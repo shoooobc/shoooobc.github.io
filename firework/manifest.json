@@ -5,9 +5,9 @@
     "start_url": "index.html",
     "icons": [
         {
-            "src": "anpanman.jpeg",
+            "src": "anpanman.png",
             "sizes": "192x192",
-            "type": "image/jpeg"
+            "type": "image/png"
         }
     ]
 }
