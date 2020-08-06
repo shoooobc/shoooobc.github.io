@@ -2,7 +2,7 @@ var fireworks = [];
 var gravity;
 
 function setup(){
-  createCanvas(375, 550); // canvasを作成
+  createCanvas(375, 470); // canvasを作成
   colorMode(HSB); //花火を出す色の指定の仕方
   gravity = createVector(0,0.4);
   stroke(255);// 線の色を設定
@@ -11,10 +11,10 @@ function setup(){
 }
 
 function draw(){
-  textSize(30);
+  textSize(40);
   textAlign(CENTER);
-  text("お誕生日",187, 250);
-  text("おめでとう！!",200, 300);
+  text("お誕生日",187, 235);
+  text("おめでとう！!",200, 270);
   colorMode(RGB); // 花火を出す色の指定の仕方
   background(0, 0, 0,25);// 背景に少し透明なのを重ねてだんだん消えて行くように
   if (random(1) < 0.15){
