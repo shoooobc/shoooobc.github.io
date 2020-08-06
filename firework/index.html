@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.min.js"></script>
+	<script src="particle.js"></script>
+	<script src="firework.js"></script>
+	<script src="sketch.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>fireworks</title>
+	<style>
+		body{
+			margin: 0;
+			padding:0;
+			background: black;
+			color:white;
+		}
+		.message{
+			display: none;
+		}
+		.btn-outer{
+			display: flex;
+			justify-content: center;
+		}
+		.btn{
+			position: absolute;
+			bottom: 30px;
+		}
+		.btn-inner{
+			border: solid 1px white;
+			padding: 10px 25px;
+		}
+		.happy{
+			font-size: 40px;
+		}
+		.happybirth{
+			width: 100%;
+			position: absolute;
+			top: 100px;
+			left: 50px;
+			transform:rotate(45deg);
+			transform-origin:0 0;
+		}
+		.iiduka{
+			margin-bottom: 20px;
+		}
+		.aoki{
+			margin-top:350px;
+			display: flex;
+			justify-content: flex-end;
+		}
+		.letter{
+			display: flex;
+			justify-content: center;
+			margin-top:20px; 
+		}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			var i = 0;
+			$('#btn-a').click(function(){
+				if(i === 0) {
+					$('#defaultCanvas0').css('display','none');
+					$('.message').css('display','block');
+					i = 1;
+				} else {
+					$('#defaultCanvas0').css('display','block');
+					$('.message').css('display','none');
+					i = 0;
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+  <div class="message">
+  	<div class="iiduka">
+  		<span>飯塚秀樹さんへ</span>
+  	</div>
+  	<div>
+  		<div>
+  			<span>おたんじょうびおめでとうございます</span>
+  		</div>
+  		<div>
+  			<span>おしごとがんばってね！</span>
+  		</div>
+  		<div class="happybirth">
+  			<span class="happy">Happy birth day</span>
+  		</div>
+  	</div>
+  	<div class="aoki">
+  		<div>
+  			<span>永遠の20歳青木より</span>
+  		</div>
+  	</div>
+	<div class="letter">
+		<div>
+			<span>手紙あげる</span>
+		</div>
+	</div>
+  </div>
+  <div class="btn-outer">
+  	<div class="btn">
+  		<div class="btn-inner">
+	  		<a id="btn-a">押して！！</a>
+	  	</div>
+	  </div>
+  </div>
+</body>
+</html>
