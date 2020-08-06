@@ -57,9 +57,34 @@
 			justify-content: center;
 			margin-top:20px;
 		}
+    #defaultCanvas0{
+      display: none;
+    }
+    .content{
+      display: none;
+    }
+    .countDown{
+      display: flex;
+      justify-content: center;
+      margin-top: 200px;
+    }
+    .count{
+      font-size: 50px;
+    }
 	</style>
 	<script type="text/javascript">
 		$(function(){
+      var count = 3;
+      var countup = function(){
+        $('.count').text(count);
+        count--;
+      }
+      setInterval(countup, 1000);
+      setTimeout(function(){
+        $('#defaultCanvas0').css('display','block');
+        $('.content').css('display','block');
+        $('.countDown').css('display','none');
+      },5000);
 			var i = 0;
 			$('#btn-a').click(function(){
 				if(i === 0) {
@@ -76,38 +101,45 @@
 	</script>
 </head>
 <body>
-  <div class="message">
-  	<div class="iiduka">
-  		<span>飯塚秀樹さんへ</span>
-  	</div>
-  	<div>
-  		<div>
-  			<span>おたんじょうびおめでとうございます</span>
-  		</div>
-  		<div>
-  			<span>おしごとがんばってね！</span>
-  		</div>
-  		<div class="happybirth">
-  			<span class="happy">Happy birth day</span>
-  		</div>
-  	</div>
-  	<div class="aoki">
-  		<div>
-  			<span>永遠の20歳青木より</span>
-  		</div>
-  	</div>
-	<div class="letter">
-		<div>
-			<span>手紙あげる</span>
-		</div>
-	</div>
+  <div class="countDown">
+    <div>
+      <span class="count"></span>
+    </div>
+  </div>
+  <div class="content">
+    <div class="message">
+    <div class="iiduka">
+      <span>飯塚秀樹さんへ</span>
+    </div>
+    <div>
+      <div>
+        <span>おたんじょうびおめでとうございます</span>
+      </div>
+      <div>
+        <span>おしごとがんばってね！</span>
+      </div>
+      <div class="happybirth">
+        <span class="happy">Happy birth day</span>
+      </div>
+    </div>
+    <div class="aoki">
+      <div>
+        <span>永遠の20歳青木より</span>
+      </div>
+    </div>
+  <div class="letter">
+    <div>
+      <span>手紙あげる</span>
+    </div>
+  </div>
   </div>
   <div class="btn-outer">
-  	<div class="btn">
-  		<div class="btn-inner">
-	  		<a id="btn-a">押して！！</a>
-	  	</div>
-	  </div>
+    <div class="btn">
+      <div class="btn-inner">
+        <a id="btn-a">押して！！</a>
+      </div>
+    </div>
+  </div>
   </div>
 </body>
 </html>
