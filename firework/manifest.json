@@ -5,7 +5,7 @@
     "start_url": "index.html",
     "icons": [
         {
-            "src": "/anpanman.png",
+            "src": "https://shoooobc.github.io/firework/anpanman.png",
             "sizes": "192x192",
             "type": "image/png"
         }
