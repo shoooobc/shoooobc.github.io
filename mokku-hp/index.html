@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>珈琲の店 もっく｜東久留米の自家焙煎コーヒー</title>
+<meta name="description" content="東京都東久留米市、本町の自家焙煎珈琲店。50年前の焙煎機で焼いた豆を、瓶の中からお選びいただけます。10:00-18:00、火・水定休。">
+
+<!-- ドメインが決まったら、このファイル内の https://example.com をすべて置き換える -->
+<link rel="canonical" href="https://shoooobc.github.io/mokku-hp/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="珈琲の店 もっく">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="珈琲の店 もっく｜東久留米の自家焙煎コーヒー">
+<meta property="og:description" content="東京都東久留米市、本町の自家焙煎珈琲店。50年前の焙煎機で焼いた豆を、瓶の中からお選びいただけます。">
+<meta property="og:url" content="https://shoooobc.github.io/mokku-hp/">
+<meta property="og:image" content="https://shoooobc.github.io/mokku-hp/images/og-home.jpg">
+<meta property="og:image:width" content="980">
+<meta property="og:image:height" content="513">
+<meta property="og:image:alt" content="窓辺のカウンターに置かれたコーヒーカップ">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="theme-color" content="#EFE8DA">
+<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Shippori+Mincho:wght@400;600&display=swap">
+<link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
+<link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.className += ' js';</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "name": "珈琲の店 もっく",
+  "alternateName": "こーひーのみせ もっく",
+  "description": "東京都東久留米市の自家焙煎珈琲店。瓶に入った豆からお好きなストレートコーヒーを選べます。",
+  "url": "https://shoooobc.github.io/mokku-hp/",
+  "image": "https://shoooobc.github.io/mokku-hp/images/og-home.jpg",
+  "telephone": "+81-42-420-5598",
+  "priceRange": "¥",
+  "servesCuisine": "コーヒー",
+  "paymentAccepted": "現金, PayPay",
+  "currenciesAccepted": "JPY",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "本町2-2-19 武蔵野サンハイツ 1F",
+    "addressLocality": "東久留米市",
+    "postalCode": "203-0053",
+    "addressRegion": "東京都",
+    "addressCountry": "JP"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "10:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "PublicHolidays",
+      "opens": "10:00",
+      "closes": "18:00"
+    }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/mokku.coffee/",
+    "https://tabelog.com/tokyo/A1328/A132802/13267023/"
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">本文へ移動</a>
+
+<!-- お知らせ帯。該当がなければ何も描かない。 -->
+<aside class="notice" id="notice" aria-label="お店からのお知らせ"></aside>
+
+<!-- ヒーローを過ぎたら出てくる。各セクションへの行き先。 -->
+<header class="sitehead" id="sitehead">
+  <div class="sitehead__in">
+    <a class="sitehead__home" href="#top">
+      <img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy">
+      <span>珈琲の店 もっく</span>
+    </a>
+
+    <nav class="sitehead__nav" aria-label="ページ内のご案内">
+      <ul>
+        <li><a href="#about">お店</a></li>
+        <li><a href="#beans">今日の豆</a></li>
+        <li><a href="#menu">メニュー</a></li>
+        <li><a href="#gift">ギフト</a></li>
+        <li><a href="#access">店舗について</a></li>
+      </ul>
+    </nav>
+
+    <a class="sitehead__coupon" href="coupon.html" data-track="coupon_open">
+      <span class="sitehead__coupon-l">ご覧の方に</span>100円引き
+    </a>
+
+    <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="menupanel">
+      <span class="burger__bars" aria-hidden="true"></span>
+      <span class="burger__label">メニュー</span>
+    </button>
+  </div>
+</header>
+
+<!-- スマホのメニュー。ヘッダーの中に横スクロールを隠さない。 -->
+<nav class="menupanel" id="menupanel" aria-label="サイトのご案内" hidden>
+  <ul class="menupanel__list">
+    <li><a href="#about">お店について</a></li>
+    <li><a href="beans.html" data-track="beans">今日の豆</a></li>
+    <li><a href="#menu">メニュー</a></li>
+    <li><a href="#gift">ギフトボックス</a></li>
+    <li><a href="#access">店舗について</a></li>
+  </ul>
+  <p class="menupanel__sub">
+    <a class="btn btn--solid" href="coupon.html" data-track="coupon_open">100円引きクーポン</a>
+  </p>
+  <p class="menupanel__tel"><a href="tel:0424205598" data-track="tel">042-420-5598</a></p>
+  <p class="menupanel__hours">10:00 - 18:00　火・水 定休</p>
+</nav>
+
+<main id="main">
+
+  <!-- ============================================================ ヒーロー -->
+  <section id="top" class="hero">
+    <div class="hero__photos" aria-hidden="true">
+      <div class="hero__photo is-on" style="background-image:url(images/hero.jpg)"></div>
+      <div class="hero__photo" style="background-image:url(images/roaster.jpg)"></div>
+      <div class="hero__photo" style="background-image:url(images/beans-shelf.jpg)"></div>
+    </div>
+    <div class="hero__veil" aria-hidden="true"></div>
+
+    <div class="hero__inner text">
+      <p class="hero__logo"><img src="images/logo.png" width="400" height="400" alt="" fetchpriority="high" decoding="async"></p>
+
+      <h1 class="hero__name">珈琲の店 もっく<small aria-hidden="true" translate="no">KOHI NO MISE MOKKU</small></h1>
+
+      <p class="hero__lead">東久留米の本町で、五十年前の焙煎機を使っています。前の店から受け継いだものです。豆は瓶に入れて棚に並べてありますので、気になったものを指してください。その場で挽いて淹れます。</p>
+
+      <p class="hero__hours"><strong>10:00 - 18:00</strong>　火・水 定休（祝日は営業）</p>
+      <p class="hero__tel"><a href="tel:0424205598" data-track="tel">042-420-5598</a></p>
+    </div>
+
+    <p class="hero__scroll" aria-hidden="true"><span>scroll</span></p>
+  </section>
+
+  <!-- ====================================================== ABOUT ＋ クーポン -->
+  <section id="about" class="sec">
+    <div class="text">
+      <div class="sechead reveal">
+        <span class="sechead__en" translate="no">ABOUT</span>
+        <span class="sechead__rule" aria-hidden="true"></span>
+        <h2>継いだ店です</h2>
+      </div>
+      <p class="lead reveal" data-i="1">この場所には二十年以上、「喫茶焙煎工房ロアン」という店がありました。高校生の頃に初めて入って、それから通うようになって、二〇一九年に引き継ぎました。</p>
+      <p class="lead reveal" data-i="2">焙煎機も、豆を入れる瓶も、外の看板も、そのままです。変えなかったというより、変える理由がありませんでした。今も「この場所を残してくれてありがとう」と言われます。そう言われると、引き継いでよかったと思います。</p>
+
+      <a class="coupon reveal" data-i="3" href="coupon.html" data-track="coupon_open">
+        <span class="coupon__stub" aria-hidden="true">
+          <b>100</b><i>円引き</i>
+        </span>
+        <span class="coupon__body">
+          <b>ホームページをご覧の方へ</b>
+          <span>お飲みものが100円引きになる画面をご用意しています。レジでお見せください。</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================================================= 写真と文（左右交互） -->
+  <section class="sec sec--joined">
+    <div class="wide">
+      <div class="pair reveal">
+        <figure class="pair__fig">
+          <img src="images/roaster.jpg" width="980" height="600" alt="店内に置かれた焙煎機" loading="lazy">
+          <figcaption class="pair__cap">ロアン時代から動いている焙煎機</figcaption>
+        </figure>
+        <div class="pair__txt">
+          <h3>五十年前の焙煎機で焼いています</h3>
+          <p>新しい機械に替えていません。癖のある機械ですが、この店の味はこの機械で出てきたものなので、そのまま使っています。焼いた豆はその日のうちに瓶へ移します。</p>
+        </div>
+      </div>
+
+      <div class="pair pair--rev reveal">
+        <figure class="pair__fig">
+          <img src="images/beans-shelf.jpg" width="980" height="600" alt="クラフト紙のラベルが貼られたガラス瓶が棚に並んでいる" loading="lazy">
+          <figcaption class="pair__cap">棚の瓶。ラベルは先代からの手書き</figcaption>
+        </figure>
+        <div class="pair__txt">
+          <h3>豆は瓶から選んでいただきます</h3>
+          <p>ストレートコーヒーは、棚の瓶を見て決めてください。名前を読んでもわからなければ、どんな味か聞いてください。切らしているものは、空の瓶のまま置いてあります。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ 写真の帯 -->
+  <div class="band" style="background-image:url(images/interior-1.jpg)" role="img" aria-label="窓から光の入る店内"></div>
+
+  <!-- ============================================================== BEANS -->
+  <section id="beans" class="sec">
+    <div class="text">
+      <div class="sechead reveal">
+        <span class="sechead__en" translate="no">BEANS</span>
+        <span class="sechead__rule" aria-hidden="true"></span>
+        <h2>今日の豆</h2>
+      </div>
+      <p class="lead reveal" data-i="1">棚の瓶は入れ替わります。産地と焙煎日、それに私からのひとことを付けてあります。切らしているものは、空の瓶のまま置いてあります。</p>
+      <p class="biglink reveal" data-i="2"><a href="beans.html" data-track="beans">今日の豆を見る</a></p>
+    </div>
+  </section>
+
+  <!-- =============================================================== MENU -->
+  <section id="menu" class="sec sec--joined">
+    <div class="wide">
+      <div class="sechead reveal">
+        <span class="sechead__en" translate="no">MENU</span>
+        <span class="sechead__rule" aria-hidden="true"></span>
+        <h2>メニュー</h2>
+      </div>
+
+      <div class="menu reveal" data-i="1">
+        <span class="menu__holes" aria-hidden="true"></span>
+        <div class="menu__sheet">
+
+          <div class="menu__group">
+            <h3>コーヒー・紅茶</h3>
+            <ul class="menu__list menu__list--2col" role="list">
+              <li class="menu__row">
+                <p class="menu__ja">ブレンドコーヒー（浅煎り / 深煎り）<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Blend Coffee (Light or Dark)</p>
+                <p class="menu__price">460円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">ストレートコーヒー<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Straight Coffee — 瓶の中からお好きな豆をお選びください</p>
+                <p class="menu__price">500円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">アイスコーヒー<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Iced Coffee</p>
+                <p class="menu__price">490円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">カフェオレ（ホット / アイス）<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Cafe au Lait (Hot / Cold)</p>
+                <p class="menu__price">520円 / 550円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">紅茶（ホット / アイス）<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Tea (Hot / Cold)</p>
+                <p class="menu__price">460円 / 490円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">紅茶オレ（ホット / アイス）<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Tea au Lait (Hot / Cold)</p>
+                <p class="menu__price">520円 / 550円</p>
+              </li>
+            </ul>
+            <p class="note menu__note">コーヒー、紅茶類は2杯目以降 100円引き。テイクアウトは 20円引きです。</p>
+          </div>
+
+          <div class="menu__group">
+            <h3>そのほかのお飲みもの</h3>
+            <ul class="menu__list menu__list--2col" role="list">
+              <li class="menu__row">
+                <p class="menu__ja">オーガニックハーブティー<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Organic Herb Tea — レモンバーム / カモミール / ローズヒップ / ペパーミント</p>
+                <p class="menu__price">480円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">レモネード（ホット / アイス）<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Lemonade (Hot / Cold)</p>
+                <p class="menu__price">460円 / 490円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">果汁100%ジュース<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
+                <p class="menu__en">Pure fruit juice — りんご / みかん / ぶどう</p>
+                <p class="menu__price">400円</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="menu__group">
+            <h3>甘いもの</h3>
+            <ul class="menu__list" role="list">
+              <li class="menu__row">
+                <p class="menu__ja">リアントさんのケーキ</p>
+                <p class="menu__en">Liante's cake — ドリンクとセットで380円</p>
+                <p class="menu__price">単品 480円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">バニラアイスクリーム</p>
+                <p class="menu__en">Vanilla ice cream</p>
+                <p class="menu__price">200円</p>
+              </li>
+              <li class="menu__row">
+                <p class="menu__ja">フレーバーシロップ</p>
+                <p class="menu__en">Flavored syrup topping</p>
+                <p class="menu__price">50円</p>
+              </li>
+            </ul>
+            <p class="note menu__note">ケーキとアイスクリームをご一緒に頼まれると50円引きです。シロップの種類はスタッフにお尋ねください。</p>
+          </div>
+
+          <p class="note menu__note"><span class="mark" aria-hidden="true">持</span> の付いたものはテイクアウトできます。</p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================= GIFT ＋ ORDER（紙面） -->
+  <div class="paper">
+    <section id="gift" class="sec">
+      <div class="wide">
+        <div class="sechead reveal">
+          <span class="sechead__en" translate="no">GIFT</span>
+          <span class="sechead__rule" aria-hidden="true"></span>
+          <h2>ギフトボックス</h2>
+        </div>
+        <div class="gift reveal" data-i="1">
+
+          <div class="gift__stage">
+            <img class="gift__shot is-on" id="gift-shot-1" src="images/gift-box-1.jpg" width="900" height="900" alt="クラフト紙の袋に入ったコーヒー豆と、焼き菓子が詰められた箱" loading="lazy">
+            <img class="gift__shot" id="gift-shot-2" src="images/gift-box-2.jpg" width="900" height="900" alt="もっくの印を押したクラフト紙の袋が2つ並んだ箱" loading="lazy">
+          </div>
+
+          <div class="gift__side">
+            <div class="gift__tabs" role="tablist" aria-label="中身の組み合わせ">
+              <button type="button" class="gift__tab" role="tab" id="gift-tab-1" aria-controls="gift-panel-1" aria-selected="true">豆＋お菓子</button>
+              <button type="button" class="gift__tab" role="tab" id="gift-tab-2" aria-controls="gift-panel-2" aria-selected="false" tabindex="-1">豆2袋</button>
+            </div>
+
+            <div class="gift__panel" role="tabpanel" id="gift-panel-1" aria-labelledby="gift-tab-1" tabindex="0">
+              <h3>コーヒー豆200g ＋ お菓子</h3>
+              <p>焼いた豆を紙の袋に詰めて、店の印を押してお渡しします。お菓子は仕入れたものをその都度合わせますので、中身はご相談ください。</p>
+            </div>
+
+            <div class="gift__panel" role="tabpanel" id="gift-panel-2" aria-labelledby="gift-tab-2" tabindex="0" hidden>
+              <h3>コーヒー豆200g × 2袋</h3>
+              <p>豆を2種類お選びいただけます。浅煎りと深煎りを1袋ずつ、という組み合わせが多いです。迷われたら、お相手の飲み方を教えてください。</p>
+            </div>
+
+            <p class="gift__note note">箱代450円に、中身の代金を足したお値段です。豆の種類とお菓子によってお値段が変わりますので、店頭か、下のご注文フォームからご相談ください。通常は白い帯を掛けてお渡しします。帯を掛けない形でしたら配送もできます（送料は別にいただきます）。</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="order" class="sec sec--joined">
+      <div class="text">
+        <div class="sechead reveal">
+          <span class="sechead__en" translate="no">ORDER</span>
+          <span class="sechead__rule" aria-hidden="true"></span>
+          <h2>ギフトボックスのご注文</h2>
+        </div>
+        <p class="lead reveal" data-i="1">ギフトボックスのご注文を、前もってお受けします。お席のご予約は承っておりません。</p>
+
+        <form class="reveal" data-i="2" id="order-form" action="" novalidate aria-describedby="gift-note" style="margin-top:34px">
+
+          <div class="field">
+            <label for="f-name">お名前<span class="req">必須</span></label>
+            <input type="text" id="f-name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-tel">電話番号<span class="req">必須</span></label>
+            <input type="tel" id="f-tel" name="tel" autocomplete="tel" required>
+          </div>
+          <div class="field">
+            <label for="f-mail">メールアドレス</label>
+            <input type="email" id="f-mail" name="email" autocomplete="email" spellcheck="false" autocapitalize="off">
+          </div>
+          <div class="field">
+            <label for="f-when">受け取り希望日時<span class="req">必須</span></label>
+            <input type="datetime-local" id="f-when" name="when" required>
+          </div>
+
+          <div id="panel-gift">
+            <fieldset>
+              <legend class="fieldset__legend">中身の組み合わせ</legend>
+              <div class="choice">
+                <label><input type="radio" name="giftContent" value="豆200g×2袋" checked> コーヒー豆200g × 2袋</label>
+                <label><input type="radio" name="giftContent" value="豆200g＋お菓子"> コーヒー豆200g ＋ お菓子</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend class="fieldset__legend">白い帯</legend>
+              <div class="choice">
+                <label><input type="radio" name="giftBand" value="帯あり" checked> 掛ける</label>
+                <label><input type="radio" name="giftBand" value="帯なし"> 掛けない（配送できます）</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend class="fieldset__legend">受け取り方法</legend>
+              <div class="choice">
+                <label><input type="radio" name="giftDelivery" value="店頭" checked> 店頭で受け取る</label>
+                <label><input type="radio" name="giftDelivery" value="配送"> 配送してもらう</label>
+              </div>
+            </fieldset>
+            <div class="field" id="f-addr-wrap" hidden>
+              <label for="f-addr">配送先</label>
+              <textarea id="f-addr" name="address" placeholder="〒203-0053 東京都東久留米市本町2-2-19 もっく 様…"></textarea>
+            </div>
+            <p class="note" id="gift-note">豆の種類とお菓子によってお値段が変わります。<strong>お日にちとお値段は、後日店舗よりご連絡します。</strong></p>
+          </div>
+
+          <div class="field" style="margin-top:22px">
+            <label for="f-memo">そのほかご希望</label>
+            <textarea id="f-memo" name="memo"></textarea>
+          </div>
+
+          <p><button type="submit" class="btn btn--solid">この内容で予約する</button></p>
+          <p class="form__msg" id="order-msg" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================= ACCESS -->
+  <section id="access" class="sec">
+    <div class="wide">
+      <div class="sechead reveal">
+        <span class="sechead__en" translate="no">ACCESS</span>
+        <span class="sechead__rule" aria-hidden="true"></span>
+        <h2>店舗について</h2>
+      </div>
+
+      <iframe class="map reveal" data-i="1" loading="lazy" title="珈琲の店 もっくの地図"
+        src="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%9D%B1%E4%B9%85%E7%95%99%E7%B1%B3%E5%B8%82%E6%9C%AC%E7%94%BA2-2-19&output=embed"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+      <table class="info reveal" data-i="2">
+        <tbody>
+          <tr>
+            <th scope="row">住所</th>
+            <td>
+              〒203-0053 東京都東久留米市本町2-2-19 武蔵野サンハイツ 1F<br>
+              <a href="https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%9D%B1%E4%B9%85%E7%95%99%E7%B1%B3%E5%B8%82%E6%9C%AC%E7%94%BA2-2-19" data-track="map">地図アプリで開く</a>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">電話</th>
+            <td><a href="tel:0424205598" data-track="tel">042-420-5598</a></td>
+          </tr>
+          <tr>
+            <th scope="row">営業時間</th>
+            <td>
+              <p class="hours__main">10:00 - 18:00</p>
+              <p class="hours__closed">月・木・金・土・日・祝日の営業です。火・水はお休みをいただきます（祝日は基本営業）。</p>
+              <p class="note" style="margin-top:.6em">臨時のお休みは <a href="https://www.instagram.com/mokku.coffee/" target="_blank" rel="noopener" data-track="instagram">Instagram</a> でお知らせします。</p>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">席</th>
+            <td>カウンター4〜5席、4人掛けのテーブル2卓、2人掛けのテーブル2卓</td>
+          </tr>
+          <tr>
+            <th scope="row">駐車場</th>
+            <td>ありません。近くのコインパーキングをお使いください。</td>
+          </tr>
+          <tr>
+            <th scope="row">お支払い</th>
+            <td>現金、PayPay</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer id="footer" class="footer" style="background-image:url(images/exterior.jpg)">
+  <div class="wide">
+    <div class="footer__panel">
+
+      <div class="footer__grid">
+
+        <div class="footer__id">
+          <p class="footer__mark"><img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy"></p>
+          <p class="footer__name">珈琲の店 もっく<span translate="no">KOHI NO MISE MOKKU</span></p>
+        </div>
+
+        <div class="footer__col">
+          <h2 class="footer__h">お店</h2>
+          <p class="footer__addr">
+            〒203-0053<br>
+            東京都東久留米市本町2-2-19<br>
+            武蔵野サンハイツ 1F
+          </p>
+          <p class="footer__line"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%9D%B1%E4%B9%85%E7%95%99%E7%B1%B3%E5%B8%82%E6%9C%AC%E7%94%BA2-2-19" data-track="map">地図アプリで開く</a></p>
+          <p class="footer__line"><a href="tel:0424205598" data-track="tel">042-420-5598</a></p>
+        </div>
+
+        <div class="footer__col">
+          <h2 class="footer__h">営業</h2>
+          <p class="footer__hours">10:00 - 18:00</p>
+          <p class="footer__addr">月・木・金・土・日・祝日<br>火・水はお休みです</p>
+          <p class="footer__note">臨時のお休みは <a href="https://www.instagram.com/mokku.coffee/" target="_blank" rel="noopener" data-track="instagram">Instagram</a> でお知らせします</p>
+        </div>
+
+        <nav class="footer__col" aria-label="サイト内のご案内">
+          <h2 class="footer__h">ご案内</h2>
+          <ul class="footer__nav">
+            <li><a href="beans.html" data-track="beans">今日の豆</a></li>
+            <li><a href="#menu">メニュー</a></li>
+            <li><a href="#gift">ギフトボックス</a></li>
+            <li><a href="coupon.html" data-track="coupon_open">100円引きクーポン</a></li>
+            <li><a href="https://www.instagram.com/mokku.coffee/" target="_blank" rel="noopener" data-track="instagram">Instagram</a></li>
+            <li><a href="https://tabelog.com/tokyo/A1328/A132802/13267023/dtlmap/" target="_blank" rel="noopener" data-track="tabelog">食べログ</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <p class="footer__copy">© 珈琲の店 もっく</p>
+
+    </div>
+  </div>
+</footer>
+
+<div class="callbar">
+  <a class="callbar__item" href="tel:0424205598" data-track="tel">042-420-5598 に電話</a>
+  <a class="callbar__item callbar__item--coupon" href="coupon.html" data-track="coupon_open">100円引きクーポン</a>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

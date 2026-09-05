@@ -1,0 +1,1318 @@
+@charset "utf-8";
+
+/* ==========================================================================
+   珈琲の店 もっく
+   色はすべて店内の実物から採色している。店にない色は足さない。
+   設計は REQUIREMENTS-v2.md、色の根拠は DESIGN.md にある。
+   ========================================================================== */
+
+:root {
+  /* --- 素材の色（DESIGN.md §1） --- */
+  --sumi:    #2A1D16; /* カップの中のコーヒー */
+  --shikkui: #EFE8DA; /* 漆喰の壁 */
+  --matsu:   #A56A34; /* パイン材の棚板 */
+  --kama:    #2F5A4E; /* 焙煎機の胴の緑 */
+  --seiji:   #8CBFA9; /* 青磁の皿 */
+  --kami:    #FBF8F2; /* メニューの紙・クーポンの券面 */
+  --kraft:   #C7A87C; /* 瓶のラベルと麻袋 */
+
+  /* --- 役割 --- */
+  --bg:     var(--shikkui);
+  --fg:     var(--sumi);
+  --dim:    #6B584B;
+  --accent: var(--kama);
+  --rule:   rgba(165, 106, 52, .45); /* 棚板の罫 */
+
+  /* --- 書体（2ファミリーのみ） --- */
+  --mincho: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --hand:   "Caveat", "Segoe Script", cursive;
+
+  /* --- 幅（REQUIREMENTS-v2 §4-3） --- */
+  --wide: 1200px;
+  --text: 720px;
+  --pad:  22px;
+  --sec:  58px;   /* セクションの上下 */
+  --head: 54px;   /* 固定ヘッダーの高さ */
+
+  /* --- 運動（REQUIREMENTS-v2 §5-1）--- */
+  --ease:    cubic-bezier(.215, .61, .355, 1);
+  --t-hover: .2s;
+  --t-ui:    .4s;
+  --t-mid:   .6s;
+  --t-in:    .8s;
+  --stagger: 60ms;
+
+  /* --- 重なり（この4段以外は使わない） --- */
+  --z-base:  0;
+  --z-veil:  1;
+  --z-front: 2;
+  --z-fixed: 40;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;              /* OS が暗くても、この配色で出す */
+  scroll-padding-top: calc(var(--head) + 16px);
+  scroll-padding-bottom: 80px;      /* 下の固定バーがフォーカスを隠さないように */
+}
+
+/* 二度叩きのズーム待ちを消し、タップの青い箱を自前の focus に任せる */
+a, button, label, input, textarea, summary {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 見出しへ飛んだとき、上に詰まらない */
+[id] { scroll-margin-top: calc(var(--head) + 16px); }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mincho);
+  font-size: 17px;
+  line-height: 1.95;
+  letter-spacing: .06em;
+  font-feature-settings: "palt";
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+img, svg, iframe { max-width: 100%; }
+img { display: block; height: auto; }
+
+h1, h2, h3 { font-weight: 600; line-height: 1.75; margin: 0; text-wrap: balance; }
+h2, h3, .lead, .hours__main { word-break: auto-phrase; }
+p, li, dd { text-wrap: pretty; }
+p, ul, ol, dl, figure, table { margin: 0; }
+ul { list-style: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; }
+
+a {
+  color: var(--accent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness var(--t-hover) var(--ease);
+}
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 2px solid var(--kama);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: 8px; top: -60px;
+  z-index: var(--z-fixed);
+  padding: 12px 18px;
+  background: var(--sumi);
+  color: var(--shikkui);
+  text-decoration: none;
+  transition: top var(--t-hover) var(--ease);
+}
+.skip:focus { top: 8px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* ==========================================================================
+   幅（この3つだけ。セクションごとに padding を上書きしない）
+   ========================================================================== */
+
+.wide, .text {
+  width: 100%;
+  margin-inline: auto;
+  padding-left:  max(var(--pad), env(safe-area-inset-left));
+  padding-right: max(var(--pad), env(safe-area-inset-right));
+}
+.wide { max-width: calc(var(--wide) + var(--pad) * 2); }
+.text { max-width: calc(var(--text) + var(--pad) * 2); }
+
+.sec { padding-block: var(--sec); }
+/* 前のセクションと地続きに見せたいとき。話が続いているので、間を空けない。 */
+.sec--joined { padding-top: 0; }
+
+/* 白い紙を1枚敷く区画（ギフトとご注文） */
+.paper { background: var(--kami); border-block: 1px solid var(--rule); }
+
+/* ==========================================================================
+   スクロール表示（REQUIREMENTS-v2 §5-2 #3, #4）
+   1種類だけ。opacity + translateY。一度出したら二度と動かさない。
+   ========================================================================== */
+
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--t-in) var(--ease), transform var(--t-in) var(--ease);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+/* 段差は6つまで。7つ目からは同時に出す。 */
+.js .reveal[data-i="1"] { transition-delay: calc(var(--stagger) * 1); }
+.js .reveal[data-i="2"] { transition-delay: calc(var(--stagger) * 2); }
+.js .reveal[data-i="3"] { transition-delay: calc(var(--stagger) * 3); }
+.js .reveal[data-i="4"] { transition-delay: calc(var(--stagger) * 4); }
+.js .reveal[data-i="5"] { transition-delay: calc(var(--stagger) * 5); }
+.js .reveal[data-i="6"] { transition-delay: calc(var(--stagger) * 6); }
+
+/* ==========================================================================
+   ヘッダー（ヒーローを過ぎたら出てくる）
+   ========================================================================== */
+
+.sitehead {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: var(--z-fixed);
+  height: var(--head);
+  /* 地の色と同じにすると、どのセクションの上でも境目が消える。
+     濃い一本にして、常にページの手前にある帯として扱う。 */
+  background: var(--sumi);
+  color: var(--shikkui);
+}
+.js .sitehead {
+  transform: translateY(-100%);
+  transition: transform var(--t-ui) var(--ease);
+}
+.js .is-scrolled .sitehead,
+.js .sitehead:focus-within { transform: none; }
+
+/* ヒーローのないページ。流れの中に置いて、上に貼り付ける。 */
+.sitehead--static { position: sticky; }
+.js .sitehead--static { transform: none; }
+
+.sitehead__in {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 100%;
+  max-width: calc(var(--wide) + var(--pad) * 2);
+  margin-inline: auto;
+  padding-left:  max(var(--pad), env(safe-area-inset-left));
+  padding-right: max(var(--pad), env(safe-area-inset-right));
+}
+
+.sitehead__home {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  color: var(--fg);
+  text-decoration: none;
+}
+.sitehead__home img { width: 28px; }
+.sitehead__home span { display: none; font-size: 14px; letter-spacing: .14em; }
+.sitehead__home { color: var(--shikkui); }
+
+.sitehead__nav {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.sitehead__nav::-webkit-scrollbar { display: none; }
+.sitehead__nav ul { display: flex; gap: 18px; }
+.sitehead__nav a {
+  display: block;
+  padding: 4px 0;
+  white-space: nowrap;
+  font-size: 14px;
+  letter-spacing: .1em;
+  color: var(--shikkui);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--t-hover) var(--ease);
+}
+.sitehead__nav a:hover { border-bottom-color: var(--kraft); }
+.sitehead__nav a[aria-current="page"] { border-bottom-color: var(--kraft); }
+
+/* クーポンだけは、ここでも探さずに済むようにする */
+/* 濃い帯の上なので、明るい札にして浮かせる */
+.sitehead__coupon {
+  flex: none;
+  display: none;
+  padding: 7px 14px;
+  background: var(--kami);
+  color: var(--sumi);
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--t-hover) var(--ease),
+              color var(--t-hover) var(--ease);
+}
+.sitehead__coupon:hover { background: var(--kama); color: var(--kami); }
+.sitehead__coupon-l { display: none; }
+
+/* スマホは横スクロールでは気づけないので、ここには出さない */
+.sitehead__nav { display: none; }
+
+/* ==========================================================================
+   ハンバーガーとメニュー面（スマホ）
+   ========================================================================== */
+
+.burger {
+  flex: none;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 2px 8px 10px;
+  border: 0;
+  background: none;
+  color: var(--shikkui);
+  font: inherit;
+  cursor: pointer;
+}
+.burger__label { font-size: 12px; letter-spacing: .16em; }
+.burger__bars {
+  position: relative;
+  display: block;
+  width: 22px; height: 2px;
+  background: currentColor;
+  transition: background-color var(--t-ui) var(--ease);
+}
+.burger__bars::before,
+.burger__bars::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; height: 2px;
+  background: currentColor;
+  transition: transform var(--t-ui) var(--ease);
+}
+.burger__bars::before { top: -7px; }
+.burger__bars::after  { top: 7px; }
+
+/* 開いたら×になる */
+.burger[aria-expanded="true"] .burger__bars { background: transparent; }
+.burger[aria-expanded="true"] .burger__bars::before { transform: translateY(7px) rotate(45deg); }
+.burger[aria-expanded="true"] .burger__bars::after  { transform: translateY(-7px) rotate(-45deg); }
+
+.menupanel {
+  position: fixed;
+  top: var(--head); left: 0; right: 0; bottom: 0;
+  z-index: calc(var(--z-fixed) - 1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--sumi);
+  color: var(--shikkui);
+  padding: 26px max(var(--pad), env(safe-area-inset-left)) 40px;
+}
+.js .menupanel {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity var(--t-ui) var(--ease), transform var(--t-ui) var(--ease);
+}
+.js .menupanel.is-open { opacity: 1; transform: none; }
+
+.menupanel__list li + li { border-top: 1px solid rgba(199, 168, 124, .3); }
+.menupanel__list a {
+  display: block;
+  padding: 17px 2px;
+  color: var(--shikkui);
+  text-decoration: none;
+  font-size: 19px;
+  letter-spacing: .12em;
+}
+.menupanel__sub { margin-top: 26px; }
+.menupanel__sub .btn { display: block; text-align: center; }
+.menupanel__tel {
+  margin-top: 26px;
+  font-size: 23px;
+  letter-spacing: .1em;
+  font-variant-numeric: tabular-nums;
+}
+.menupanel__tel a { color: var(--shikkui); text-decoration-color: rgba(199, 168, 124, .6); }
+.menupanel__hours { margin-top: 6px; font-size: 14px; color: var(--kraft); }
+
+body.is-menuopen { overflow: hidden; }
+
+/* ==========================================================================
+   お知らせ帯
+   ========================================================================== */
+
+.notice {
+  background: var(--sumi);
+  color: var(--shikkui);
+  font-size: 15px;
+  letter-spacing: .04em;
+}
+.notice:empty { display: none; }
+.notice ul { padding-block: 10px; }
+.notice li + li { margin-top: 2px; }
+
+/* ==========================================================================
+   ヒーロー
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  padding-block: calc(var(--head) + 40px) 128px;
+  overflow: clip;
+}
+
+.hero__photos { position: absolute; inset: 0; z-index: var(--z-base); }
+.hero__photo {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 2s linear;
+}
+.hero__photo.is-on { opacity: 1; }
+
+/* 写真の上で本文が読めるだけの、漆喰色のヴェール。一枚の面。色も階調も足さない。 */
+.hero__veil {
+  position: absolute; inset: 0; z-index: var(--z-veil);
+  background: rgba(239, 232, 218, .92);
+}
+
+.hero__inner { position: relative; z-index: var(--z-front); }
+
+.hero__logo { margin-bottom: 22px; }
+.hero__logo img { width: 104px; }
+
+.hero__name {
+  font-size: 27px;
+  letter-spacing: .18em;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+.hero__name small {
+  display: block;
+  font-size: 13px;
+  letter-spacing: .3em;
+  color: var(--dim);
+  margin-top: 8px;
+}
+
+.hero__lead {
+  font-size: 19px;
+  line-height: 2.05;
+  letter-spacing: .08em;
+  max-width: 30em;
+}
+
+.hero__hours {
+  margin-top: 30px;
+  font-size: 15px;
+  color: var(--dim);
+  letter-spacing: .08em;
+}
+.hero__hours strong { color: var(--fg); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.hero__tel {
+  margin-top: 10px;
+  font-size: 23px;
+  letter-spacing: .1em;
+  font-variant-numeric: tabular-nums;
+}
+.hero__tel a {
+  color: var(--fg);
+  text-decoration-color: var(--rule);
+  text-underline-offset: 6px;
+}
+.hero__tel a:hover { color: var(--kama); text-decoration-color: currentColor; }
+
+.hero__scroll {
+  position: absolute;
+  left: 0; right: 0; bottom: 26px;
+  z-index: var(--z-front);
+  text-align: center;
+  color: var(--dim);
+}
+.hero__scroll span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: .3em;
+  padding-left: .3em; /* 字間の分、中心をそろえる */
+}
+/* 下向きの線。矢印の文字は使わない。 */
+.hero__scroll::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 34px;
+  margin: 9px auto 0;
+  background: currentColor;
+}
+.hero__scroll::before {
+  content: "";
+  position: absolute;
+  left: 50%; bottom: 0;
+  width: 9px; height: 9px;
+  margin-left: -5px;
+  border-left: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(-45deg);
+}
+
+/* ヒーローの登場（#2）。ローディング画面は作らないので、ここが第一印象になる。 */
+.js .hero__inner > *, .js .hero__scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--t-in) var(--ease), transform var(--t-in) var(--ease);
+}
+.is-ready .hero__inner > *,
+.is-ready .hero__scroll { opacity: 1; transform: none; }
+.is-ready .hero__name   { transition-delay: calc(var(--stagger) * 1); }
+.is-ready .hero__lead   { transition-delay: calc(var(--stagger) * 2); }
+.is-ready .hero__hours  { transition-delay: calc(var(--stagger) * 3); }
+.is-ready .hero__actions{ transition-delay: calc(var(--stagger) * 4); }
+.is-ready .hero__scroll { transition-delay: calc(var(--stagger) * 5); }
+
+/* ==========================================================================
+   ボタン（色面にしない。罫と余白で作る）
+   ========================================================================== */
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid var(--kama);
+  color: var(--kama);
+  background: none;
+  font: inherit;
+  letter-spacing: .1em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease),
+              color var(--t-hover) var(--ease);
+}
+.btn:hover { background: var(--kama); color: var(--kami); }
+
+.btn--solid { background: var(--kama); color: var(--kami); }
+.btn--solid:hover { background: var(--sumi); border-color: var(--sumi); }
+
+/* ==========================================================================
+   セクション見出し（英字ラベルは見出しの「上」に置かない。同じ行の左端）
+   ========================================================================== */
+
+.sechead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+.sechead__en {
+  flex: none;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .28em;
+  color: var(--dim);
+}
+.sechead__rule {
+  flex: none;
+  width: 44px;
+  height: 1px;
+  background: var(--rule);
+  transform: translateY(-5px);
+}
+.sechead h2 {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 30px;
+  letter-spacing: .12em;
+}
+
+.lead { font-size: 17px; }
+.lead + .lead { margin-top: 1.6em; }
+.note { font-size: 14px; color: var(--dim); line-height: 1.9; }
+
+/* ==========================================================================
+   写真と文の左右交互（森の図書室 is-reversed）
+   ========================================================================== */
+
+.pair {
+  display: grid;
+  gap: 26px;
+  align-items: center;
+}
+.pair + .pair { margin-top: 64px; }
+.pair__fig img { width: 100%; }
+.pair__cap { margin-top: 10px; font-size: 13px; color: var(--dim); }
+.pair h3 { font-size: 21px; letter-spacing: .1em; margin-bottom: .6em; }
+
+/* ==========================================================================
+   全画面の写真帯（PC は背後を抜ける、スマホは静止）
+
+   background-attachment: fixed は使わない。スクロールのたびに
+   画面いっぱいの画像を再描画させるため、ここが一番のカクつきの元になる。
+   代わりに clip-path で包含ブロックを作り、position: fixed の擬似要素を
+   1枚のレイヤーとして合成させる。見た目は同じで、描画は1回で済む。
+   ========================================================================== */
+
+.band {
+  position: relative;
+  height: 58vh;
+  min-height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+@media (min-width: 768px) {
+  .band {
+    clip-path: inset(0); /* fixed の子を、この帯の内側に閉じ込める */
+  }
+  .band::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: inherit;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+/* ==========================================================================
+   クーポン導線
+   1行の罫では見落とされたので、券の形にする。切り取り線と半券で「券」と分かる。
+   ========================================================================== */
+
+.coupon {
+  display: flex;
+  align-items: stretch;
+  margin-top: 40px;
+  border: 1px solid var(--kama);
+  background: var(--kami);
+  color: var(--fg);
+  text-decoration: none;
+  transition: background-color var(--t-hover) var(--ease);
+}
+.coupon:hover { background: var(--shikkui); }
+
+/* 半券。ここだけ色を持たせる。 */
+.coupon__stub {
+  flex: none;
+  width: 96px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: var(--kama);
+  color: var(--kami);
+  border-right: 1px dashed var(--kami); /* 切り取り線 */
+}
+.coupon__stub b {
+  display: block;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+}
+.coupon__stub i { font-style: normal; font-size: 12px; letter-spacing: .12em; }
+
+.coupon__body { padding: 18px 20px; }
+.coupon__body b {
+  display: block;
+  font-weight: 600;
+  letter-spacing: .1em;
+  margin-bottom: 5px;
+}
+.coupon__body span { font-size: 14px; color: var(--dim); line-height: 1.85; }
+
+/* ==========================================================================
+   今日の豆への導線
+   ========================================================================== */
+
+/* ボタンにしない。文章の続きとして、そのまま棚へ行ってもらう。 */
+.biglink { margin-top: 28px; }
+.biglink a {
+  display: inline-block;
+  font-size: 24px;
+  letter-spacing: .12em;
+  color: var(--fg);
+  text-decoration-line: underline;
+  text-decoration-color: var(--matsu);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 10px;
+  transition: color var(--t-hover) var(--ease),
+              text-underline-offset var(--t-hover) var(--ease);
+}
+.biglink a:hover { color: var(--kama); text-underline-offset: 13px; }
+
+/* ==========================================================================
+   メニュー
+   店のメニューは紙に書かれている。ノートの罫線と綴じ穴でそれを写す。
+   横罫は装飾ではなく、行の位置を決めている。
+   ========================================================================== */
+
+.menu {
+  position: relative;
+  background: var(--kami);
+  border: 1px solid var(--rule);
+  /* 紙が1枚置かれているように、ごくわずかだけ浮かせる */
+  box-shadow:
+    0 1px 0 rgba(165, 106, 52, .22),
+    0 20px 34px -24px rgba(42, 29, 22, .55);
+}
+
+/* 綴じ穴。左の余白に3つ。位置は .menu を基準にする。 */
+.menu__holes { display: none; }
+.menu__holes::before,
+.menu__holes::after,
+.menu__sheet::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--shikkui);
+  border: 1px solid var(--rule);
+}
+.menu__holes::before { top: 15%; }
+.menu__holes::after  { top: 50%; }
+
+.menu__sheet { padding: 30px var(--pad); }
+
+/* ノートの縦罫（左の余白線） */
+.menu__sheet::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 36px;
+  width: 1px;
+  background: rgba(165, 106, 52, .3);
+  display: none;
+}
+
+.menu h3 {
+  font-size: 15px;
+  letter-spacing: .2em;
+  padding-bottom: 9px;
+  border-bottom: 1.5px solid var(--matsu);
+}
+.menu h3 + .menu__list { margin-top: 0; }
+.menu__group + .menu__group { margin-top: 38px; }
+
+/* 罫線。ノートの横罫なので、行ごとに高さをそろえて等間隔に引く。 */
+.menu__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 16px;
+  align-content: center;
+  align-items: baseline;
+  min-height: 74px;
+  padding: 12px 0 11px;
+  border-bottom: 1px solid rgba(165, 106, 52, .42);
+}
+/* 最後の行の下にも罫を残す。ノートは書き終えても線が続いている。 */
+.menu__list { border-bottom: 1px solid rgba(165, 106, 52, .42); }
+.menu__ja { letter-spacing: .04em; }
+.menu__en {
+  grid-column: 1;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--dim);
+  letter-spacing: .02em;
+}
+.menu__price {
+  grid-column: 2; grid-row: 1 / span 2;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.menu__note { margin-top: 14px; }
+
+/* テイクアウトできる品の印 */
+.mark {
+  display: inline-block;
+  margin-left: .5em;
+  padding: 0 .3em;
+  border: 1px solid var(--kama);
+  color: var(--kama);
+  font-size: 11px;
+  line-height: 1.7;
+  vertical-align: .1em;
+  letter-spacing: 0;
+}
+
+/* ==========================================================================
+   ギフトボックス（中身を切り替えて見せる）
+   ========================================================================== */
+
+.gift { display: grid; gap: 26px; }
+
+.gift__stage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--shikkui);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.gift__shot {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease);
+}
+.gift__shot.is-on { opacity: 1; }
+
+.gift__tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--rule);
+}
+.gift__tab {
+  flex: 1 1 0;
+  padding: 12px 8px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: .1em;
+  color: var(--dim);
+  cursor: pointer;
+  transition: color var(--t-hover) var(--ease),
+              border-color var(--t-hover) var(--ease);
+}
+.gift__tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--kama); }
+
+.gift__panel h3 { font-size: 20px; letter-spacing: .1em; margin-bottom: .7em; }
+.gift__panel:focus-visible { outline: 2px solid var(--kama); outline-offset: 6px; }
+.gift__note { margin-top: 26px; }
+
+/* ==========================================================================
+   ご注文の予約フォーム（品目選択と金額計算は作らない）
+   ========================================================================== */
+
+.field { margin-bottom: 22px; }
+.field > label, .fieldset__legend {
+  padding: 0;
+  display: block;
+  font-size: 15px;
+  letter-spacing: .08em;
+  margin-bottom: 7px;
+}
+.req { color: var(--kama); font-size: 12px; margin-left: .5em; letter-spacing: .1em; }
+
+input[type="text"], input[type="tel"], input[type="email"],
+input[type="datetime-local"], textarea, select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  background: var(--kami);
+  color: var(--fg);
+  font: inherit;
+  font-size: 16px; /* iOS の自動ズーム回避 */
+  letter-spacing: .04em;
+  transition: border-color var(--t-hover) var(--ease);
+}
+input:focus, textarea:focus, select:focus { border-color: var(--kama); }
+textarea { min-height: 132px; line-height: 1.9; resize: vertical; }
+
+fieldset { border: 0; padding: 0; margin: 0 0 22px; }
+.choice { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.choice label { display: flex; align-items: center; gap: 7px; font-size: 16px; }
+.choice input { accent-color: var(--kama); }
+
+.form__msg { margin-top: 16px; min-height: 1.9em; color: var(--kama); font-size: 15px; }
+.form__msg:empty { min-height: 0; }
+
+/* ==========================================================================
+   アクセス
+   ========================================================================== */
+
+.map {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--rule);
+  margin-bottom: 26px;
+}
+.info th, .info td {
+  text-align: left;
+  vertical-align: top;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+  font-weight: 400;
+}
+.info th { width: 6.5em; color: var(--dim); font-size: 15px; }
+.hours__main { font-size: 19px; letter-spacing: .1em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hours__closed { color: var(--dim); font-size: 15px; }
+
+/* ==========================================================================
+   フッター
+   ずっと漆喰の面が続くので、最後は外観の写真で閉じる。
+   文字は写真の上に直に置かず、濃い一枚を敷いてその上に置く。
+   ========================================================================== */
+
+.footer {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  padding-block: 54px 96px;
+  font-size: 15px;
+  color: var(--shikkui);
+}
+/* 写真を少し落ち着かせる。文字の下地は別に敷く。 */
+.footer::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: rgba(42, 29, 22, .35);
+}
+.footer > .wide { position: relative; }
+
+.footer__panel {
+  background: rgba(29, 20, 15, .93);
+  padding: 40px 26px 30px;
+}
+
+.footer__grid { display: grid; gap: 36px; }
+
+.footer__mark img { width: 62px; }
+.footer__name {
+  margin-top: 14px;
+  font-size: 19px;
+  letter-spacing: .16em;
+  line-height: 1.7;
+}
+.footer__name span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: .3em;
+  color: var(--kraft);
+  margin-top: 4px;
+}
+
+.footer__h {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .24em;
+  color: var(--kraft);
+  padding-bottom: 9px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(199, 168, 124, .35);
+}
+
+.footer__addr { line-height: 2; }
+.footer__line { margin-top: .9em; }
+.footer__hours { font-size: 19px; letter-spacing: .1em; margin-bottom: .5em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.footer__note { margin-top: 1em; font-size: 13px; color: var(--kraft); line-height: 1.9; }
+
+.footer a { color: var(--shikkui); text-decoration-color: rgba(199, 168, 124, .6); }
+.footer a:hover { color: #fff; text-decoration-color: currentColor; }
+
+.footer__nav li + li { margin-top: 9px; }
+
+.footer__copy {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(199, 168, 124, .3);
+  font-size: 12px;
+  letter-spacing: .16em;
+  color: var(--kraft);
+}
+
+/* ==========================================================================
+   スマホの固定電話バー
+   ========================================================================== */
+
+.callbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: var(--z-fixed);
+  display: flex;
+  height: calc(56px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.callbar__item {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sumi);
+  color: var(--shikkui);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: .08em;
+}
+.callbar__item--coupon {
+  background: var(--kama);
+  border-left: 1px solid rgba(251, 248, 242, .25);
+}
+.callbar__item:hover { color: #fff; }
+
+@media (min-width: 768px) {
+  .callbar { display: none; }
+}
+
+/* ==========================================================================
+   beans.html — 棚
+   このサイトで一番密度が高い場所。大胆さはここに全部置く。
+   瓶は画像を使わず、CSS だけで描く。
+   ========================================================================== */
+
+.bhead { padding-block: 46px 26px; }
+.bhead h1 { font-size: 30px; letter-spacing: .14em; margin-bottom: .7em; }
+
+.shelf { margin-top: 44px; }
+.shelf__label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .28em;
+  color: var(--dim);
+  margin-bottom: 14px;
+}
+.shelf__label::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* 棚そのもの。奥の板をごく薄く起こして、家具として見せる。 */
+.shelf__unit {
+  background: rgba(165, 106, 52, .07);
+  border: 1px solid var(--rule);
+  border-bottom: 0;
+  padding: 26px 12px 0;
+}
+
+.jars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  align-items: end;
+}
+
+/* 棚板と、その前小口 */
+.shelf__board { height: 9px; background: var(--matsu); }
+.shelf__edge  { height: 4px; background: rgba(42, 29, 22, .3); }
+
+.jar {
+  display: block;
+  width: 100%;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* --- 蓋（ワイヤークランプ） --- */
+.jar__lid {
+  display: block;
+  position: relative;
+  width: 42%;
+  max-width: 46px;
+  height: 15px;
+  margin: 0 auto -1px;
+  border: 1.5px solid var(--sumi);
+  border-bottom: 0;
+  border-radius: 4px 4px 0 0;
+  background: var(--shikkui);
+}
+/* 締め具の針金。肩の外まで渡る。 */
+.jar__lid::after {
+  content: "";
+  position: absolute;
+  left: -34%; right: -34%; top: 58%;
+  height: 1.5px;
+  background: var(--sumi);
+}
+
+/* --- 胴 --- */
+.jar__glass {
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100px;
+  height: 168px;
+  border: 1.5px solid var(--sumi);
+  border-radius: 14px 14px 5px 5px;
+  background: rgba(255, 255, 255, .38);
+  overflow: hidden;
+  transition: border-color var(--t-ui) var(--ease);
+}
+
+/* 中身の豆 */
+.jar__beans {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 56%;
+  background: var(--roast, #4A2A17);
+}
+.jar__beans::before {
+  content: "";
+  position: absolute; inset: 0 0 auto;
+  height: 7px;
+  background: rgba(255, 255, 255, .18);
+}
+
+/* ガラスの照り返し */
+.jar__shine {
+  position: absolute;
+  left: 11%; top: 13%; bottom: 16%;
+  width: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .5);
+}
+
+/* クラフト紙のラベル。手書きの英字を写す。 */
+.jar__label {
+  position: absolute;
+  left: 5%; right: 5%; top: 44%;
+  padding: 8px 3px;
+  background: var(--kraft);
+  color: #241812;
+  font-family: var(--hand);
+  font-size: 16px;
+  line-height: 1.1;
+  letter-spacing: 0;
+  transform: rotate(-1.2deg);
+}
+
+.jar__name {
+  display: block;
+  margin-top: 11px;
+  font-size: 13px;
+  letter-spacing: .05em;
+  line-height: 1.55;
+}
+.jar__state {
+  display: block;
+  font-size: 11px;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.jar__state--fresh { color: var(--kama); }
+
+/* 空の瓶。消さずに残す。 */
+.jar--empty .jar__glass { border-color: rgba(42, 29, 22, .3); background: rgba(255, 255, 255, .18); }
+.jar--empty .jar__lid   { border-color: rgba(42, 29, 22, .3); }
+.jar--empty .jar__lid::after { background: rgba(42, 29, 22, .3); }
+.jar--empty .jar__shine { opacity: .5; }
+.jar--empty .jar__label {
+  background: none;
+  border: 1px dashed rgba(42, 29, 22, .35);
+  color: var(--dim);
+}
+.jar--empty .jar__name { color: var(--dim); }
+
+/* 開いている瓶 */
+.jar[aria-expanded="true"] .jar__glass {
+  border-color: var(--kama);
+  outline: 2px solid var(--seiji);
+  outline-offset: -5px;
+}
+.jar[aria-expanded="true"] .jar__lid { border-color: var(--kama); }
+
+/* 開いた説明。店主のひとことが主役。 */
+.beanpanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows var(--t-ui) var(--ease),
+              opacity var(--t-ui) var(--ease);
+}
+.beanpanel.is-open { grid-template-rows: 1fr; opacity: 1; }
+.beanpanel__in { overflow: hidden; contain: content; }
+.beanpanel__pad { padding: 24px 2px 28px; }
+.beanpanel__comment {
+  font-size: 19px;
+  line-height: 2.1;
+  letter-spacing: .08em;
+  max-width: 32em;
+}
+.beanpanel__spec {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.9;
+}
+.beanpanel__sold { margin-top: 14px; font-size: 15px; }
+
+.bfoot { padding-block: 48px 90px; }
+.actions--center { justify-content: center; }
+.bfoot__back { margin-top: 26px; text-align: center; font-size: 15px; }
+
+/* ==========================================================================
+   coupon.html — 券面
+   ========================================================================== */
+
+.coupon-page { background: var(--kami); }
+.coupon-page .callbar { display: none; }
+
+.ticket {
+  max-width: 460px;
+  margin: 0 auto;
+  border: 1px solid var(--sumi);
+  background: var(--kami);
+}
+.js .ticket {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
+}
+.is-ready .ticket { opacity: 1; transform: none; }
+
+.ticket__photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.ticket__body { padding: 28px 26px 30px; text-align: center; }
+.ticket__logo img { width: 74px; margin: 0 auto; }
+.ticket__shop { font-size: 13px; letter-spacing: .26em; color: var(--dim); }
+
+.ticket__offer {
+  margin-top: 18px;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: .1em;
+}
+.ticket__for { margin-top: 10px; font-size: 15px; color: var(--dim); }
+
+.ticket__date {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-size: 19px;
+  letter-spacing: .1em;
+  font-variant-numeric: tabular-nums;
+}
+.ticket__date small { display: block; font-size: 12px; letter-spacing: .22em; color: var(--dim); margin-bottom: 5px; }
+
+.ticket__use {
+  margin-top: 18px;
+  padding: 12px;
+  border: 1px solid var(--kama);
+  color: var(--kama);
+  font-size: 15px;
+  letter-spacing: .08em;
+}
+
+.ticket__terms { margin-top: 22px; text-align: left; font-size: 13px; color: var(--dim); line-height: 1.95; }
+.ticket__terms li { padding-left: 1em; text-indent: -1em; }
+.ticket__terms li::before { content: "・"; }
+
+.ticket__done {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid var(--rule);
+  background: var(--shikkui);
+  font-size: 15px;
+  letter-spacing: .06em;
+}
+
+.coupon-page .cbody { padding-block: 46px 70px; }
+.cback { margin-top: 34px; text-align: center; font-size: 15px; }
+
+/* ==========================================================================
+   PC
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  :root { --pad: 40px; --sec: 92px; --head: 62px; }
+
+  .sechead { gap: 20px; margin-bottom: 40px; }
+  .sechead__rule { width: 80px; }
+  .sechead h2 { font-size: 34px; }
+
+  .sitehead__home img { width: 32px; }
+  .sitehead__home span { display: block; }
+  .sitehead__nav { display: block; flex: 0 1 auto; margin-left: auto; overflow: visible; }
+  .sitehead__nav ul { gap: 28px; }
+  .sitehead__nav a { font-size: 15px; }
+  .sitehead__coupon { display: inline-block; margin-left: 8px; font-size: 14px; padding: 8px 16px; }
+  .sitehead__coupon-l { display: inline; margin-right: .5em; font-size: 12px; opacity: .8; }
+  .burger, .menupanel { display: none; }
+
+  .gift { grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .gift__tab { font-size: 16px; }
+  .biglink a { font-size: 28px; }
+
+  .hero__logo img { width: 132px; }
+  .hero__name { font-size: 34px; }
+  .hero__lead { font-size: 20px; }
+  .hero__tel { font-size: 26px; }
+
+  .coupon { margin-top: 48px; }
+  .coupon__stub { width: 128px; }
+  .coupon__stub b { font-size: 44px; }
+  .coupon__body { padding: 24px 28px; }
+  .coupon__body span { font-size: 15px; }
+
+  .pair { grid-template-columns: 1fr 1fr; gap: 48px; }
+  .pair--rev .pair__fig { order: 2; }
+  .pair + .pair { margin-top: 72px; }
+
+  /* ノートらしく見えるのは、余白と綴じ穴が入るこの幅から */
+  .menu__holes { display: block; }
+  .menu__sheet { padding: 46px 54px 46px 96px; }
+  .menu__sheet::before { top: 84%; }
+  .menu__sheet::after { display: block; left: 76px; }
+  .menu__list--2col { columns: 2; column-gap: 54px; }
+  .menu__list--2col .menu__row { break-inside: avoid; }
+
+  .band { height: 76vh; }
+
+  .shelf { margin-top: 64px; }
+  .shelf__unit { padding: 40px 26px 0; }
+  .jars { grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .jar__glass { max-width: 118px; height: 208px; }
+  .jar__lid { max-width: 54px; height: 18px; }
+  .jar__label { font-size: 19px; padding: 10px 4px; }
+  .jar__name { font-size: 14px; margin-top: 14px; }
+  .shelf__board { height: 11px; }
+  .bhead { padding-block: 64px 30px; }
+  .bhead h1 { font-size: 38px; }
+  .bfoot { padding-block: 64px 80px; }
+
+  .map { aspect-ratio: 16 / 9; }
+
+  .footer { padding-block: 88px; }
+  .footer__panel { padding: 54px 54px 40px; }
+  .footer__grid {
+    grid-template-columns: 1.1fr 1fr 1fr 1fr;
+    gap: 54px;
+    align-items: start;
+  }
+  .footer__mark img { width: 78px; }
+}
+
+/* ==========================================================================
+   印刷（クーポンを紙で持ってくる人がいる）
+   ========================================================================== */
+
+@media print {
+  body { background: #fff; color: #000; }
+  .callbar, .cback, .notice, .sitehead, .ticket__photo { display: none; }
+  .ticket { opacity: 1; transform: none; border-color: #000; }
+  .ticket__use { border-color: #000; color: #000; }
+}
+
+/* ==========================================================================
+   動きを減らす設定（REQUIREMENTS-v2 §5-5）
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .hero__inner > *, .hero__scroll { opacity: 1; transform: none; }
+  .ticket { opacity: 1; transform: none; }
+  .band { clip-path: none; }
+  .band::after { display: none; }
+}

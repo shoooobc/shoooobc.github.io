@@ -1,0 +1,83 @@
+{
+  "_note": "サンプルデータです。豆の名前と棚の段は店頭の写真（images/beans-shelf.jpg）から起こしましたが、農園・精製方法・焙煎日・ひとことはすべて仮の内容です。店主さんの言葉に差し替えてください。",
+  "beans": [
+    {
+      "name": "モカ シダモ",
+      "nameEn": "Mocha Sidamo",
+      "origin": "エチオピア / シダモ",
+      "farm": "ベンサ地区の小農家",
+      "process": "ナチュラル",
+      "roast": "中煎り",
+      "roastedOn": "2026-09-04",
+      "notes": "熟した果実のような甘さ",
+      "comment": "うちで一番よく出る豆です。冷めてくると甘さがはっきりしてくるので、急がずに飲んでみてください。",
+      "soldOut": false,
+      "shelf": "upper"
+    },
+    {
+      "name": "ラオス",
+      "nameEn": "Laos",
+      "origin": "ラオス / ボラベン高原",
+      "farm": "ジャイ農協",
+      "process": "ウォッシュド",
+      "roast": "浅煎り",
+      "roastedOn": "2026-09-02",
+      "notes": "レモンティーのような酸",
+      "comment": "浅く焼いています。酸っぱいのが苦手な方にも、これは大丈夫だと言われることが多いです。",
+      "soldOut": false,
+      "shelf": "upper"
+    },
+    {
+      "name": "グアテマラ",
+      "nameEn": "Guatemala",
+      "origin": "グアテマラ / アンティグア",
+      "farm": "サンミゲル農園",
+      "process": "ウォッシュド",
+      "roast": "中煎り",
+      "roastedOn": "2026-08-24",
+      "notes": "チョコレートのような後味",
+      "comment": "どれにするか迷ったら、まずこれを淹れます。だいたい外しません。",
+      "soldOut": false,
+      "shelf": "upper"
+    },
+    {
+      "name": "タンザニア",
+      "nameEn": "Tanzania High roast",
+      "origin": "タンザニア / キリマンジャロ",
+      "farm": "エーデルワイス農園",
+      "process": "ウォッシュド",
+      "roast": "深煎り",
+      "roastedOn": "2026-08-27",
+      "notes": "苦さのあとに残る甘み",
+      "comment": "深めに焼いた分、ミルクを入れても負けません。カフェオレにする方が多い豆です。",
+      "soldOut": false,
+      "shelf": "lower"
+    },
+    {
+      "name": "東ティモール",
+      "nameEn": "East Timor",
+      "origin": "東ティモール / レテフォホ",
+      "farm": "ライラコ村の共同組合",
+      "process": "ウォッシュド",
+      "roast": "中深煎り",
+      "roastedOn": "2026-08-21",
+      "notes": "土の匂いを思わせる香ばしさ",
+      "comment": "先代のころから置いている豆です。次に焼き上がったらまた瓶に入れます。",
+      "soldOut": true,
+      "shelf": "upper"
+    },
+    {
+      "name": "フレンチロースト",
+      "nameEn": "French roast",
+      "origin": "ブレンド",
+      "farm": "",
+      "process": "—",
+      "roast": "深煎り",
+      "roastedOn": "2026-08-18",
+      "notes": "しっかりした苦さ",
+      "comment": "アイスコーヒーにするとよく合います。夏のあいだに出てしまいました。",
+      "soldOut": true,
+      "shelf": "lower"
+    }
+  ]
+}
