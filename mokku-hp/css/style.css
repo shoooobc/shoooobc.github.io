@@ -1213,7 +1213,9 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 .thanks__steps li::before {
   content: counter(step);
   position: absolute;
-  left: 0; top: 22px;
+  /* 行頭ではなく、その段の上下の真ん中に置く */
+  left: 0; top: 50%;
+  transform: translateY(-50%);
   width: 28px; height: 28px;
   display: grid;
   place-content: center;
