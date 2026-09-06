@@ -97,7 +97,7 @@
     </nav>
 
     <a class="sitehead__coupon" href="coupon.html" data-track="coupon_open">
-      <span class="sitehead__coupon-l">ご覧の方に</span>100円引き
+      <span class="sitehead__coupon-l">ご覧の方に</span>100円引
     </a>
 
     <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="menupanel">
@@ -117,7 +117,7 @@
     <li><a href="#access">店舗について</a></li>
   </ul>
   <p class="menupanel__sub">
-    <a class="btn btn--solid" href="coupon.html" data-track="coupon_open">100円引きクーポン</a>
+    <a class="btn btn--solid" href="coupon.html" data-track="coupon_open">初回100円引きクーポン</a>
   </p>
   <p class="menupanel__tel"><a href="tel:0424205598" data-track="tel">042-420-5598</a></p>
   <p class="menupanel__hours">10:00 - 18:00　火・水 定休</p>
@@ -134,7 +134,8 @@
     </div>
     <div class="hero__veil" aria-hidden="true"></div>
 
-    <div class="hero__inner text">
+    <div class="hero__inner wide">
+      <div class="secbody">
       <p class="hero__logo"><img src="images/logo.png" width="400" height="400" alt="" fetchpriority="high" decoding="async"></p>
 
       <h1 class="hero__name">珈琲の店 もっく<small aria-hidden="true" translate="no">KOHI NO MISE MOKKU</small></h1>
@@ -143,6 +144,7 @@
 
       <p class="hero__hours"><strong>10:00 - 18:00</strong>　火・水 定休（祝日は営業）</p>
       <p class="hero__tel"><a href="tel:0424205598" data-track="tel">042-420-5598</a></p>
+      </div>
     </div>
 
     <p class="hero__scroll" aria-hidden="true"><span>scroll</span></p>
@@ -150,13 +152,14 @@
 
   <!-- ====================================================== ABOUT ＋ クーポン -->
   <section id="about" class="sec">
-    <div class="text">
+    <div class="wide">
       <div class="sechead reveal">
         <span class="sechead__en" translate="no">ABOUT</span>
         <span class="sechead__rule" aria-hidden="true"></span>
         <h2>継いだ店です</h2>
       </div>
-      <p class="lead reveal" data-i="1">この場所には二十年以上、「喫茶焙煎工房ロアン」という店がありました。高校生の頃に初めて入って、それから通うようになって、二〇一九年に引き継ぎました。</p>
+      <div class="secbody">
+      <p class="lead reveal" data-i="1">この場所には20年以上、「喫茶焙煎工房ロアン」という店がありました。高校生の頃に初めて入って、それから通うようになって、2019年に引き継ぎました。</p>
       <p class="lead reveal" data-i="2">焙煎機も、豆を入れる瓶も、外の看板も、そのままです。変えなかったというより、変える理由がありませんでした。今も「この場所を残してくれてありがとう」と言われます。そう言われると、引き継いでよかったと思います。</p>
 
       <a class="coupon reveal" data-i="3" href="coupon.html" data-track="coupon_open">
@@ -164,10 +167,11 @@
           <b>100</b><i>円引き</i>
         </span>
         <span class="coupon__body">
-          <b>ホームページをご覧の方へ</b>
-          <span>お飲みものが100円引きになる画面をご用意しています。レジでお見せください。</span>
+          <b>はじめてご来店の方へ</b>
+          <span>ホームページをご覧いただいた方の<b>初回のご来店1回かぎり</b>、お飲みものを100円引きにします。レジで画面をお見せください。</span>
         </span>
       </a>
+      </div>
     </div>
   </section>
 
@@ -203,14 +207,16 @@
 
   <!-- ============================================================== BEANS -->
   <section id="beans" class="sec">
-    <div class="text">
+    <div class="wide">
       <div class="sechead reveal">
         <span class="sechead__en" translate="no">BEANS</span>
         <span class="sechead__rule" aria-hidden="true"></span>
         <h2>今日の豆</h2>
       </div>
+      <div class="secbody">
       <p class="lead reveal" data-i="1">棚の瓶は入れ替わります。産地と焙煎日、それに私からのひとことを付けてあります。切らしているものは、空の瓶のまま置いてあります。</p>
       <p class="biglink reveal" data-i="2"><a href="beans.html" data-track="beans">今日の豆を見る</a></p>
+      </div>
     </div>
   </section>
 
@@ -226,8 +232,9 @@
       <div class="menu reveal" data-i="1">
         <span class="menu__holes" aria-hidden="true"></span>
         <div class="menu__sheet">
+          <div class="menu__track" id="menu-track">
 
-          <div class="menu__group">
+          <div class="menu__group" id="menu-page-1">
             <h3>コーヒー・紅茶</h3>
             <ul class="menu__list menu__list--2col" role="list">
               <li class="menu__row">
@@ -264,7 +271,7 @@
             <p class="note menu__note">コーヒー、紅茶類は2杯目以降 100円引き。テイクアウトは 20円引きです。</p>
           </div>
 
-          <div class="menu__group">
+          <div class="menu__group" id="menu-page-2">
             <h3>そのほかのお飲みもの</h3>
             <ul class="menu__list menu__list--2col" role="list">
               <li class="menu__row">
@@ -285,7 +292,7 @@
             </ul>
           </div>
 
-          <div class="menu__group">
+          <div class="menu__group" id="menu-page-3">
             <h3>甘いもの</h3>
             <ul class="menu__list" role="list">
               <li class="menu__row">
@@ -307,7 +314,15 @@
             <p class="note menu__note">ケーキとアイスクリームをご一緒に頼まれると50円引きです。シロップの種類はスタッフにお尋ねください。</p>
           </div>
 
-          <p class="note menu__note"><span class="mark" aria-hidden="true">持</span> の付いたものはテイクアウトできます。</p>
+          </div>
+
+          <div class="menu__pager" hidden>
+            <button type="button" class="menu__arrow" id="menu-prev" aria-label="前のページ" aria-controls="menu-track"></button>
+            <p class="menu__pageno" id="menu-pageno" aria-live="polite">1 / 3　コーヒー・紅茶</p>
+            <button type="button" class="menu__arrow menu__arrow--next" id="menu-next" aria-label="次のページ" aria-controls="menu-track"></button>
+          </div>
+
+          <p class="note menu__note menu__legend"><span class="mark" aria-hidden="true">持</span> の付いたものはテイクアウトできます。</p>
 
         </div>
       </div>
@@ -354,12 +369,13 @@
     </section>
 
     <section id="order" class="sec sec--joined">
-      <div class="text">
+      <div class="wide">
         <div class="sechead reveal">
           <span class="sechead__en" translate="no">ORDER</span>
           <span class="sechead__rule" aria-hidden="true"></span>
           <h2>ギフトボックスのご注文</h2>
         </div>
+        <div class="secbody">
         <p class="lead reveal" data-i="1">ギフトボックスのご注文を、前もってお受けします。お席のご予約は承っておりません。</p>
 
         <form class="reveal" data-i="2" id="order-form" action="" novalidate aria-describedby="gift-note" style="margin-top:34px">
@@ -418,6 +434,7 @@
           <p><button type="submit" class="btn btn--solid">この内容で予約する</button></p>
           <p class="form__msg" id="order-msg" role="status"></p>
         </form>
+        </div>
       </div>
     </section>
   </div>
@@ -504,13 +521,13 @@
           <p class="footer__note">臨時のお休みは <a href="https://www.instagram.com/mokku.coffee/" target="_blank" rel="noopener" data-track="instagram">Instagram</a> でお知らせします</p>
         </div>
 
-        <nav class="footer__col" aria-label="サイト内のご案内">
+        <nav class="footer__col footer__col--nav" aria-label="サイト内のご案内">
           <h2 class="footer__h">ご案内</h2>
           <ul class="footer__nav">
             <li><a href="beans.html" data-track="beans">今日の豆</a></li>
             <li><a href="#menu">メニュー</a></li>
             <li><a href="#gift">ギフトボックス</a></li>
-            <li><a href="coupon.html" data-track="coupon_open">100円引きクーポン</a></li>
+            <li><a href="coupon.html" data-track="coupon_open">初回100円引きクーポン</a></li>
             <li><a href="https://www.instagram.com/mokku.coffee/" target="_blank" rel="noopener" data-track="instagram">Instagram</a></li>
             <li><a href="https://tabelog.com/tokyo/A1328/A132802/13267023/dtlmap/" target="_blank" rel="noopener" data-track="tabelog">食べログ</a></li>
           </ul>
@@ -526,7 +543,7 @@
 
 <div class="callbar">
   <a class="callbar__item" href="tel:0424205598" data-track="tel">042-420-5598 に電話</a>
-  <a class="callbar__item callbar__item--coupon" href="coupon.html" data-track="coupon_open">100円引きクーポン</a>
+  <a class="callbar__item callbar__item--coupon" href="coupon.html" data-track="coupon_open">初回100円引き</a>
 </div>
 
 <script src="js/main.js"></script>
