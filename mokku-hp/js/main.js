@@ -115,9 +115,9 @@ function jaDate(iso) {
   return FMT_MD.format(d);
 }
 
-/* beans.html — 棚に並べる
-   beans.html には同じ形の棚が静的に書いてある。取得できたらここで描き直す。
-   取得に失敗しても、静的な棚がそのまま残る。 */
+/* beans.html — 豆の帯を並べる
+   beans.html には同じ形の帯が静的に書いてある。取得できたらここで描き直す。
+   取得に失敗しても、静的な帯がそのまま残る。 */
 function renderShelves(beans) {
   const wrap = document.getElementById('shelves');
   if (!wrap) return;
@@ -137,109 +137,92 @@ function renderShelves(beans) {
                    '<span class="sr-only">（' + shelf.ja + '）</span>';
     sec.appendChild(h2);
 
-    const unit = document.createElement('div');
-    unit.className = 'shelf__unit';
-
-    const jars = document.createElement('div');
-    jars.className = 'jars';
-
-    const panel = document.createElement('div');
-    panel.className = 'beanpanel';
-    panel.id = 'panel-' + shelf.key;
-    panel.innerHTML = '<div class="beanpanel__in"><div class="beanpanel__pad"></div></div>';
-    const pad = panel.querySelector('.beanpanel__pad');
+    const ul = document.createElement('ul');
+    ul.className = 'beans';
 
     list.forEach(function (bean, i) {
+      const id = 'bean-' + shelf.key + '-' + i;
+
+      const li = document.createElement('li');
+      li.className = 'bean reveal' + (bean.soldOut ? ' bean--empty' : '');
+      if (i < 6) li.dataset.i = String(i);
+
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'jar reveal' + (bean.soldOut ? ' jar--empty' : '');
-      if (i < 6) btn.dataset.i = String(i);
+      btn.className = 'bean__row';
       btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-controls', panel.id);
+      btn.setAttribute('aria-controls', id);
+      btn.innerHTML = beanRowHTML(bean);
 
-      const days = daysSince(bean.roastedOn);
-      let state, fresh = false;
-      if (bean.soldOut) {
-        state = '切らしています';
-      } else if (days !== null && days <= 7) {
-        state = '焼きたて';
-        fresh = true;
-      } else {
-        state = jaDate(bean.roastedOn) + ' 焙煎';
-      }
+      const detail = document.createElement('div');
+      detail.className = 'bean__detail';
+      detail.id = id;
+      detail.innerHTML = '<div><p class="bean__spec">' + beanSpecHTML(bean) + '</p></div>';
 
-      btn.innerHTML =
-        '<span class="jar__lid" aria-hidden="true"></span>' +
-        '<span class="jar__glass">' +
-          (bean.soldOut ? '' :
-            '<span class="jar__beans" style="--roast:' +
-              (ROAST_COLOR[bean.roast] || '#4A2A17') + '"></span>') +
-          '<span class="jar__shine" aria-hidden="true"></span>' +
-          '<span class="jar__label" translate="no">' + esc(bean.nameEn || bean.name) + '</span>' +
-        '</span>' +
-        '<span class="jar__name">' + esc(bean.name) +
-          '<span class="jar__state' + (fresh ? ' jar__state--fresh' : '') + '">' +
-            esc(state) + '</span>' +
-        '</span>';
+      btn.addEventListener('click', function () { openBean(btn, detail); });
 
-      btn.addEventListener('click', function () {
-        openBean(btn, bean, panel, pad);
-      });
-
-      jars.appendChild(btn);
+      li.appendChild(btn);
+      li.appendChild(detail);
+      ul.appendChild(li);
     });
 
-    const board = document.createElement('div');
-    board.className = 'shelf__board';
-    board.setAttribute('aria-hidden', 'true');
-    const edge = document.createElement('div');
-    edge.className = 'shelf__edge';
-    edge.setAttribute('aria-hidden', 'true');
-
-    unit.appendChild(jars);
-    unit.appendChild(board);
-    unit.appendChild(edge);
-
-    sec.appendChild(unit);
-    sec.appendChild(panel);
+    sec.appendChild(ul);
     wrap.appendChild(sec);
   });
 
   observeReveals();
 }
 
-/* 瓶の開閉。このサイトで唯一、人の操作に返す動き。 */
-function openBean(btn, bean, panel, pad) {
+/* 帯の頭。焙煎度の色バー・名前・焙煎日・店主のひとこと（1行）。 */
+function beanRowHTML(bean) {
+  const days = daysSince(bean.roastedOn);
+  const fresh = !bean.soldOut && days !== null && days <= 7;
+
+  let when;
+  if (bean.soldOut) {
+    when = '<b>切らしています</b>';
+  } else if (fresh) {
+    when = '<b>焼きたて</b><i>/</i>' + esc(jaDate(bean.roastedOn)) + ' 焙煎';
+  } else {
+    when = '<b>' + esc(jaDate(bean.roastedOn)) + ' 焙煎</b>';
+  }
+  if (bean.roast) when += '<i>/</i>' + esc(bean.roast);
+
+  return '<span class="bean__bar" aria-hidden="true"' +
+           (bean.soldOut ? '' :
+             ' style="--roast:' + (ROAST_COLOR[bean.roast] || '#4A2A17') + '"') + '></span>' +
+         '<span class="bean__id">' +
+           '<span class="bean__en" translate="no">' + esc(bean.nameEn || bean.name) + '</span>' +
+           '<span class="bean__ja">' + esc(bean.name) + '</span>' +
+         '</span>' +
+         '<span class="bean__when' + (fresh ? ' bean__when--fresh' : '') + '">' + when + '</span>' +
+         '<span class="bean__say">' + esc(bean.comment || '') + '</span>';
+}
+
+/* 開いたときに出る、産地の1行。 */
+function beanSpecHTML(bean) {
+  const spec = [bean.origin, bean.farm, bean.process, bean.notes]
+    .filter(Boolean)
+    .map(function (v) { return '<span>' + esc(v) + '</span>'; })
+    .join('<i aria-hidden="true">　/　</i>');
+
+  return spec;
+}
+
+/* 帯の開閉。このサイトで唯一、人の操作に返す動き。 */
+function openBean(btn, detail) {
   const already = btn.getAttribute('aria-expanded') === 'true';
 
-  document.querySelectorAll('.jar[aria-expanded="true"]').forEach(function (b) {
+  document.querySelectorAll('.bean__row[aria-expanded="true"]').forEach(function (b) {
     b.setAttribute('aria-expanded', 'false');
+    const d = document.getElementById(b.getAttribute('aria-controls'));
+    if (d) d.classList.remove('is-open');
   });
 
-  if (already) {
-    panel.classList.remove('is-open');
-    return;
-  }
+  if (already) return;
 
   btn.setAttribute('aria-expanded', 'true');
-
-  const spec = [
-    bean.origin,
-    bean.farm,
-    bean.process,
-    bean.roast,
-    bean.roastedOn ? jaDate(bean.roastedOn) + ' 焙煎' : ''
-  ].filter(Boolean).join('　/　');
-
-  pad.innerHTML =
-    '<p class="beanpanel__comment">' + esc(bean.comment || '') + '</p>' +
-    (bean.notes ? '<p class="beanpanel__spec">' + esc(bean.notes) + '</p>' : '') +
-    '<p class="beanpanel__spec">' + esc(spec) + '</p>' +
-    (bean.soldOut
-      ? '<p class="beanpanel__sold">いまは切らしています。焼き上がったらまた瓶に入れます。</p>'
-      : '');
-
-  panel.classList.add('is-open');
+  detail.classList.add('is-open');
 }
 
 function esc(s) {

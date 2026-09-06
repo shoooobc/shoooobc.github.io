@@ -1007,7 +1007,8 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 .bhead { padding-block: 46px 26px; }
 .bhead h1 { font-size: 26px; letter-spacing: .12em; margin-bottom: .7em; }
 
-.shelf { margin-top: 44px; }
+/* 棚の段。見出しは罫だけで切る。 */
+.shelf { margin-top: 40px; }
 .shelf__label {
   display: flex;
   align-items: center;
@@ -1016,7 +1017,7 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   font-weight: 400;
   letter-spacing: .28em;
   color: var(--dim);
-  margin-bottom: 14px;
+  margin-bottom: 6px;
 }
 .shelf__label::after {
   content: "";
@@ -1025,171 +1026,122 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   background: var(--rule);
 }
 
-/* 棚そのもの。奥の板をごく薄く起こして、家具として見せる。 */
-.shelf__unit {
-  background: rgba(165, 106, 52, .07);
-  border: 1px solid var(--rule);
-  border-bottom: 0;
-  padding: 26px 12px 0;
-}
+/* 豆の帯。1豆＝画面幅いっぱいの1本。カードにも影にもしない。 */
+.beans { list-style: none; margin: 0; padding: 0; }
+.bean { border-bottom: 1px solid var(--rule); }
 
-/* スマホは2本ずつ。3本並べると瓶もラベルも小さすぎて読めない。 */
-.jars {
+/* 帯の頭。ここだけがボタン。 */
+.bean__row {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  align-items: end;
-}
-
-/* 棚板と、その前小口 */
-.shelf__board { height: 9px; background: var(--matsu); }
-.shelf__edge  { height: 4px; background: rgba(42, 29, 22, .3); }
-
-.jar {
-  display: block;
+  grid-template-columns: 6px minmax(0, 1fr);
+  grid-template-areas:
+    "bar id"
+    "bar when"
+    "bar say";
+  column-gap: 14px;
+  align-items: start;
   width: 100%;
-  padding: 0 2px;
+  padding: 15px 0 13px;
   border: 0;
   background: none;
   font: inherit;
   color: inherit;
-  text-align: center;
+  text-align: left;
   cursor: pointer;
 }
 
-/* --- 蓋。金具の帯として描く --- */
-.jar__lid {
-  display: block;
-  position: relative;
-  width: 52%;
-  max-width: 62px;
-  height: 17px;
-  margin: 0 auto -1px;
-  border: 1.5px solid var(--sumi);
-  border-bottom: 0;
-  border-radius: 5px 5px 0 0;
-  background: var(--shikkui);
-}
-/* 締め具の針金。肩の外まで渡る。 */
-.jar__lid::after {
-  content: "";
-  position: absolute;
-  left: -26%; right: -26%; top: 60%;
-  height: 1.5px;
-  background: var(--sumi);
-}
-
-/* --- 胴 --- */
-.jar__glass {
-  display: block;
-  position: relative;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 136px;
-  height: 210px;
-  border: 1.5px solid var(--sumi);
-  border-radius: 18px 18px 6px 6px;
-  background: rgba(255, 255, 255, .4);
-  overflow: hidden;
-  transition: border-color var(--t-ui) var(--ease);
-}
-
-/* 中身の豆 */
-.jar__beans {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 58%;
-  background: var(--roast, #4A2A17);
-}
-.jar__beans::before {
-  content: "";
-  position: absolute; inset: 0 0 auto;
-  height: 8px;
-  background: rgba(255, 255, 255, .2);
-}
-
-/* ガラスの照り返し */
-.jar__shine {
-  position: absolute;
-  left: 10%; top: 12%; bottom: 15%;
-  width: 6px;
+/* 焙煎度の色見本。瓶の中身の色をそのまま縦バーにした。 */
+.bean__bar {
+  grid-area: bar;
+  align-self: stretch;
   border-radius: 3px;
-  background: rgba(255, 255, 255, .55);
+  background: var(--roast, #4A2A17);
+  transition: background-color var(--t-ui) var(--ease);
 }
 
-/* クラフト紙のラベル。手書きの英字を写す。 */
-.jar__label {
-  position: absolute;
-  left: 7%; right: 7%; top: 42%;
-  padding: 11px 4px;
-  background: var(--kraft);
-  color: #241812;
+.bean__id { grid-area: id; min-width: 0; }
+.bean__en {
+  display: block;
   font-family: var(--hand);
-  font-size: 21px;
-  line-height: 1.05;
+  font-size: 27px;
+  line-height: 1.15;
   letter-spacing: 0;
-  transform: rotate(-1.2deg);
+}
+.bean__ja {
+  display: block;
+  margin-top: 2px;
+  font-size: 15px;
+  letter-spacing: .08em;
 }
 
-.jar__name {
+.bean__when {
+  grid-area: when;
   display: block;
-  margin-top: 13px;
-  font-size: 14px;
-  letter-spacing: .05em;
-  line-height: 1.55;
-}
-.jar__state {
-  display: block;
-  font-size: 12px;
+  margin-top: 5px;
+  font-size: 13px;
   color: var(--dim);
+  letter-spacing: .06em;
   font-variant-numeric: tabular-nums;
 }
-.jar__state--fresh { color: var(--kama); }
+.bean__when b { font-weight: 400; }
+.bean__when--fresh b { color: var(--kama); }
+.bean__when i { font-style: normal; opacity: .55; padding: 0 .5em; }
 
-/* 空の瓶。消さずに残す。 */
-.jar--empty .jar__glass { border-color: rgba(42, 29, 22, .3); background: rgba(255, 255, 255, .18); }
-.jar--empty .jar__lid   { border-color: rgba(42, 29, 22, .3); }
-.jar--empty .jar__lid::after { background: rgba(42, 29, 22, .3); }
-.jar--empty .jar__shine { opacity: .5; }
-.jar--empty .jar__label {
-  background: none;
-  border: 1px dashed rgba(42, 29, 22, .35);
+/* 店主のひとこと。閉じているときも1行だけ出す。 */
+.bean__say {
+  grid-area: say;
+  margin: 7px 0 0;
+  font-size: 15px;
+  line-height: 1.85;
+  letter-spacing: .06em;
   color: var(--dim);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
 }
-.jar--empty .jar__name { color: var(--dim); }
 
-/* 開いている瓶 */
-.jar[aria-expanded="true"] .jar__glass {
-  border-color: var(--kama);
-  outline: 2px solid var(--seiji);
-  outline-offset: -5px;
+/* 開いているときだけ、続きと産地が出る。 */
+.bean__row[aria-expanded="true"] .bean__say {
+  -webkit-line-clamp: 999;
+  line-clamp: 999;
+  color: var(--fg);
 }
-.jar[aria-expanded="true"] .jar__lid { border-color: var(--kama); }
 
-/* 開いた説明。店主のひとことが主役。 */
-.beanpanel {
+.bean__detail {
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
   transition: grid-template-rows var(--t-ui) var(--ease),
               opacity var(--t-ui) var(--ease);
 }
-.beanpanel.is-open { grid-template-rows: 1fr; opacity: 1; }
-.beanpanel__in { overflow: hidden; contain: content; }
-.beanpanel__pad { padding: 24px 2px 28px; }
-.beanpanel__comment {
-  font-size: 17px;
-  line-height: 2.1;
-  letter-spacing: .08em;
-  max-width: 32em;
-}
-.beanpanel__spec {
-  margin-top: 16px;
-  font-size: 14px;
+.bean__detail.is-open { grid-template-rows: 1fr; opacity: 1; }
+.bean__detail > div { overflow: hidden; }
+.bean__spec {
+  margin: 0;
+  padding: 0 0 18px 20px;
+  font-size: 13px;
+  line-height: 1.95;
   color: var(--dim);
-  line-height: 1.9;
+  letter-spacing: .06em;
 }
-.beanpanel__sold { margin-top: 14px; font-size: 15px; }
+.bean__spec span { display: block; }
+.bean__spec i { display: none; }
+
+/* 切らしている豆。消さずに、色だけ抜く。 */
+.bean--empty .bean__bar {
+  background: none;
+  border: 1px dashed rgba(42, 29, 22, .4);
+}
+.bean--empty .bean__en,
+.bean--empty .bean__ja { color: var(--dim); }
+
+/* 触ったときの返し */
+@media (hover: hover) {
+  .bean__row:hover .bean__en { color: var(--kama); }
+}
+.bean__row:focus-visible { outline: 2px solid var(--kama); outline-offset: 3px; }
 
 .bfoot { padding-block: 54px 90px; text-align: center; }
 .actions--center { justify-content: center; }
@@ -1355,7 +1307,6 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 
   .pair h3 { font-size: 21px; }
   .gift__panel h3 { font-size: 20px; }
-  .beanpanel__comment { font-size: 19px; }
   .bhead h1 { font-size: 38px; letter-spacing: .14em; }
 
   /* メニューは全部開いたまま。畳まない。 */
@@ -1416,14 +1367,31 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 
   .band { height: 76vh; }
 
-  .shelf { margin-top: 64px; }
-  .shelf__unit { padding: 40px 26px 0; }
-  .jars { grid-template-columns: repeat(6, 1fr); gap: 10px; }
-  .jar__glass { max-width: 122px; height: 214px; }
-  .jar__lid { max-width: 58px; height: 18px; }
-  .jar__label { font-size: 19px; padding: 10px 4px; }
-  .jar__name { font-size: 14px; margin-top: 14px; }
-  .shelf__board { height: 11px; }
+  .shelf { margin-top: 60px; }
+  .shelf__label { margin-bottom: 8px; }
+
+  /* 広い画面では、焙煎日を右端に振り分けて表を作る。 */
+  .bean__row {
+    grid-template-columns: 8px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "bar id when"
+      "bar say say";
+    column-gap: 24px;
+    padding: 24px 0 18px;
+  }
+  .bean__en { font-size: 40px; }
+  .bean__ja { font-size: 16px; }
+  .bean__when {
+    align-self: center;
+    margin-top: 0;
+    text-align: right;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .bean__say { font-size: 16px; margin-top: 10px; }
+  .bean__spec { padding: 0 0 26px 32px; font-size: 14px; }
+  .bean__spec span { display: inline; }
+  .bean__spec i { display: inline; font-style: normal; opacity: .55; }
   .bfoot__note { margin-bottom: 30px; }
   .bhead { padding-block: 64px 30px; }
   .bhead h1 { font-size: 38px; }

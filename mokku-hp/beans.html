@@ -81,82 +81,96 @@
   <header class="bhead">
     <div class="text">
       <h1>今日の豆</h1>
-      <p class="lead">棚の瓶です。気になったものを指してください。名前をタップすると、どんな豆か出ます。切らしているものは、空の瓶のまま置いてあります。</p>
+      <p class="lead">棚に並んでいる豆です。名前をタップすると、産地と味の見当が出ます。切らしているものは、空の瓶のまま置いてあります。</p>
     </div>
   </header>
 
   <div class="wide" id="shelves">
-    <!-- ここは data/beans.json から生成した静的な棚。
-         JS が取得に成功したら、同じ形で描き直す。失敗しても棚は消えない。 -->
+    <!-- ここは data/beans.json から生成した静的な帯。
+         JS が取得に成功したら、同じ形で描き直す。失敗しても帯は消えない。 -->
 
       <section class="shelf">
         <h2 class="shelf__label"><span translate="no">UPPER SHELF</span><span class="sr-only">（上の段）</span></h2>
-        <div class="shelf__unit">
-          <div class="jars">
-          <button type="button" class="jar reveal" data-i="0" aria-expanded="false" aria-controls="panel-upper">
-            <span class="jar__lid" aria-hidden="true"></span>
-            <span class="jar__glass">
-              <span class="jar__beans" style="--roast:#6B3F22"></span><span class="jar__shine" aria-hidden="true"></span>
-              <span class="jar__label" translate="no">Mocha Sidamo</span>
-            </span>
-            <span class="jar__name">モカ シダモ<span class="jar__state">9月4日 焙煎</span></span>
-          </button>
-          <button type="button" class="jar reveal" data-i="1" aria-expanded="false" aria-controls="panel-upper">
-            <span class="jar__lid" aria-hidden="true"></span>
-            <span class="jar__glass">
-              <span class="jar__beans" style="--roast:#8A5A32"></span><span class="jar__shine" aria-hidden="true"></span>
-              <span class="jar__label" translate="no">Laos</span>
-            </span>
-            <span class="jar__name">ラオス<span class="jar__state">9月2日 焙煎</span></span>
-          </button>
-          <button type="button" class="jar reveal" data-i="2" aria-expanded="false" aria-controls="panel-upper">
-            <span class="jar__lid" aria-hidden="true"></span>
-            <span class="jar__glass">
-              <span class="jar__beans" style="--roast:#6B3F22"></span><span class="jar__shine" aria-hidden="true"></span>
-              <span class="jar__label" translate="no">Guatemala</span>
-            </span>
-            <span class="jar__name">グアテマラ<span class="jar__state">8月24日 焙煎</span></span>
-          </button>
-          <button type="button" class="jar reveal jar--empty" data-i="3" aria-expanded="false" aria-controls="panel-upper">
-            <span class="jar__lid" aria-hidden="true"></span>
-            <span class="jar__glass">
-              <span class="jar__shine" aria-hidden="true"></span>
-              <span class="jar__label" translate="no">East Timor</span>
-            </span>
-            <span class="jar__name">東ティモール<span class="jar__state">切らしています</span></span>
-          </button>
-          </div>
-          <div class="shelf__board" aria-hidden="true"></div>
-          <div class="shelf__edge" aria-hidden="true"></div>
-        </div>
-        <div class="beanpanel" id="panel-upper"><div class="beanpanel__in"><div class="beanpanel__pad"></div></div></div>
+        <ul class="beans">
+          <li class="bean reveal" data-i="0">
+            <button type="button" class="bean__row" aria-expanded="false" aria-controls="bean-upper-0">
+              <span class="bean__bar" aria-hidden="true" style="--roast:#6B3F22"></span>
+              <span class="bean__id">
+                <span class="bean__en" translate="no">Mocha Sidamo</span>
+                <span class="bean__ja">モカ シダモ</span>
+              </span>
+              <span class="bean__when bean__when--fresh"><b>焼きたて</b><i>/</i>9月4日 焙煎<i>/</i>中煎り</span>
+              <span class="bean__say">うちで一番よく出る豆です。冷めてくると甘さがはっきりしてくるので、急がずに飲んでみてください。</span>
+            </button>
+            <div class="bean__detail" id="bean-upper-0"><div><p class="bean__spec"><span>エチオピア / シダモ</span><i aria-hidden="true">　/　</i><span>ベンサ地区の小農家</span><i aria-hidden="true">　/　</i><span>ナチュラル</span><i aria-hidden="true">　/　</i><span>熟した果実のような甘さ</span></p></div></div>
+          </li>
+          <li class="bean reveal" data-i="1">
+            <button type="button" class="bean__row" aria-expanded="false" aria-controls="bean-upper-1">
+              <span class="bean__bar" aria-hidden="true" style="--roast:#8A5A32"></span>
+              <span class="bean__id">
+                <span class="bean__en" translate="no">Laos</span>
+                <span class="bean__ja">ラオス</span>
+              </span>
+              <span class="bean__when bean__when--fresh"><b>焼きたて</b><i>/</i>9月2日 焙煎<i>/</i>浅煎り</span>
+              <span class="bean__say">浅く焼いています。酸っぱいのが苦手な方にも、これは大丈夫だと言われることが多いです。</span>
+            </button>
+            <div class="bean__detail" id="bean-upper-1"><div><p class="bean__spec"><span>ラオス / ボラベン高原</span><i aria-hidden="true">　/　</i><span>ジャイ農協</span><i aria-hidden="true">　/　</i><span>ウォッシュド</span><i aria-hidden="true">　/　</i><span>レモンティーのような酸</span></p></div></div>
+          </li>
+          <li class="bean reveal" data-i="2">
+            <button type="button" class="bean__row" aria-expanded="false" aria-controls="bean-upper-2">
+              <span class="bean__bar" aria-hidden="true" style="--roast:#6B3F22"></span>
+              <span class="bean__id">
+                <span class="bean__en" translate="no">Guatemala</span>
+                <span class="bean__ja">グアテマラ</span>
+              </span>
+              <span class="bean__when"><b>8月24日 焙煎</b><i>/</i>中煎り</span>
+              <span class="bean__say">どれにするか迷ったら、まずこれを淹れます。だいたい外しません。</span>
+            </button>
+            <div class="bean__detail" id="bean-upper-2"><div><p class="bean__spec"><span>グアテマラ / アンティグア</span><i aria-hidden="true">　/　</i><span>サンミゲル農園</span><i aria-hidden="true">　/　</i><span>ウォッシュド</span><i aria-hidden="true">　/　</i><span>チョコレートのような後味</span></p></div></div>
+          </li>
+          <li class="bean reveal bean--empty" data-i="3">
+            <button type="button" class="bean__row" aria-expanded="false" aria-controls="bean-upper-3">
+              <span class="bean__bar" aria-hidden="true"></span>
+              <span class="bean__id">
+                <span class="bean__en" translate="no">East Timor</span>
+                <span class="bean__ja">東ティモール</span>
+              </span>
+              <span class="bean__when"><b>切らしています</b><i>/</i>中深煎り</span>
+              <span class="bean__say">先代のころから置いている豆です。次に焼き上がったらまた瓶に入れます。</span>
+            </button>
+            <div class="bean__detail" id="bean-upper-3"><div><p class="bean__spec"><span>東ティモール / レテフォホ</span><i aria-hidden="true">　/　</i><span>ライラコ村の共同組合</span><i aria-hidden="true">　/　</i><span>ウォッシュド</span><i aria-hidden="true">　/　</i><span>土の匂いを思わせる香ばしさ</span></p></div></div>
+          </li>
+        </ul>
       </section>
 
       <section class="shelf">
         <h2 class="shelf__label"><span translate="no">LOWER SHELF</span><span class="sr-only">（下の段）</span></h2>
-        <div class="shelf__unit">
-          <div class="jars">
-          <button type="button" class="jar reveal" data-i="0" aria-expanded="false" aria-controls="panel-lower">
-            <span class="jar__lid" aria-hidden="true"></span>
-            <span class="jar__glass">
-              <span class="jar__beans" style="--roast:#2E1A10"></span><span class="jar__shine" aria-hidden="true"></span>
-              <span class="jar__label" translate="no">Tanzania High roast</span>
-            </span>
-            <span class="jar__name">タンザニア<span class="jar__state">8月27日 焙煎</span></span>
-          </button>
-          <button type="button" class="jar reveal jar--empty" data-i="1" aria-expanded="false" aria-controls="panel-lower">
-            <span class="jar__lid" aria-hidden="true"></span>
-            <span class="jar__glass">
-              <span class="jar__shine" aria-hidden="true"></span>
-              <span class="jar__label" translate="no">French roast</span>
-            </span>
-            <span class="jar__name">フレンチロースト<span class="jar__state">切らしています</span></span>
-          </button>
-          </div>
-          <div class="shelf__board" aria-hidden="true"></div>
-          <div class="shelf__edge" aria-hidden="true"></div>
-        </div>
-        <div class="beanpanel" id="panel-lower"><div class="beanpanel__in"><div class="beanpanel__pad"></div></div></div>
+        <ul class="beans">
+          <li class="bean reveal" data-i="0">
+            <button type="button" class="bean__row" aria-expanded="false" aria-controls="bean-lower-0">
+              <span class="bean__bar" aria-hidden="true" style="--roast:#2E1A10"></span>
+              <span class="bean__id">
+                <span class="bean__en" translate="no">Tanzania High roast</span>
+                <span class="bean__ja">タンザニア</span>
+              </span>
+              <span class="bean__when"><b>8月27日 焙煎</b><i>/</i>深煎り</span>
+              <span class="bean__say">深めに焼いた分、ミルクを入れても負けません。カフェオレにする方が多い豆です。</span>
+            </button>
+            <div class="bean__detail" id="bean-lower-0"><div><p class="bean__spec"><span>タンザニア / キリマンジャロ</span><i aria-hidden="true">　/　</i><span>エーデルワイス農園</span><i aria-hidden="true">　/　</i><span>ウォッシュド</span><i aria-hidden="true">　/　</i><span>苦さのあとに残る甘み</span></p></div></div>
+          </li>
+          <li class="bean reveal bean--empty" data-i="1">
+            <button type="button" class="bean__row" aria-expanded="false" aria-controls="bean-lower-1">
+              <span class="bean__bar" aria-hidden="true"></span>
+              <span class="bean__id">
+                <span class="bean__en" translate="no">French roast</span>
+                <span class="bean__ja">フレンチロースト</span>
+              </span>
+              <span class="bean__when"><b>切らしています</b><i>/</i>深煎り</span>
+              <span class="bean__say">アイスコーヒーにするとよく合います。夏のあいだに出てしまいました。</span>
+            </button>
+            <div class="bean__detail" id="bean-lower-1"><div><p class="bean__spec"><span>ブレンド</span><i aria-hidden="true">　/　</i><span>—</span><i aria-hidden="true">　/　</i><span>しっかりした苦さ</span></p></div></div>
+          </li>
+        </ul>
       </section>
   </div>
 
