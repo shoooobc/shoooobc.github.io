@@ -493,9 +493,58 @@ function submitOrder(formData) {
   // TODO: Apps Script のエンドポイントに POST
 }
 
+/* 受け取りの日と時間。
+   休みの日を「選べない」ようにしたいので、input[type=date] ではなく
+   選べる日だけを入れた select にしている。datetime-local は iOS の実機で
+   横にはみ出るのと、定休日を落とせないのとで、2つに分けた。 */
+const CLOSED_DAYS = [2, 3];              // 火・水は定休
+const PICKUP_FROM = 10 * 60;             // 10:00
+const PICKUP_TO   = 18 * 60 + 30;        // 18:30
+const PICKUP_STEP = 30;                  // 30分刻み
+const WEEKDAY_JA = ['日', '月', '火', '水', '木', '金', '土'];
+
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+function fillPickupFields(form) {
+  const dateSel = form.querySelector('#f-date');
+  const timeSel = form.querySelector('#f-time');
+  if (!dateSel || !timeSel) return;
+
+  // 翌日から1か月先まで。定休日は入れない。
+  const from = new Date();
+  from.setHours(0, 0, 0, 0);
+  from.setDate(from.getDate() + 1);
+
+  const to = new Date(from);
+  to.setMonth(to.getMonth() + 1);
+  // 1/31 の1か月後が 3/3 になるのを避け、月末に丸める
+  if (to.getDate() !== from.getDate()) to.setDate(0);
+
+  const days = document.createDocumentFragment();
+  for (const d = new Date(from); d <= to; d.setDate(d.getDate() + 1)) {
+    if (CLOSED_DAYS.indexOf(d.getDay()) !== -1) continue;
+    const o = document.createElement('option');
+    o.value = d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+    o.textContent = (d.getMonth() + 1) + '月' + d.getDate() + '日（' + WEEKDAY_JA[d.getDay()] + '）';
+    days.appendChild(o);
+  }
+  dateSel.appendChild(days);
+
+  const times = document.createDocumentFragment();
+  for (let m = PICKUP_FROM; m <= PICKUP_TO; m += PICKUP_STEP) {
+    const o = document.createElement('option');
+    o.value = pad2(Math.floor(m / 60)) + ':' + pad2(m % 60);
+    o.textContent = o.value;
+    times.appendChild(o);
+  }
+  timeSel.appendChild(times);
+}
+
 function setupOrderForm() {
   const form = document.getElementById('order-form');
   if (!form) return;
+
+  fillPickupFields(form);
 
   // 配送先は「配送してもらう」を選んだときだけ出す
   const addrWrap = document.getElementById('f-addr-wrap');

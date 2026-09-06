@@ -403,10 +403,21 @@
             <label for="f-mail">メールアドレス</label>
             <input type="email" id="f-mail" name="email" autocomplete="email" spellcheck="false" autocapitalize="off">
           </div>
-          <div class="field">
-            <label for="f-when">受け取り希望日時<span class="req">必須</span></label>
-            <input type="datetime-local" id="f-when" name="when" required>
+          <div class="field field--when">
+            <div class="field__col">
+              <label for="f-date">受け取り希望日<span class="req">必須</span></label>
+              <select id="f-date" name="date" required aria-describedby="when-hint">
+                <option value="">選んでください</option>
+              </select>
+            </div>
+            <div class="field__col">
+              <label for="f-time">時間<span class="req">必須</span></label>
+              <select id="f-time" name="time" required>
+                <option value="">選んでください</option>
+              </select>
+            </div>
           </div>
+          <p class="field__hint" id="when-hint">火曜・水曜はお休みです。翌日から1か月先までお選びいただけます。</p>
 
           <div id="panel-gift">
             <fieldset>

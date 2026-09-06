@@ -840,9 +840,26 @@ body.is-menuopen .callbar { display: none; }
 }
 .req { color: var(--kama); font-size: 12px; margin-left: .5em; letter-spacing: .1em; }
 
+/* 受け取り日時。日と時間を分ける。スマホは縦、広い画面は横に並べる。 */
+.field--when {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.field__col { min-width: 0; }
+.field__hint {
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--dim);
+  letter-spacing: .06em;
+}
+
 input[type="text"], input[type="tel"], input[type="email"],
-input[type="datetime-local"], textarea, select {
+input[type="date"], input[type="time"], textarea, select {
   width: 100%;
+  max-width: 100%;
   padding: 11px 12px;
   border: 1px solid var(--rule);
   border-radius: 0;
@@ -853,6 +870,21 @@ input[type="datetime-local"], textarea, select {
   letter-spacing: .04em;
   transition: border-color var(--t-hover) var(--ease);
 }
+
+/* select は見た目を自前で持つ。iOS の既定の矢印と幅に任せない。 */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 38px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--sumi) 50%),
+    linear-gradient(135deg, var(--sumi) 50%, transparent 50%);
+  background-position: right 18px center, right 13px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+}
+
 input:focus, textarea:focus, select:focus { border-color: var(--kama); }
 textarea { min-height: 132px; line-height: 1.9; resize: vertical; }
 
@@ -1362,6 +1394,8 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   .menu__sheet { padding: 46px 54px 46px 96px; }
   .menu__sheet::before { display: block; top: 84%; }
   .menu__sheet::after { display: block; left: 76px; }
+  .field--when { grid-template-columns: minmax(0, 1fr) minmax(0, 180px); }
+
   .menu__list--2col { columns: 2; column-gap: 54px; }
   .menu__list--2col .menu__row { break-inside: avoid; }
 
