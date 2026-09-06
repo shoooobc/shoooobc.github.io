@@ -334,6 +334,8 @@ a:hover { text-decoration-thickness: 2px; }
 .menupanel__hours { margin-top: 6px; font-size: 14px; color: var(--kraft); }
 
 body.is-menuopen { overflow: hidden; }
+/* メニュー面に電話もクーポンも入っているので、下の固定バーは引っ込める */
+body.is-menuopen .callbar { display: none; }
 
 /* ==========================================================================
    ヒーロー
@@ -1195,6 +1197,74 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 .bfoot__back { margin-top: 34px; font-size: 15px; }
 
 /* ==========================================================================
+   thanks.html — ご注文の予約のあと
+   ========================================================================== */
+
+.thanks { padding-block: 54px 80px; text-align: center; }
+.thanks__mark img { width: 68px; margin: 0 auto 22px; }
+.thanks__h {
+  font-size: 26px;
+  letter-spacing: .12em;
+  line-height: 1.7;
+  margin-bottom: .8em;
+}
+.thanks__lead { font-size: 16px; margin-bottom: 40px; }
+
+/* ここから先に何が起きるかを、順番のあるものとして示す */
+.thanks__steps {
+  counter-reset: step;
+  text-align: left;
+  border-top: 1px solid var(--rule);
+}
+.thanks__steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 22px 0 22px 46px;
+  border-bottom: 1px solid var(--rule);
+}
+.thanks__steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0; top: 22px;
+  width: 28px; height: 28px;
+  display: grid;
+  place-content: center;
+  border: 1px solid var(--kama);
+  color: var(--kama);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.thanks__steps b {
+  display: block;
+  font-weight: 600;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.thanks__steps span { font-size: 14px; color: var(--dim); line-height: 1.9; }
+
+.thanks__note { margin-top: 40px; }
+.thanks__tel {
+  margin-top: 8px;
+  font-size: 24px;
+  letter-spacing: .1em;
+  font-variant-numeric: tabular-nums;
+}
+.thanks__tel a { color: var(--fg); text-decoration-color: var(--rule); text-underline-offset: 6px; }
+.thanks__tel a:hover { color: var(--kama); text-decoration-color: currentColor; }
+.thanks__hours { margin-top: 6px; }
+
+/* Apps Script につないだら、この一行を消す */
+.thanks__demo {
+  margin-top: 34px;
+  padding: 12px;
+  border: 1px dashed var(--rule);
+  font-size: 13px;
+  color: var(--dim);
+}
+
+.thanks__actions { margin-top: 34px; }
+
+/* ==========================================================================
    coupon.html — 券面
    ========================================================================== */
 
@@ -1360,6 +1430,11 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   .bfoot { padding-block: 64px 80px; }
 
   .map { aspect-ratio: 16 / 9; }
+
+  .thanks { padding-block: 88px 100px; }
+  .thanks__h { font-size: 34px; }
+  .thanks__lead { font-size: 17px; }
+  .thanks__mark img { width: 82px; }
 
   .footer { padding-block: 88px; }
   .footer__panel { padding: 54px 54px 40px; }

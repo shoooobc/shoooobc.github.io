@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ご注文の予約を承りました｜珈琲の店 もっく</title>
+<meta name="description" content="ギフトボックスのご注文の予約を承りました。お日にちとお値段は、後日店舗よりご連絡します。">
+<!-- 送信後にだけ通る画面なので、検索には載せない -->
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="theme-color" content="#EFE8DA">
+<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Shippori+Mincho:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.className += ' js';</script>
+</head>
+<body>
+
+<a class="skip" href="#main">本文へ移動</a>
+
+<header class="sitehead sitehead--static">
+  <div class="sitehead__in">
+    <a class="sitehead__home" href="index.html">
+      <img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy">
+      <span>珈琲の店 もっく</span>
+    </a>
+
+    <nav class="sitehead__nav" aria-label="サイトのご案内">
+      <ul>
+        <li><a href="index.html#about">お店</a></li>
+        <li><a href="beans.html" data-track="beans">今日の豆</a></li>
+        <li><a href="index.html#menu">メニュー</a></li>
+        <li><a href="index.html#gift">ギフト</a></li>
+        <li><a href="index.html#access">店舗について</a></li>
+      </ul>
+    </nav>
+
+    <a class="sitehead__coupon" href="coupon.html" data-track="coupon_open">
+      <span class="sitehead__coupon-l">ご覧の方に</span>100円引
+    </a>
+
+    <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="menupanel">
+      <span class="burger__bars" aria-hidden="true"></span>
+      <span class="burger__label">メニュー</span>
+    </button>
+  </div>
+</header>
+
+<nav class="menupanel" id="menupanel" aria-label="サイトのご案内" hidden>
+  <ul class="menupanel__list">
+    <li><a href="index.html#about">お店について</a></li>
+    <li><a href="beans.html" data-track="beans">今日の豆</a></li>
+    <li><a href="index.html#menu">メニュー</a></li>
+    <li><a href="index.html#gift">ギフトボックス</a></li>
+    <li><a href="index.html#access">店舗について</a></li>
+  </ul>
+  <p class="menupanel__sub">
+    <a class="btn btn--solid" href="coupon.html" data-track="coupon_open">初回100円引きクーポン</a>
+  </p>
+  <p class="menupanel__tel"><a href="tel:0424205598" data-track="tel">042-420-5598</a></p>
+  <p class="menupanel__hours">10:00 - 18:00　火・水 定休</p>
+</nav>
+
+<main id="main" class="thanks">
+  <div class="text">
+
+    <p class="thanks__mark" aria-hidden="true"><img src="images/logo.png" width="400" height="400" alt="" loading="lazy"></p>
+
+    <h1 class="thanks__h">ご注文の予約を<br>承りました</h1>
+
+    <p class="thanks__lead">ギフトボックスのご注文をお預かりしました。ありがとうございます。</p>
+
+    <ol class="thanks__steps">
+      <li>
+        <b>店主が内容を確認します</b>
+        <span>豆の種類とお菓子の組み合わせを見て、お作りできるか確かめます。</span>
+      </li>
+      <li>
+        <b>お日にちとお値段をご連絡します</b>
+        <span>いただいたお電話またはメールに、店舗からご連絡します。営業日でしたら当日か翌日、お休みをはさむ場合はその次の営業日になります。</span>
+      </li>
+      <li>
+        <b>お受け取り</b>
+        <span>店頭でのお渡し、または配送でお届けします。この時点でのお支払いはありません。</span>
+      </li>
+    </ol>
+
+    <p class="thanks__note note">お急ぎの場合や、ご連絡が届かない場合は、お手数ですがお電話ください。</p>
+    <p class="thanks__tel"><a href="tel:0424205598" data-track="tel">042-420-5598</a></p>
+    <p class="note thanks__hours">10:00 - 18:00　火・水 定休（祝日は営業）</p>
+
+    <p class="thanks__demo" id="thanks-demo">※このフォームはデモです。実際には送信されていません。</p>
+
+    <p class="actions actions--center thanks__actions">
+      <a class="btn" href="index.html">お店のページに戻る</a>
+      <a class="btn" href="beans.html" data-track="beans">今日の豆を見る</a>
+    </p>
+
+  </div>
+</main>
+
+<footer id="footer" class="footer" style="background-image:url(images/exterior.jpg)">
+  <div class="wide">
+    <div class="footer__panel">
+
+      <div class="footer__grid">
+
+        <div class="footer__id">
+          <p class="footer__mark"><img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy"></p>
+          <p class="footer__name">珈琲の店 もっく<span translate="no">KOHI NO MISE MOKKU</span></p>
+        </div>
+
+        <div class="footer__col">
+          <h2 class="footer__h">お店</h2>
+          <p class="footer__addr">
+            〒203-0053<br>
+            東京都東久留米市本町2-2-19<br>
+            武蔵野サンハイツ 1F
+          </p>
+          <p class="footer__line"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%9D%B1%E4%B9%85%E7%95%99%E7%B1%B3%E5%B8%82%E6%9C%AC%E7%94%BA2-2-19" data-track="map">地図アプリで開く</a></p>
+          <p class="footer__line"><a href="tel:0424205598" data-track="tel">042-420-5598</a></p>
+        </div>
+
+        <div class="footer__col">
+          <h2 class="footer__h">営業</h2>
+          <p class="footer__hours">10:00 - 18:00</p>
+          <p class="footer__addr">月・木・金・土・日・祝日<br>火・水はお休みです</p>
+          <p class="footer__note">臨時のお休みは <a href="https://www.instagram.com/mokku.coffee/" target="_blank" rel="noopener" data-track="instagram">Instagram</a> でお知らせします</p>
+        </div>
+
+        <nav class="footer__col footer__col--nav" aria-label="サイト内のご案内">
+          <h2 class="footer__h">ご案内</h2>
+          <ul class="footer__nav">
+            <li><a href="index.html">お店のページ</a></li>
+            <li><a href="index.html#menu">メニュー</a></li>
+            <li><a href="index.html#gift">ギフトボックス</a></li>
+            <li><a href="coupon.html" data-track="coupon_open">初回100円引きクーポン</a></li>
+            <li><a href="https://www.instagram.com/mokku.coffee/" target="_blank" rel="noopener" data-track="instagram">Instagram</a></li>
+            <li><a href="https://tabelog.com/tokyo/A1328/A132802/13267023/dtlmap/" target="_blank" rel="noopener" data-track="tabelog">食べログ</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <p class="footer__copy">© 珈琲の店 もっく</p>
+
+    </div>
+  </div>
+</footer>
+
+<div class="callbar">
+  <a class="callbar__item" href="tel:0424205598" data-track="tel">042-420-5598 に電話</a>
+  <a class="callbar__item callbar__item--coupon" href="coupon.html" data-track="coupon_open">初回100円引き</a>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

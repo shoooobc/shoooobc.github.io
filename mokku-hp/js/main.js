@@ -523,11 +523,12 @@ function setupOrderForm() {
   });
 
   form.addEventListener('submit', function (e) {
-    e.preventDefault();
+    e.preventDefault(); // 必須項目の確認はブラウザが済ませている
     trackEvent('order_submit', SOURCE);
     submitOrder(new FormData(form));
-    document.getElementById('order-msg').textContent =
-      '※このフォームはデモです。まだ送信されません。';
+    document.getElementById('order-msg').textContent = 'お預かりしています…';
+    // Apps Script につないだら、POST の完了を待ってからここへ来る
+    location.href = 'thanks.html';
   });
 }
 
