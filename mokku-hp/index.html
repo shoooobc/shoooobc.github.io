@@ -7,6 +7,7 @@
 <meta name="description" content="東京都東久留米市、本町の自家焙煎珈琲店。50年前の焙煎機で焼いた豆を、瓶の中からお選びいただけます。10:00-18:00、火・水定休。">
 
 <!-- ドメインが決まったら、このファイル内の https://example.com をすべて置き換える -->
+<meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://shoooobc.github.io/mokku-hp/">
 
 <meta property="og:type" content="website">
@@ -81,7 +82,7 @@
 <!-- ヒーローを過ぎたら出てくる。各セクションへの行き先。 -->
 <header class="sitehead" id="sitehead">
   <div class="sitehead__in">
-    <a class="sitehead__home" href="#top">
+    <a class="sitehead__home" href="#top" aria-label="珈琲の店 もっく トップへ">
       <img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy">
       <span>珈琲の店 もっく</span>
     </a>
@@ -92,6 +93,7 @@
         <li><a href="#beans">今日の豆</a></li>
         <li><a href="#menu">メニュー</a></li>
         <li><a href="#gift">ギフト</a></li>
+        <li><a href="#first">はじめての方</a></li>
         <li><a href="#access">店舗について</a></li>
       </ul>
     </nav>
@@ -114,6 +116,7 @@
     <li><a href="beans.html" data-track="beans">今日の豆</a></li>
     <li><a href="#menu">メニュー</a></li>
     <li><a href="#gift">ギフトボックス</a></li>
+    <li><a href="#first">はじめての方へ</a></li>
     <li><a href="#access">店舗について</a></li>
   </ul>
   <p class="menupanel__sub">
@@ -162,7 +165,12 @@
       <p class="lead reveal" data-i="1">この場所には20年以上、「喫茶焙煎工房ロアン」という店がありました。高校生の頃に初めて入って、それから通うようになって、2019年に引き継ぎました。</p>
       <p class="lead reveal" data-i="2">焙煎機も、豆を入れる瓶も、外の看板も、そのままです。変えなかったというより、変える理由がありませんでした。前と変わらない場所で、前と変わらない珈琲をお出ししています。</p>
 
-      <a class="coupon reveal" data-i="3" href="coupon.html" data-track="coupon_open">
+      <figure class="portrait reveal" data-i="3">
+        <img src="images/owner.jpg" width="1000" height="625" alt="焙煎機の前で、豆の入った瓶を持つ店主" loading="lazy">
+        <figcaption class="cap">先代から受け継いだ焙煎機と、棚に並ぶ瓶のひとつ</figcaption>
+      </figure>
+
+      <a class="coupon reveal" data-i="4" href="coupon.html" data-track="coupon_open">
         <span class="coupon__stub" aria-hidden="true">
           <b>100</b><i>円引き</i>
         </span>
@@ -181,7 +189,7 @@
       <div class="pair reveal">
         <figure class="pair__fig">
           <img src="images/roaster.jpg" width="980" height="600" alt="店内に置かれた焙煎機" loading="lazy">
-          <figcaption class="pair__cap">ロアン時代から動いている焙煎機</figcaption>
+          <figcaption class="cap">ロアン時代から動いている焙煎機</figcaption>
         </figure>
         <div class="pair__txt">
           <h3>五十年前の焙煎機で焼いています</h3>
@@ -192,11 +200,45 @@
       <div class="pair pair--rev reveal">
         <figure class="pair__fig">
           <img src="images/beans-shelf.jpg" width="980" height="600" alt="クラフト紙のラベルが貼られたガラス瓶が棚に並んでいる" loading="lazy">
-          <figcaption class="pair__cap">棚の瓶。ラベルは先代からの手書き</figcaption>
+          <figcaption class="cap">棚の瓶。ラベルは先代からの手書き</figcaption>
         </figure>
         <div class="pair__txt">
           <h3>豆は瓶から選んでいただきます</h3>
           <p>ストレートコーヒーは、棚の瓶を見て決めてください。名前を読んでもわからなければ、どんな味か聞いてください。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== 注文のしかた（3ステップ） -->
+  <section id="choose" class="sec sec--joined">
+    <div class="wide">
+      <div class="sechead reveal">
+        <span class="sechead__en" translate="no">HOW TO ORDER</span>
+        <span class="sechead__rule" aria-hidden="true"></span>
+        <h2>瓶を指すだけです</h2>
+      </div>
+
+      <div class="pair pair--flow reveal" data-i="1">
+        <figure class="pair__fig">
+          <img src="images/coffee-1.jpg" width="600" height="600" alt="ドリップポットから湯を注いでいるところ" loading="lazy">
+          <figcaption class="cap">選んでいただいた豆を、その場で挽いて淹れます</figcaption>
+        </figure>
+        <div class="pair__txt">
+          <ol class="steps">
+            <li>
+              <b>棚の前に立つ</b>
+              <span>店の真ん中の棚に、豆の入った瓶が並んでいます。ラベルの手書きの英字は、先代のものです。</span>
+            </li>
+            <li>
+              <b>気になった瓶を指す</b>
+              <span>名前が読めなくても構いません。「これはどんな味ですか」と聞いていただければ、お答えします。</span>
+            </li>
+            <li>
+              <b>その場で挽いて、淹れます</b>
+              <span>お選びいただいた豆を挽いて淹れます。豆のままお持ち帰りいただくこともできます。</span>
+            </li>
+          </ol>
         </div>
       </div>
     </div>
@@ -432,7 +474,7 @@
               <div class="field field--when">
                 <div class="field__col">
                   <label for="f-date">受け取り希望日<span class="req">必須</span></label>
-                  <select id="f-date" name="date" required aria-describedby="when-hint">
+                  <select id="f-date" name="date" required aria-describedby="when-error when-hint">
                     <option value="">選んでください</option>
                   </select>
                 </div>
@@ -443,6 +485,7 @@
                   </select>
                 </div>
               </div>
+              <p class="field__error" id="when-error" role="alert"></p>
               <p class="field__hint" id="when-hint">火曜・水曜と年末年始（12/31〜1/3）はお休みです。1か月先までお選びいただけます。当日は、いまから1時間後より後の時間になります。</p>
             </div>
 
@@ -466,6 +509,38 @@
     </section>
   </div>
 
+  <!-- ==================================================== はじめての方へ -->
+  <section id="first" class="sec">
+    <div class="wide">
+      <div class="sechead reveal">
+        <span class="sechead__en" translate="no">FIRST VISIT</span>
+        <span class="sechead__rule" aria-hidden="true"></span>
+        <h2>はじめての方へ</h2>
+      </div>
+      <div class="secbody">
+      <dl class="qa reveal" data-i="1">
+        <dt class="qa__q">ひとりでも入れますか</dt>
+        <dd class="qa__a">カウンター席があります。おひとりで来られる方が多いです。</dd>
+
+        <dt class="qa__q">どのくらい居ていいですか</dt>
+        <dd class="qa__a">決まりはありません。本を読んで過ごされる方もいます。混み合ったときだけ、ご協力をお願いすることがあります。</dd>
+
+        <dt class="qa__q">Wi-Fi や電源はありますか</dt>
+        <dd class="qa__a">ありません。</dd>
+
+        <dt class="qa__q">子どもと一緒でも大丈夫ですか</dt>
+        <dd class="qa__a">大丈夫です。</dd>
+
+        <dt class="qa__q">席の予約はできますか</dt>
+        <dd class="qa__a">承っていません。満席のときは、少しお待ちいただくことがあります。</dd>
+
+        <dt class="qa__q">支払いに使えるものは</dt>
+        <dd class="qa__a">現金と PayPay です。</dd>
+      </dl>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================================================= ACCESS -->
   <section id="access" class="sec">
     <div class="wide">
@@ -475,11 +550,35 @@
         <h2>店舗について</h2>
       </div>
 
-      <iframe class="map reveal" data-i="1" loading="lazy" title="珈琲の店 もっくの地図"
-        src="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%9D%B1%E4%B9%85%E7%95%99%E7%B1%B3%E5%B8%82%E6%9C%AC%E7%94%BA2-2-19&output=embed"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="pair reveal" data-i="1">
+        <figure class="pair__fig">
+          <img src="images/interior-2.jpg" width="980" height="600" alt="麻袋の掛かった壁と、木のテーブル席" loading="lazy">
+          <figcaption class="cap">奥のテーブル席。本棚もあります</figcaption>
+        </figure>
+        <div class="pair__txt">
+          <h3>席は10席ほどです</h3>
+          <p>カウンターが4〜5席、4人掛けのテーブルが2卓、2人掛けが2卓あります。カウンターは焙煎機のすぐ前です。</p>
+        </div>
+      </div>
 
-      <table class="info reveal" data-i="2">
+      <div class="pair pair--rev reveal" data-i="2">
+        <figure class="pair__fig">
+          <img src="images/exterior.jpg" width="980" height="600" alt="道路に面した店の外観。黒板の看板とオリーブの木が置かれている" loading="lazy">
+          <figcaption class="cap">黒板の看板とオリーブの木が目印です</figcaption>
+        </figure>
+        <div class="pair__txt">
+          <h3>東久留米駅西口から歩いて5分</h3>
+          <p>武蔵野サンハイツという建物の1階です。駐車場はありませんので、近くのコインパーキングをお使いください。</p>
+          <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%9D%B1%E4%B9%85%E7%95%99%E7%B1%B3%E5%B8%82%E6%9C%AC%E7%94%BA2-2-19" data-track="map">地図アプリで開く</a></p>
+        </div>
+      </div>
+
+      <!-- 住所ではなく店舗そのものを指す埋め込み。ピンが「珈琲の店もっく」に立つ。 -->
+      <iframe class="map reveal" data-i="3" loading="lazy" title="珈琲の店 もっくの地図" allowfullscreen
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.535360913833!2d139.53011329999998!3d35.7622235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018e9aa0c38d0df%3A0x932f970ff1baa5fb!2z54-I55Cy44Gu5bqX44KC44Gj44GP!5e0!3m2!1sja!2sjp!4v1788669225046!5m2!1sja!2sjp"
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+      <table class="info reveal" data-i="4">
         <tbody>
           <tr>
             <th scope="row">住所</th>
@@ -554,6 +653,7 @@
             <li><a href="beans.html" data-track="beans">今日の豆</a></li>
             <li><a href="#menu">メニュー</a></li>
             <li><a href="#gift">ギフトボックス</a></li>
+            <li><a href="#first">はじめての方へ</a></li>
             <li><a href="coupon.html" data-track="coupon_open">初回100円引きクーポン</a></li>
             <li><a href="https://www.instagram.com/mokku.coffee/" target="_blank" rel="noopener" data-track="instagram">Instagram</a></li>
             <li><a href="https://tabelog.com/tokyo/A1328/A132802/13267023/dtlmap/" target="_blank" rel="noopener" data-track="tabelog">食べログ</a></li>

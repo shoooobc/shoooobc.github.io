@@ -369,11 +369,20 @@ function setupMenu() {
   const panel = document.getElementById('menupanel');
   if (!btn || !panel) return;
 
+  /* Tab で回る輪。ハンバーガーは面の上に見えたままなので、輪の先頭に入れる。 */
+  function ring() {
+    return [btn].concat(Array.prototype.slice.call(
+      panel.querySelectorAll('a[href], button:not([disabled])')
+    ));
+  }
+
   function open() {
     panel.hidden = false;
     requestAnimationFrame(function () { panel.classList.add('is-open'); });
     btn.setAttribute('aria-expanded', 'true');
     document.body.classList.add('is-menuopen');
+    const first = panel.querySelector('a[href]');
+    if (first) first.focus();
   }
 
   function close(focusBack) {
@@ -398,8 +407,21 @@ function setupMenu() {
     if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') close(true);
   });
 
-  // 画面が広がってメニューが並ぶようになったら、開いた状態を畳む
-  window.matchMedia('(min-width: 768px)').addEventListener('change', function (m) {
+  /* 面はページ全体を覆って body のスクロールも止めている。
+     見えていない後ろのリンクへ Tab が抜けないよう、輪の中で折り返す。 */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    if (btn.getAttribute('aria-expanded') !== 'true') return;
+    const f = ring();
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  // 画面が広がってナビが横に並ぶようになったら、開いた状態を畳む
+  // （この 1024px は style.css のナビ切り替えと同じ幅。ずらすと畳み損ねる）
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', function (m) {
     if (m.matches && btn.getAttribute('aria-expanded') === 'true') close(false);
   });
 }
@@ -594,17 +616,25 @@ function setupOrderForm() {
   const form = document.getElementById('order-form');
   if (!form) return;
 
-  const msg     = document.getElementById('order-msg');
+  const msg     = document.getElementById('order-msg');   // 送信中などの状態（role="status"）
+  const whenErr = document.getElementById('when-error');  // 受け取り日時の不備（role="alert"）
   const dateSel = form.querySelector('#f-date');
   const timeSel = form.querySelector('#f-time');
   const whenWrap = document.getElementById('f-when-wrap');
   const addrWrap = document.getElementById('f-addr-wrap');
+
+  function clearWhenError() {
+    if (whenErr) whenErr.textContent = '';
+    if (dateSel) dateSel.removeAttribute('aria-invalid');
+    if (timeSel) timeSel.removeAttribute('aria-invalid');
+  }
 
   if (dateSel && timeSel) {
     fillPickupDates(dateSel);
     fillPickupTimes(timeSel, dateSel.value);
     dateSel.addEventListener('change', function () {
       fillPickupTimes(timeSel, dateSel.value);
+      clearWhenError();
       if (msg) msg.textContent = '';
     });
   }
@@ -625,6 +655,7 @@ function setupOrderForm() {
     if (timeSel) { timeSel.required = toShop; }
     if (addrWrap) addrWrap.hidden = !toShip;
     if (addrEl)  { addrEl.required = toShip; }
+    clearWhenError();
     if (msg) msg.textContent = '';
   }
 
@@ -641,7 +672,11 @@ function setupOrderForm() {
     if (problem) {
       fillPickupDates(dateSel);
       fillPickupTimes(timeSel, dateSel.value);
-      if (msg) msg.textContent = problem;
+      // 直す場所のすぐ下に出す。ボタンの下に書くと、飛んだ先から文章が見えない。
+      if (whenErr) whenErr.textContent = problem;
+      if (msg) msg.textContent = '';
+      dateSel.setAttribute('aria-invalid', 'true');
+      timeSel.setAttribute('aria-invalid', 'true');
       dateSel.focus();
       return;
     }

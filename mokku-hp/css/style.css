@@ -103,17 +103,32 @@ a:hover { text-decoration-thickness: 2px; }
   outline-offset: 3px;
 }
 
+/* 濃い面の上では、焙煎機の緑が沈んで輪郭が見えない（--kama と --sumi で 2.1:1）。
+   その面の中だけ、輪郭の色を漆喰に替える（12.9:1）。 */
+.sitehead :focus-visible,
+.menupanel :focus-visible,
+.footer :focus-visible { outline-color: var(--shikkui); }
+
+/* 固定バーは画面の下端に貼りついていて、外へ輪郭を出す余地がない。
+   内側に描いて、バー自身の濃い地の上に乗せる。 */
+.callbar :focus-visible {
+  outline-color: var(--shikkui);
+  outline-offset: -4px;
+}
+
 .skip {
   position: absolute;
-  left: 8px; top: -60px;
+  left: 8px; top: 8px;
   z-index: var(--z-fixed);
   padding: 12px 18px;
   background: var(--sumi);
   color: var(--shikkui);
   text-decoration: none;
-  transition: top var(--t-hover) var(--ease);
+  /* 画面の外へは transform で逃がす。top を動かすと毎フレーム組み直しになる。 */
+  transform: translateY(-200%);
+  transition: transform var(--t-hover) var(--ease);
 }
-.skip:focus { top: 8px; }
+.skip:focus { transform: none; }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px;
@@ -534,8 +549,85 @@ body.is-menuopen .callbar { display: none; }
 }
 .pair + .pair { margin-top: 64px; }
 .pair__fig img { width: 100%; }
-.pair__cap { margin-top: 10px; font-size: 13px; color: var(--dim); }
+.cap { margin-top: 10px; font-size: 13px; color: var(--dim); }
 .pair h3 { font-size: 19px; letter-spacing: .1em; margin-bottom: .6em; }
+.pair__txt > p + p { margin-top: 1.2em; }
+
+/* 店主の写真。読ませる柱（720px）の中に1枚だけ置く */
+.portrait { margin-top: 44px; }
+.portrait img { width: 100%; }
+
+/* 写真と文のあとに地図が続くとき（#access）、棚1段ぶん空ける */
+.pair + .map { margin-top: 48px; }
+
+/* ==========================================================================
+   番号付きの手順（#choose の注文のしかた、thanks.html のこの先の流れ）
+   ========================================================================== */
+
+.steps {
+  counter-reset: step;
+  text-align: left;
+  border-top: 1px solid var(--rule);
+  /* 番号は下の ::before で角囲みにして出す。ol 既定の「1.」と重なるので消す。 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 22px 0 22px 46px;
+  border-bottom: 1px solid var(--rule);
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  /* 行頭ではなく、その段の上下の真ん中に置く */
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 28px; height: 28px;
+  display: grid;
+  place-content: center;
+  border: 1px solid var(--kama);
+  color: var(--kama);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.steps b {
+  display: block;
+  font-weight: 600;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.steps span { font-size: 14px; color: var(--dim); line-height: 1.9; }
+
+/* ==========================================================================
+   一問一答（#first はじめての方へ）
+   カードにせず、棚板の罫だけで一行ずつ切る。
+   ========================================================================== */
+
+.qa { border-top: 1px solid var(--rule); }
+.qa__q {
+  padding-top: 20px;
+  letter-spacing: .06em;
+}
+.qa__q::before {
+  content: "Q";
+  display: inline-block;
+  width: 1.6em;
+  color: var(--kama);
+  font-size: 13px;
+  letter-spacing: .1em;
+}
+.qa__a {
+  margin: 0;
+  padding-left: 1.6em;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px;
+  color: var(--dim);
+  line-height: 1.95;
+}
 
 /* ==========================================================================
    全画面の写真帯（PC は背後を抜ける、スマホは静止）
@@ -548,7 +640,9 @@ body.is-menuopen .callbar { display: none; }
 
 .band {
   position: relative;
+  /* URL バーの出入りで高さが変わらないよう、ヒーローと同じ svh にそろえる */
   height: 58vh;
+  height: 58svh;
   min-height: 300px;
   background-size: cover;
   background-position: center;
@@ -848,6 +942,16 @@ body.is-menuopen .callbar { display: none; }
   margin-bottom: 8px;
 }
 .field__col { min-width: 0; }
+/* 入力欄のすぐ下に出すエラー。何も無いときは行を取らない。 */
+.field__error {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--kama);
+  letter-spacing: .06em;
+}
+.field__error:not(:empty) { margin-bottom: 10px; }
+
 .field__hint {
   margin: 0 0 22px;
   font-size: 13px;
@@ -1194,44 +1298,6 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 }
 .thanks__lead { font-size: 16px; margin-bottom: 40px; }
 
-/* ここから先に何が起きるかを、順番のあるものとして示す */
-.thanks__steps {
-  counter-reset: step;
-  text-align: left;
-  border-top: 1px solid var(--rule);
-  /* 番号は下の ::before で角囲みにして出す。ol 既定の「1.」と重なるので消す。 */
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.thanks__steps li {
-  counter-increment: step;
-  position: relative;
-  padding: 22px 0 22px 46px;
-  border-bottom: 1px solid var(--rule);
-}
-.thanks__steps li::before {
-  content: counter(step);
-  position: absolute;
-  /* 行頭ではなく、その段の上下の真ん中に置く */
-  left: 0; top: 50%;
-  transform: translateY(-50%);
-  width: 28px; height: 28px;
-  display: grid;
-  place-content: center;
-  border: 1px solid var(--kama);
-  color: var(--kama);
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-}
-.thanks__steps b {
-  display: block;
-  font-weight: 600;
-  letter-spacing: .08em;
-  margin-bottom: 4px;
-}
-.thanks__steps span { font-size: 14px; color: var(--dim); line-height: 1.9; }
-
 .thanks__note { margin-top: 40px; }
 .thanks__tel {
   margin-top: 8px;
@@ -1375,6 +1441,8 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 
   .pair h3 { font-size: 21px; }
   .gift__panel h3 { font-size: 20px; }
+  .qa__q { font-size: 17px; }
+  .qa__a { font-size: 16px; }
   .bhead h1 { font-size: 38px; letter-spacing: .14em; }
 
   /* メニューは全部開いたまま。畳まない。 */
@@ -1401,12 +1469,8 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 
   .sitehead__home img { width: 32px; }
   .sitehead__home span { display: block; }
-  .sitehead__nav { display: block; flex: 0 1 auto; margin-left: auto; overflow: visible; }
-  .sitehead__nav ul { gap: 28px; }
-  .sitehead__nav a { font-size: 15px; }
   .sitehead__coupon { display: inline-block; margin-left: 8px; font-size: 14px; padding: 8px 16px; }
   .sitehead__coupon-l { display: inline; margin-right: .5em; font-size: 12px; opacity: .8; }
-  .burger, .menupanel { display: none; }
 
   .gift { grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
   .gift__tab { font-size: 16px; }
@@ -1415,6 +1479,8 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 
   .hero__logo img { width: 132px; }
 
+  .portrait { margin-top: 56px; }
+  .pair + .map { margin-top: 72px; }
   .coupon { margin-top: 48px; }
   .coupon__stub { width: 128px; }
   .coupon__stub b { font-size: 44px; }
@@ -1423,6 +1489,8 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 
   .pair { grid-template-columns: 1fr 1fr; gap: 48px; }
   .pair--rev .pair__fig { order: 2; }
+  /* 3ステップは文の量が多いので、写真の側を少し狭める */
+  .pair--flow { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
   .pair + .pair { margin-top: 72px; }
 
   /* ノートらしく見えるのは、余白と綴じ穴が入るこの幅から */
@@ -1435,7 +1503,7 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   .menu__list--2col { columns: 2; column-gap: 54px; }
   .menu__list--2col .menu__row { break-inside: avoid; }
 
-  .band { height: 76vh; }
+  .band { height: 76vh; height: 76svh; }
 
   .shelf { margin-top: 60px; }
   .shelf__label { margin-bottom: 8px; }
@@ -1497,6 +1565,21 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 /* ==========================================================================
    印刷（クーポンを紙で持ってくる人がいる）
    ========================================================================== */
+
+/* ==========================================================================
+   ヘッダーのナビを出す幅
+
+   店名・ナビ6項目・クーポンの札が、横一列に収まるのはこの幅から。
+   768px では収まらず、ナビがクーポンの札に重なる。
+   それより下はハンバーガーのまま出す。
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+  .sitehead__nav { display: block; flex: 0 1 auto; margin-left: auto; overflow: visible; }
+  .sitehead__nav ul { gap: 28px; }
+  .sitehead__nav a { font-size: 15px; }
+  .burger, .menupanel { display: none; }
+}
 
 @media print {
   body { background: #fff; color: #000; }
