@@ -73,6 +73,11 @@
 
     <p class="thanks__lead">ギフトボックスのご注文をお預かりしました。ありがとうございます。</p>
 
+    <!-- 送信した内容の控え。JS が sessionStorage から入れる。無ければ出さない。 -->
+    <section class="recap" id="order-recap" aria-labelledby="recap-h" hidden>
+      <h2 class="recap__h" id="recap-h">お預かりした内容</h2>
+    </section>
+
     <ol class="thanks__steps">
       <li>
         <b>店主が内容を確認します</b>
@@ -94,10 +99,7 @@
 
     <p class="thanks__demo" id="thanks-demo">※このフォームはデモです。実際には送信されていません。</p>
 
-    <p class="actions actions--center thanks__actions">
-      <a class="btn" href="index.html">お店のページに戻る</a>
-      <a class="btn" href="beans.html" data-track="beans">今日の豆を見る</a>
-    </p>
+    <p class="thanks__back"><a href="index.html">お店のページに戻る</a></p>
 
   </div>
 </main>

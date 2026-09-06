@@ -497,71 +497,218 @@ function submitOrder(formData) {
    休みの日を「選べない」ようにしたいので、input[type=date] ではなく
    選べる日だけを入れた select にしている。datetime-local は iOS の実機で
    横にはみ出るのと、定休日を落とせないのとで、2つに分けた。 */
-const CLOSED_DAYS = [2, 3];              // 火・水は定休
-const PICKUP_FROM = 10 * 60;             // 10:00
-const PICKUP_TO   = 18 * 60 + 30;        // 18:30
-const PICKUP_STEP = 30;                  // 30分刻み
+const CLOSED_DAYS  = [2, 3];                                  // 火・水は定休
+const CLOSED_DATES = ['12-31', '01-01', '01-02', '01-03'];    // 年末年始
+const PICKUP_FROM  = 10 * 60;          // 10:00
+const PICKUP_TO    = 17 * 60 + 30;     // 17:30
+const PICKUP_STEP  = 30;               // 30分刻み
+const PICKUP_LEAD  = 60;               // 当日は「いまから1時間後」より後だけ
+const PICKUP_MONTHS = 1;               // 1か月先まで
 const WEEKDAY_JA = ['日', '月', '火', '水', '木', '金', '土'];
 
 function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
-function fillPickupFields(form) {
-  const dateSel = form.querySelector('#f-date');
-  const timeSel = form.querySelector('#f-time');
-  if (!dateSel || !timeSel) return;
+function ymd(d) {
+  return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+}
 
-  // 翌日から1か月先まで。定休日は入れない。
+function isClosedDay(d) {
+  if (CLOSED_DAYS.indexOf(d.getDay()) !== -1) return true;
+  return CLOSED_DATES.indexOf(pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())) !== -1;
+}
+
+/* その日に選べる最初の時刻（分）。当日だけ、いまから1時間後に繰り上がる。 */
+function earliestMinutes(dateStr) {
+  const now = new Date();
+  if (dateStr !== ymd(now)) return PICKUP_FROM;
+  const m = now.getHours() * 60 + now.getMinutes() + PICKUP_LEAD;
+  return Math.max(PICKUP_FROM, Math.ceil(m / PICKUP_STEP) * PICKUP_STEP);
+}
+
+function minutesToHM(m) { return pad2(Math.floor(m / 60)) + ':' + pad2(m % 60); }
+
+/* 日の候補。当日から1か月先まで。休みの日と、もう間に合わない当日は入れない。 */
+function fillPickupDates(dateSel) {
+  const keep = dateSel.value;
+  dateSel.textContent = '';
+  dateSel.appendChild(new Option('選んでください', ''));
+
   const from = new Date();
   from.setHours(0, 0, 0, 0);
-  from.setDate(from.getDate() + 1);
 
   const to = new Date(from);
-  to.setMonth(to.getMonth() + 1);
+  to.setMonth(to.getMonth() + PICKUP_MONTHS);
   // 1/31 の1か月後が 3/3 になるのを避け、月末に丸める
   if (to.getDate() !== from.getDate()) to.setDate(0);
 
-  const days = document.createDocumentFragment();
   for (const d = new Date(from); d <= to; d.setDate(d.getDate() + 1)) {
-    if (CLOSED_DAYS.indexOf(d.getDay()) !== -1) continue;
-    const o = document.createElement('option');
-    o.value = d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
-    o.textContent = (d.getMonth() + 1) + '月' + d.getDate() + '日（' + WEEKDAY_JA[d.getDay()] + '）';
-    days.appendChild(o);
+    if (isClosedDay(d)) continue;
+    const value = ymd(d);
+    if (earliestMinutes(value) > PICKUP_TO) continue;   // 今日はもう間に合わない
+    const label = (d.getMonth() + 1) + '月' + d.getDate() + '日（' + WEEKDAY_JA[d.getDay()] + '）';
+    dateSel.appendChild(new Option(label, value));
   }
-  dateSel.appendChild(days);
 
-  const times = document.createDocumentFragment();
-  for (let m = PICKUP_FROM; m <= PICKUP_TO; m += PICKUP_STEP) {
-    const o = document.createElement('option');
-    o.value = pad2(Math.floor(m / 60)) + ':' + pad2(m % 60);
-    o.textContent = o.value;
-    times.appendChild(o);
+  // 選び直しの手間を増やさない。まだ選べる日なら選択を残す。
+  if (keep) dateSel.value = keep;
+}
+
+/* 時間の候補。選ばれた日によって、始まりが変わる。 */
+function fillPickupTimes(timeSel, dateStr) {
+  const keep = timeSel.value;
+  timeSel.textContent = '';
+
+  if (!dateStr) {
+    timeSel.appendChild(new Option('日をお選びください', ''));
+    timeSel.disabled = true;
+    return;
   }
-  timeSel.appendChild(times);
+
+  timeSel.disabled = false;
+  timeSel.appendChild(new Option('選んでください', ''));
+  for (let m = earliestMinutes(dateStr); m <= PICKUP_TO; m += PICKUP_STEP) {
+    const hm = minutesToHM(m);
+    timeSel.appendChild(new Option(hm, hm));
+  }
+  if (keep) timeSel.value = keep;
+}
+
+/* ページを開きっぱなしにしていると、候補が古くなる。送る前にもう一度見る。 */
+function pickupProblem(form) {
+  const dateSel = form.querySelector('#f-date');
+  const timeSel = form.querySelector('#f-time');
+  if (!dateSel || !timeSel || !dateSel.required) return '';   // 配送のときは見ない
+  if (!dateSel.value || !timeSel.value) return '';            // 未入力はブラウザが止める
+
+  const ymdPart = dateSel.value.split('-').map(Number);
+  const hmPart  = timeSel.value.split(':').map(Number);
+  const picked = new Date(ymdPart[0], ymdPart[1] - 1, ymdPart[2], hmPart[0], hmPart[1]);
+
+  if (picked.getTime() < Date.now() + PICKUP_LEAD * 60000) {
+    return 'お選びいただいた日時が、いまから1時間以内になりました。選び直してください。';
+  }
+  return '';
 }
 
 function setupOrderForm() {
   const form = document.getElementById('order-form');
   if (!form) return;
 
-  fillPickupFields(form);
-
-  // 配送先は「配送してもらう」を選んだときだけ出す
+  const msg     = document.getElementById('order-msg');
+  const dateSel = form.querySelector('#f-date');
+  const timeSel = form.querySelector('#f-time');
+  const whenWrap = document.getElementById('f-when-wrap');
   const addrWrap = document.getElementById('f-addr-wrap');
-  form.querySelectorAll('input[name="giftDelivery"]').forEach(function (r) {
-    r.addEventListener('change', function () {
-      if (addrWrap) addrWrap.hidden = r.value !== '配送' || !r.checked;
+
+  if (dateSel && timeSel) {
+    fillPickupDates(dateSel);
+    fillPickupTimes(timeSel, dateSel.value);
+    dateSel.addEventListener('change', function () {
+      fillPickupTimes(timeSel, dateSel.value);
+      if (msg) msg.textContent = '';
     });
+  }
+
+  /* 受け取り方法で、そのあとに聞くことが変わる。
+     店頭 → 日時を聞く。配送 → 配送先を聞く。日時は聞かない。
+     隠したままの required は送信を止めてしまうので、必ず一緒に外す。 */
+  function syncDelivery() {
+    const picked = form.querySelector('input[name="giftDelivery"]:checked');
+    const toShop = !picked || picked.value === '店頭';
+
+    if (whenWrap) whenWrap.hidden = !toShop;
+    if (dateSel) { dateSel.required = toShop; dateSel.disabled = !toShop; }
+    if (timeSel) { timeSel.required = toShop; }
+    if (addrWrap) addrWrap.hidden = toShop;
+    if (msg) msg.textContent = '';
+  }
+
+  form.querySelectorAll('input[name="giftDelivery"]').forEach(function (r) {
+    r.addEventListener('change', syncDelivery);
   });
+  syncDelivery();
 
   form.addEventListener('submit', function (e) {
     e.preventDefault(); // 必須項目の確認はブラウザが済ませている
+
+    // 開きっぱなしのあいだに時間が過ぎていないか、ここでもう一度見る
+    const problem = pickupProblem(form);
+    if (problem) {
+      fillPickupDates(dateSel);
+      fillPickupTimes(timeSel, dateSel.value);
+      if (msg) msg.textContent = problem;
+      dateSel.focus();
+      return;
+    }
+
     trackEvent('order_submit', SOURCE);
+    keepOrderSummary(form);
     submitOrder(new FormData(form));
-    document.getElementById('order-msg').textContent = 'お預かりしています…';
+    if (msg) msg.textContent = 'お預かりしています…';
     // Apps Script につないだら、POST の完了を待ってからここへ来る
     location.href = 'thanks.html';
   });
+}
+
+/* 送った内容を thanks.html で出すために預ける。
+   静的サイトなのでサーバに聞けない。タブを閉じたら消える sessionStorage に置く。 */
+const ORDER_KEY = 'mokku_order';
+
+function keepOrderSummary(form) {
+  // ラジオは RadioNodeList。value がそのまま選ばれている方を返す。
+  const get = function (name) {
+    const el = form.elements[name];
+    return el && el.value ? String(el.value).trim() : '';
+  };
+
+  const toShop = get('giftDelivery') === '店頭';
+  const rows = [
+    ['お名前', get('name')],
+    ['電話番号', get('tel')],
+    ['メールアドレス', get('email')],
+    ['中身の組み合わせ', get('giftContent')],
+    ['白い帯', get('giftBand')],
+    ['受け取り方法', get('giftDelivery')],
+    [toShop ? '受け取り希望' : '', toShop ? pickupLabel(get('date'), get('time')) : ''],
+    [toShop ? '' : '配送先', toShop ? '' : get('address')],
+    ['そのほかご希望', get('memo')]
+  ].filter(function (r) { return r[0] && r[1]; });
+
+  try {
+    sessionStorage.setItem(ORDER_KEY, JSON.stringify(rows));
+  } catch (e) { /* プライベートモードなど。thanks.html は控えなしで出す */ }
+}
+
+function pickupLabel(dateStr, timeStr) {
+  if (!dateStr) return '';
+  const p = dateStr.split('-').map(Number);
+  const d = new Date(p[0], p[1] - 1, p[2]);
+  return (d.getMonth() + 1) + '月' + d.getDate() + '日（' + WEEKDAY_JA[d.getDay()] + '）' +
+         (timeStr ? '　' + timeStr : '');
+}
+
+/* thanks.html — 送った内容の控え。無ければ何も出さない。 */
+function renderOrderRecap() {
+  const wrap = document.getElementById('order-recap');
+  if (!wrap) return;
+
+  let rows;
+  try { rows = JSON.parse(sessionStorage.getItem(ORDER_KEY) || 'null'); } catch (e) { rows = null; }
+  if (!Array.isArray(rows) || !rows.length) return;
+
+  const dl = document.createElement('dl');
+  dl.className = 'recap__list';
+  rows.forEach(function (r) {
+    const dt = document.createElement('dt');
+    dt.textContent = r[0];
+    const dd = document.createElement('dd');
+    dd.textContent = r[1];
+    dl.appendChild(dt);
+    dl.appendChild(dd);
+  });
+
+  wrap.appendChild(dl);
+  wrap.hidden = false;
 }
 
 /* ==========================================================================
@@ -603,6 +750,7 @@ document.addEventListener('DOMContentLoaded', function () {
   observeReveals();
   slowAnchors();
   setupOrderForm();
+  renderOrderRecap();
   setupMenu();
   setupMenuGroups();
   setupGift();

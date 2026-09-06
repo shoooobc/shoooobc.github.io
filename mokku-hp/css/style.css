@@ -1199,6 +1199,10 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   counter-reset: step;
   text-align: left;
   border-top: 1px solid var(--rule);
+  /* 番号は下の ::before で角囲みにして出す。ol 既定の「1.」と重なるので消す。 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .thanks__steps li {
   counter-increment: step;
@@ -1246,7 +1250,37 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   color: var(--dim);
 }
 
-.thanks__actions { margin-top: 34px; }
+/* ボタンではなく、下線のリンク1本だけ置く */
+.thanks__back { margin-top: 40px; font-size: 15px; }
+
+/* 送った内容の控え */
+/* 下の罫は「ここから先の流れ」の罫が兼ねる。線を二重に引かない。 */
+.recap {
+  margin: 0 0 34px;
+  text-align: left;
+  border-top: 1px solid var(--rule);
+}
+.recap__h {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .2em;
+  color: var(--dim);
+  margin: 18px 0 4px;
+}
+.recap__list { margin: 0 0 18px; }
+.recap__list dt {
+  margin-top: 12px;
+  font-size: 13px;
+  letter-spacing: .08em;
+  color: var(--dim);
+}
+.recap__list dd {
+  margin: 2px 0 0;
+  font-size: 16px;
+  line-height: 1.85;
+  letter-spacing: .06em;
+  white-space: pre-wrap;
+}
 
 /* ==========================================================================
    coupon.html — 券面
@@ -1432,6 +1466,15 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   .bfoot { padding-block: 64px 80px; }
 
   .map { aspect-ratio: 16 / 9; }
+
+  .recap__list {
+    display: grid;
+    grid-template-columns: 10em minmax(0, 1fr);
+    column-gap: 24px;
+    align-items: baseline;
+  }
+  .recap__list dt { grid-column: 1; }
+  .recap__list dd { grid-column: 2; margin-top: 12px; }
 
   .thanks { padding-block: 88px 100px; }
   .thanks__h { font-size: 34px; }
