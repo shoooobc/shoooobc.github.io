@@ -291,10 +291,29 @@ function watchHero() {
   }, { rootMargin: '-70% 0px 0px 0px' }).observe(hero);
 }
 
+/* data-photo に控えてある写真を、その要素の背景に貼る。
+   background-image を2回入れるのは、CSS の控えと同じ考え方。
+   image-set を読めない browser では2回目が捨てられ、1回目の jpg が残る。 */
+function fillPhoto(el) {
+  const fallback = el.dataset.photo;
+  if (!fallback) return;
+  const webp = fallback.replace(/\.(jpg|png)$/, '.webp');
+  const mime = fallback.endsWith('.png') ? 'image/png' : 'image/jpeg';
+  el.style.backgroundImage = 'url(' + fallback + ')';
+  el.style.backgroundImage =
+    "image-set(url(" + webp + ") type('image/webp'), url(" + fallback + ") type('" + mime + "'))";
+  delete el.dataset.photo;
+}
+
 function heroCrossfade() {
   const hero = document.querySelector('.hero');
   const shots = document.querySelectorAll('.hero__photo');
   if (!hero || shots.length < 2 || REDUCED) return; // 動きを減らす設定では1枚目で固定
+
+  // 1枚目が出てからでよい。読み込みが済むまで、残りの写真に帯域を使わせない。
+  const load = function () { shots.forEach(fillPhoto); };
+  if (document.readyState === 'complete') load();
+  else window.addEventListener('load', load, { once: true });
 
   // ヒーローが画面の外に出たら止める。見えていないものを動かし続けない。
   let visible = true;
@@ -311,6 +330,25 @@ function heroCrossfade() {
     i = (i + 1) % shots.length;
     shots[i].classList.add('is-on');
   }, 6000);
+}
+
+/* 画面の下のほうにある大きな背景（写真の帯・footer）は、近づいてから取りに行く。
+   この2枚で170KBほどある。最初に見えるのはヒーローだけなので、そこに帯域を譲る。
+   JavaScript が動かないときは head の noscript が同じ写真を貼る。 */
+function lazyPhotos() {
+  const els = document.querySelectorAll('[data-photo]:not(.hero__photo)');
+  if (!els.length) return;
+  if (!('IntersectionObserver' in window)) { els.forEach(fillPhoto); return; }
+
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      fillPhoto(e.target);
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '200% 0px' }); // 2画面ぶん手前で読み始める。着く頃には出ている。
+
+  els.forEach(function (el) { io.observe(el); });
 }
 
 /* ==========================================================================
@@ -534,9 +572,85 @@ function ymd(d) {
   return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
 }
 
+/* 祝日。サイトには「火・水 定休（祝日は営業）」と書いてある。
+   曜日だけで休みを決めると、祝日の火・水が候補から消えて、書いてあることと食い違う。
+   内閣府の決まりをそのまま関数にした。いまの法律（2020年以降）の並びで、
+   1980〜2099年に効く。2020・2021年の五輪による移動は入れていない。
+   振替休日と国民の休日も、店の開け閉めとしては祝日と同じに扱う。 */
+
+/* その月の第 nth 月曜が何日か。 */
+function nthMonday(year, month, nth) {
+  const dow = new Date(year, month - 1, 1).getDay();
+  return 1 + ((8 - dow) % 7) + (nth - 1) * 7;
+}
+
+/* 春分・秋分は年ごとに動くので、天文の近似式から出す。 */
+function equinoxDay(year, base) {
+  return Math.floor(base + 0.242194 * (year - 1980) - Math.floor((year - 1980) / 4));
+}
+
+const HOLIDAY_CACHE = {};
+
+/* その年の祝日を 'MM-DD' の Set で返す。 */
+function holidaysOf(year) {
+  if (HOLIDAY_CACHE[year]) return HOLIDAY_CACHE[year];
+
+  const key = function (m, d) { return pad2(m) + '-' + pad2(d); };
+  const base = [
+    [1, 1],                            // 元日
+    [1, nthMonday(year, 1, 2)],        // 成人の日
+    [2, 11],                           // 建国記念の日
+    [2, 23],                           // 天皇誕生日
+    [3, equinoxDay(year, 20.8431)],    // 春分の日
+    [4, 29],                           // 昭和の日
+    [5, 3],                            // 憲法記念日
+    [5, 4],                            // みどりの日
+    [5, 5],                            // こどもの日
+    [7, nthMonday(year, 7, 3)],        // 海の日
+    [8, 11],                           // 山の日
+    [9, nthMonday(year, 9, 3)],        // 敬老の日
+    [9, equinoxDay(year, 23.2488)],    // 秋分の日
+    [10, nthMonday(year, 10, 2)],      // スポーツの日
+    [11, 3],                           // 文化の日
+    [11, 23]                           // 勤労感謝の日
+  ];
+
+  const days = new Set(base.map(function (h) { return key(h[0], h[1]); }));
+
+  // 国民の休日 — 祝日にはさまれた平日。2026年の9月22日（火）がこれにあたる。
+  // 振替休日を足す前の、素の祝日だけで見る（法律の順番がそうなっている）。
+  base.forEach(function (h) {
+    const next = new Date(year, h[0] - 1, h[1] + 1);
+    if (next.getFullYear() !== year) return;
+    if (next.getDay() === 0) return;                                   // 日曜は対象外
+    const nextKey = key(next.getMonth() + 1, next.getDate());
+    if (days.has(nextKey)) return;                                     // それ自体が祝日
+    const after = new Date(year, h[0] - 1, h[1] + 2);
+    if (after.getFullYear() !== year) return;
+    if (days.has(key(after.getMonth() + 1, after.getDate()))) days.add(nextKey);
+  });
+
+  // 振替休日 — 日曜に当たった祝日は、次の平日にずれる。
+  base.forEach(function (h) {
+    const d = new Date(year, h[0] - 1, h[1]);
+    if (d.getDay() !== 0) return;
+    do { d.setDate(d.getDate() + 1); } while (days.has(key(d.getMonth() + 1, d.getDate())));
+    if (d.getFullYear() === year) days.add(key(d.getMonth() + 1, d.getDate()));
+  });
+
+  HOLIDAY_CACHE[year] = days;
+  return days;
+}
+
+function isHoliday(d) {
+  return holidaysOf(d.getFullYear()).has(pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()));
+}
+
 function isClosedDay(d) {
-  if (CLOSED_DAYS.indexOf(d.getDay()) !== -1) return true;
-  return CLOSED_DATES.indexOf(pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())) !== -1;
+  // 年末年始は祝日（元日）でも閉めるので、こちらを先に見る。
+  if (CLOSED_DATES.indexOf(pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())) !== -1) return true;
+  if (CLOSED_DAYS.indexOf(d.getDay()) === -1) return false;
+  return !isHoliday(d);   // 火・水でも、祝日なら開けている
 }
 
 /* その日に選べる最初の時刻（分）。当日だけ、いまから1時間後に繰り上がる。 */
@@ -662,10 +776,55 @@ function setupOrderForm() {
   form.querySelectorAll('input[name="giftDelivery"]').forEach(function (r) {
     r.addEventListener('change', syncDelivery);
   });
+
+  /* 帯を掛けた箱は配送できない（ギフトの説明にそう書いてある）。
+     送信のときに叱るのではなく、選べないようにして、理由をその場に出す。 */
+  const shipEl   = form.querySelector('input[name="giftDelivery"][value="配送"]');
+  const shipLabel = document.getElementById('f-ship-label');
+  const shipNote = document.getElementById('ship-note');
+
+  function syncBand() {
+    const band = form.querySelector('input[name="giftBand"]:checked');
+    const withBand = band && band.value === '帯あり';
+    if (!shipEl) return;
+
+    // 帯ありに変えたとき、配送が選ばれたままだと矛盾が残る。店頭に戻す。
+    const hadShip = withBand && shipEl.checked;
+    if (hadShip) {
+      const shopEl = form.querySelector('input[name="giftDelivery"][value="店頭"]');
+      if (shopEl) shopEl.checked = true;
+      syncDelivery();
+    }
+
+    shipEl.disabled = !!withBand;
+    if (shipLabel) shipLabel.classList.toggle('is-off', !!withBand);
+    if (shipNote) {
+      shipNote.textContent = withBand
+        ? (hadShip
+            ? '帯を掛けた箱は配送できないため、店頭でのお渡しにしました。配送をご希望でしたら、白い帯を「掛けない」にしてください。'
+            : '帯を掛けた箱は配送できません。配送をご希望でしたら、白い帯を「掛けない」にしてください。')
+        : '';
+    }
+  }
+
+  form.querySelectorAll('input[name="giftBand"]').forEach(function (r) {
+    r.addEventListener('change', syncBand);
+  });
+
   syncDelivery();
+  syncBand();
 
   form.addEventListener('submit', function (e) {
     e.preventDefault(); // 必須項目の確認はブラウザが済ませている
+
+    // 念のための歯止め。選べないようにしてあるが、ここでも組み合わせを見る。
+    const band = form.querySelector('input[name="giftBand"]:checked');
+    if (band && band.value === '帯あり' && shipEl && shipEl.checked) {
+      syncBand();
+      if (msg) msg.textContent = '';
+      shipEl.focus();
+      return;
+    }
 
     // 開きっぱなしのあいだに時間が過ぎていないか、ここでもう一度見る
     const problem = pickupProblem(form);
@@ -797,6 +956,7 @@ document.addEventListener('DOMContentLoaded', function () {
   setupCoupon();
   watchHero();
   heroCrossfade();
+  lazyPhotos();
 
   // ヒーローと券面の登場。ローディング画面は作らないので、ここが第一印象になる。
   requestAnimationFrame(function () {

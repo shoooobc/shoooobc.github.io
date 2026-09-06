@@ -83,6 +83,10 @@ body {
 img, svg, iframe { max-width: 100%; }
 img { display: block; height: auto; }
 
+/* picture は webp を差し出すためだけの入れ物。box を持たせない。
+   こうすると中の img が、これまでどおり figure や span の直下の子として並ぶ。 */
+picture { display: contents; }
+
 h1, h2, h3 { font-weight: 600; line-height: 1.75; margin: 0; text-wrap: balance; }
 h2, h3, .lead, .hours__main { word-break: auto-phrase; }
 p, li, dd { text-wrap: pretty; }
@@ -223,7 +227,13 @@ a:hover { text-decoration-thickness: 2px; }
   text-decoration: none;
 }
 .sitehead__home img { width: 28px; }
-.sitehead__home span { display: none; font-size: 14px; letter-spacing: .14em; }
+.sitehead__home span {
+  /* スマホでも店名は出す。ロゴの印だけでは、どの店か分からない。 */
+  display: block;
+  font-size: 13px;
+  letter-spacing: .1em;
+  white-space: nowrap;
+}
 .sitehead__home { color: var(--shikkui); }
 
 .sitehead__nav {
@@ -959,6 +969,8 @@ body.is-menuopen .callbar { display: none; }
   color: var(--dim);
   letter-spacing: .06em;
 }
+/* 中身が入るまで出しっぱなしにしない（配送できない理由など、出たり消えたりする） */
+.field__hint:empty { display: none; }
 
 input[type="text"], input[type="tel"], input[type="email"],
 input[type="date"], input[type="time"], textarea, select {
@@ -994,8 +1006,10 @@ textarea { min-height: 132px; line-height: 1.9; resize: vertical; }
 
 fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 .choice { display: flex; flex-wrap: wrap; gap: 8px 20px; }
-.choice label { display: flex; align-items: center; gap: 7px; font-size: 16px; }
+.choice label { display: flex; align-items: center; gap: 7px; font-size: 16px; min-height: 26px; }
 .choice input { accent-color: var(--kama); }
+/* 選べない組み合わせ。理由は隣の field__hint に文章で出している。 */
+.choice label.is-off { color: var(--kraft); cursor: not-allowed; }
 
 .form__msg { margin-top: 16px; min-height: 1.9em; color: var(--kama); font-size: 15px; }
 .form__msg:empty { min-height: 0; }
@@ -1087,6 +1101,13 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 
 .footer a { color: var(--shikkui); text-decoration-color: rgba(199, 168, 124, .6); }
 .footer a:hover { color: #fff; text-decoration-color: currentColor; }
+
+/* 単独で立っているリンクは、指で押せる高さ（24px）を確保する。
+   文章のなかに挟まっているリンクは、行が崩れるのでそのままにする。 */
+.footer__line a,
+.footer__nav a,
+.pair__txt a[data-track="map"],
+.info td > a { display: inline-flex; align-items: center; min-height: 24px; }
 
 .footer__col--nav { grid-column: 1 / -1; }
 .footer__nav { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 20px; }
@@ -1468,7 +1489,7 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
   .footer__copy { margin-top: 40px; padding-top: 20px; }
 
   .sitehead__home img { width: 32px; }
-  .sitehead__home span { display: block; }
+  .sitehead__home span { font-size: 14px; letter-spacing: .14em; }
   .sitehead__coupon { display: inline-block; margin-left: 8px; font-size: 14px; padding: 8px 16px; }
   .sitehead__coupon-l { display: inline; margin-right: .5em; font-size: 12px; opacity: .8; }
 

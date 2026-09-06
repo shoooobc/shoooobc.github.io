@@ -15,6 +15,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Shippori+Mincho:wght@400;600&display=swap">
 <link rel="stylesheet" href="css/style.css">
+<!-- JavaScript が動かないときの控え。下のほうの大きな背景は
+     普段は近づいてから読むので、その仕掛けが効かない場合にここで貼る。 -->
+<noscript><style>
+.footer { background-image: url(images/exterior.jpg); }
+</style></noscript>
 <script>document.documentElement.className += ' js';</script>
 </head>
 <body>
@@ -24,7 +29,10 @@
 <header class="sitehead sitehead--static">
   <div class="sitehead__in">
     <a class="sitehead__home" href="index.html" aria-label="珈琲の店 もっく トップへ">
-      <img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy">
+      <picture>
+        <source srcset="images/logo-light.webp" type="image/webp">
+        <img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy">
+      </picture>
       <span>珈琲の店 もっく</span>
     </a>
 
@@ -67,7 +75,7 @@
 <main id="main" class="thanks">
   <div class="text">
 
-    <p class="thanks__mark" aria-hidden="true"><img src="images/logo.png" width="400" height="400" alt="" loading="lazy"></p>
+    <p class="thanks__mark" aria-hidden="true"><picture><source srcset="images/logo.webp" type="image/webp"><img src="images/logo.png" width="400" height="400" alt="" loading="lazy"></picture></p>
 
     <h1 class="thanks__h">ご注文の予約を<br>承りました</h1>
 
@@ -88,8 +96,8 @@
         <span>いただいたお電話またはメールに、店舗からご連絡します。営業日でしたら当日か翌日、お休みをはさむ場合はその次の営業日になります。</span>
       </li>
       <li>
-        <b>お受け取り</b>
-        <span>店頭でのお渡し、または配送でお届けします。この時点でのお支払いはありません。</span>
+        <b>お支払いとお受け取り</b>
+        <span>店頭でのお渡しでしたら、そのときに現金でいただきます。配送でしたら、ご連絡のメールに PayPay のお支払い先を書き添えますので、先にお支払いください。お支払いを確かめてからお作りし、発送します。</span>
       </li>
     </ol>
 
@@ -104,14 +112,14 @@
   </div>
 </main>
 
-<footer id="footer" class="footer" style="background-image:url(images/exterior.jpg)">
+<footer id="footer" class="footer" data-photo="images/exterior.jpg">
   <div class="wide">
     <div class="footer__panel">
 
       <div class="footer__grid">
 
         <div class="footer__id">
-          <p class="footer__mark"><img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy"></p>
+          <p class="footer__mark"><picture><source srcset="images/logo-light.webp" type="image/webp"><img src="images/logo-light.png" width="400" height="400" alt="" loading="lazy"></picture></p>
           <p class="footer__name">珈琲の店 もっく<span translate="no">KOHI NO MISE MOKKU</span></p>
         </div>
 
