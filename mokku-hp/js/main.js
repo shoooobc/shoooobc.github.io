@@ -115,16 +115,6 @@ function jaDate(iso) {
   return FMT_MD.format(d);
 }
 
-/* index.html — 点数だけ見せて、続きは beans.html へ */
-function renderBeansCount(beans) {
-  const el = document.getElementById('beans-count');
-  if (!el) return;
-  const inStock = beans.filter(function (b) { return !b.soldOut; }).length;
-  const empty = beans.length - inStock;
-  el.innerHTML = '棚に今 <span class="num">' + inStock + '</span> 本' +
-    (empty ? '。空の瓶が ' + empty + ' 本' : '');
-}
-
 /* beans.html — 棚に並べる
    beans.html には同じ形の棚が静的に書いてある。取得できたらここで描き直す。
    取得に失敗しても、静的な棚がそのまま残る。 */
@@ -266,14 +256,11 @@ function seedBeans() {
 }
 
 async function renderBeans() {
-  const needsIndex = document.getElementById('beans-count');
-  const needsPage  = document.getElementById('shelves');
-  if (!needsIndex && !needsPage) return;
+  if (!document.getElementById('shelves')) return;
 
   const data = (await loadJSON(BEANS_URL, 'mokku_beans')) || seedBeans();
   if (!data || !Array.isArray(data.beans) || !data.beans.length) return; // 静的な棚をそのまま残す
 
-  renderBeansCount(data.beans);
   renderShelves(data.beans);
 }
 
@@ -435,67 +422,47 @@ function setupMenu() {
 }
 
 /* ==========================================================================
-   メニューをめくる（スマホのみ）
-   横に払うのはブラウザの scroll-snap に任せる。JS は今どこかを数えるだけ。
+   メニューの開閉（スマホのみ）
+   3つのまとまりを畳んでおく。開いたものだけが伸びるので、余白が残らない。
+   PC は全部開いたまま、操作もしない。
    ========================================================================== */
 
-function setupMenuPager() {
-  const track = document.getElementById('menu-track');
-  const pager = document.querySelector('.menu__pager');
-  const prev = document.getElementById('menu-prev');
-  const next = document.getElementById('menu-next');
-  const label = document.getElementById('menu-pageno');
-  if (!track || !pager || !prev || !next || !label) return;
-
-  const pages = Array.prototype.slice.call(track.children);
-  if (pages.length < 2) return;
+function setupMenuGroups() {
+  const toggles = Array.prototype.slice.call(document.querySelectorAll('.menu__toggle'));
+  if (!toggles.length) return;
 
   const wide = window.matchMedia('(min-width: 768px)');
-  const titles = pages.map(function (p) {
-    const h = p.querySelector('h3');
-    return h ? h.textContent.trim() : '';
-  });
 
-  let at = 0;
-
-  function paint() {
-    label.textContent = (at + 1) + ' / ' + pages.length + '　' + titles[at];
-    prev.disabled = at === 0;
-    next.disabled = at === pages.length - 1;
-  }
-
-  function goto(i) {
-    at = Math.max(0, Math.min(pages.length - 1, i));
-    track.scrollTo({ left: pages[at].offsetLeft - track.offsetLeft, behavior: REDUCED ? 'auto' : 'smooth' });
-    paint();
-  }
-
-  prev.addEventListener('click', function () { goto(at - 1); });
-  next.addEventListener('click', function () { goto(at + 1); });
-
-  // 指で払われたときは、止まった位置から今のページを読み直す
-  let idle;
-  track.addEventListener('scroll', function () {
-    clearTimeout(idle);
-    idle = setTimeout(function () {
-      const mid = track.scrollLeft + track.clientWidth / 2;
-      let best = 0, gap = Infinity;
-      pages.forEach(function (p, i) {
-        const c = p.offsetLeft - track.offsetLeft + p.offsetWidth / 2;
-        if (Math.abs(c - mid) < gap) { gap = Math.abs(c - mid); best = i; }
-      });
-      if (best !== at) { at = best; paint(); }
-    }, 120);
-  }, { passive: true });
+  function body(t) { return document.getElementById(t.getAttribute('aria-controls')); }
 
   function sync() {
-    if (wide.matches) {
-      pager.hidden = true;
-    } else {
-      pager.hidden = false;
-      paint();
-    }
+    toggles.forEach(function (t, i) {
+      const b = body(t);
+      if (!b) return;
+      if (wide.matches) {
+        // 幅があるときは全部見せる。ボタンとしても働かせない。
+        t.setAttribute('aria-expanded', 'true');
+        t.disabled = true;
+        b.classList.add('is-open');
+      } else {
+        t.disabled = false;
+        const open = i === 0;
+        t.setAttribute('aria-expanded', String(open));
+        b.classList.toggle('is-open', open);
+      }
+    });
   }
+
+  toggles.forEach(function (t) {
+    t.addEventListener('click', function () {
+      if (wide.matches) return;
+      const b = body(t);
+      const open = t.getAttribute('aria-expanded') === 'true';
+      t.setAttribute('aria-expanded', String(!open));
+      if (b) b.classList.toggle('is-open', !open);
+    });
+  });
+
   wide.addEventListener('change', sync);
   sync();
 }
@@ -604,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function () {
   slowAnchors();
   setupOrderForm();
   setupMenu();
-  setupMenuPager();
+  setupMenuGroups();
   setupGift();
   setupCoupon();
   watchHero();

@@ -215,7 +215,13 @@
       </div>
       <div class="secbody">
       <p class="lead reveal" data-i="1">棚の瓶は入れ替わります。産地と焙煎日、それに私からのひとことを付けてあります。切らしているものは、空の瓶のまま置いてあります。</p>
-      <p class="biglink reveal" data-i="2"><a href="beans.html" data-track="beans">今日の豆を見る</a></p>
+      <a class="beanslink reveal" data-i="2" href="beans.html" data-track="beans">
+        <span class="beanslink__fig" aria-hidden="true"><img src="images/beans-shelf.jpg" width="980" height="600" alt="" loading="lazy"></span>
+        <span class="beanslink__txt">
+          <b>今日の豆を見る</b>
+          <span>棚に並んでいる瓶の一覧</span>
+        </span>
+      </a>
       </div>
     </div>
   </section>
@@ -232,10 +238,10 @@
       <div class="menu reveal" data-i="1">
         <span class="menu__holes" aria-hidden="true"></span>
         <div class="menu__sheet">
-          <div class="menu__track" id="menu-track">
 
-          <div class="menu__group" id="menu-page-1">
-            <h3>コーヒー・紅茶</h3>
+          <div class="menu__group">
+            <h3><button type="button" class="menu__toggle" aria-expanded="true" aria-controls="menu-body-1">コーヒー・紅茶</button></h3>
+            <div class="menu__body" id="menu-body-1">
             <ul class="menu__list menu__list--2col" role="list">
               <li class="menu__row">
                 <p class="menu__ja">ブレンドコーヒー（浅煎り / 深煎り）<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
@@ -269,10 +275,12 @@
               </li>
             </ul>
             <p class="note menu__note">コーヒー、紅茶類は2杯目以降 100円引き。テイクアウトは 20円引きです。</p>
+            </div>
           </div>
 
-          <div class="menu__group" id="menu-page-2">
-            <h3>そのほかのお飲みもの</h3>
+          <div class="menu__group">
+            <h3><button type="button" class="menu__toggle" aria-expanded="false" aria-controls="menu-body-2">そのほかのお飲みもの</button></h3>
+            <div class="menu__body" id="menu-body-2">
             <ul class="menu__list menu__list--2col" role="list">
               <li class="menu__row">
                 <p class="menu__ja">オーガニックハーブティー<span class="mark" role="img" aria-label="テイクアウトできます">持</span></p>
@@ -290,10 +298,12 @@
                 <p class="menu__price">400円</p>
               </li>
             </ul>
+            </div>
           </div>
 
-          <div class="menu__group" id="menu-page-3">
-            <h3>甘いもの</h3>
+          <div class="menu__group">
+            <h3><button type="button" class="menu__toggle" aria-expanded="false" aria-controls="menu-body-3">甘いもの</button></h3>
+            <div class="menu__body" id="menu-body-3">
             <ul class="menu__list" role="list">
               <li class="menu__row">
                 <p class="menu__ja">リアントさんのケーキ</p>
@@ -312,15 +322,9 @@
               </li>
             </ul>
             <p class="note menu__note">ケーキとアイスクリームをご一緒に頼まれると50円引きです。シロップの種類はスタッフにお尋ねください。</p>
+            </div>
           </div>
 
-          </div>
-
-          <div class="menu__pager" hidden>
-            <button type="button" class="menu__arrow" id="menu-prev" aria-label="前のページ" aria-controls="menu-track"></button>
-            <p class="menu__pageno" id="menu-pageno" aria-live="polite">1 / 3　コーヒー・紅茶</p>
-            <button type="button" class="menu__arrow menu__arrow--next" id="menu-next" aria-label="次のページ" aria-controls="menu-track"></button>
-          </div>
 
           <p class="note menu__note menu__legend"><span class="mark" aria-hidden="true">持</span> の付いたものはテイクアウトできます。</p>
 
@@ -341,17 +345,24 @@
         <div class="gift reveal" data-i="1">
 
           <div class="gift__stage">
-            <img class="gift__shot is-on" id="gift-shot-1" src="images/gift-box-1.jpg" width="900" height="900" alt="クラフト紙の袋に入ったコーヒー豆と、焼き菓子が詰められた箱" loading="lazy">
-            <img class="gift__shot" id="gift-shot-2" src="images/gift-box-2.jpg" width="900" height="900" alt="もっくの印を押したクラフト紙の袋が2つ並んだ箱" loading="lazy">
+            <img class="gift__shot is-on" src="images/gift-box.jpg" width="900" height="900" alt="白い帯を掛けた黒い箱。帯にもっくの印が押してある" loading="lazy">
+            <img class="gift__shot" src="images/gift-box-1.jpg" width="900" height="900" alt="クラフト紙の袋に入ったコーヒー豆と、焼き菓子が詰められた箱の中身" loading="lazy">
+            <img class="gift__shot" src="images/gift-box-2.jpg" width="900" height="900" alt="もっくの印を押したクラフト紙の袋が2つ並んだ箱の中身" loading="lazy">
           </div>
 
           <div class="gift__side">
-            <div class="gift__tabs" role="tablist" aria-label="中身の組み合わせ">
-              <button type="button" class="gift__tab" role="tab" id="gift-tab-1" aria-controls="gift-panel-1" aria-selected="true">豆＋お菓子</button>
+            <div class="gift__tabs" role="tablist" aria-label="ギフトボックスの見え方">
+              <button type="button" class="gift__tab" role="tab" id="gift-tab-0" aria-controls="gift-panel-0" aria-selected="true">箱と帯</button>
+              <button type="button" class="gift__tab" role="tab" id="gift-tab-1" aria-controls="gift-panel-1" aria-selected="false" tabindex="-1">豆＋お菓子</button>
               <button type="button" class="gift__tab" role="tab" id="gift-tab-2" aria-controls="gift-panel-2" aria-selected="false" tabindex="-1">豆2袋</button>
             </div>
 
-            <div class="gift__panel" role="tabpanel" id="gift-panel-1" aria-labelledby="gift-tab-1" tabindex="0">
+            <div class="gift__panel" role="tabpanel" id="gift-panel-0" aria-labelledby="gift-tab-0" tabindex="0">
+              <h3>黒い箱に、白い帯を掛けて</h3>
+              <p>お渡しするときはこの形です。帯には店の印を押しています。箱代は450円。帯を掛けない形でしたら配送もできます（送料は別にいただきます）。</p>
+            </div>
+
+            <div class="gift__panel" role="tabpanel" id="gift-panel-1" aria-labelledby="gift-tab-1" tabindex="0" hidden>
               <h3>コーヒー豆200g ＋ お菓子</h3>
               <p>焼いた豆を紙の袋に詰めて、店の印を押してお渡しします。お菓子は仕入れたものをその都度合わせますので、中身はご相談ください。</p>
             </div>
@@ -361,7 +372,7 @@
               <p>豆を2種類お選びいただけます。浅煎りと深煎りを1袋ずつ、という組み合わせが多いです。迷われたら、お相手の飲み方を教えてください。</p>
             </div>
 
-            <p class="gift__note note">箱代450円に、中身の代金を足したお値段です。豆の種類とお菓子によってお値段が変わりますので、店頭か、下のご注文フォームからご相談ください。通常は白い帯を掛けてお渡しします。帯を掛けない形でしたら配送もできます（送料は別にいただきます）。</p>
+            <p class="gift__note note">箱代450円に、中身の代金を足したお値段です。豆の種類とお菓子によってお値段が変わりますので、店頭か、下のご注文フォームからご相談ください。</p>
           </div>
 
         </div>
