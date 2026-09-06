@@ -334,20 +334,6 @@ a:hover { text-decoration-thickness: 2px; }
 body.is-menuopen { overflow: hidden; }
 
 /* ==========================================================================
-   お知らせ帯
-   ========================================================================== */
-
-.notice {
-  background: var(--sumi);
-  color: var(--shikkui);
-  font-size: 15px;
-  letter-spacing: .04em;
-}
-.notice:empty { display: none; }
-.notice ul { padding-block: 10px; }
-.notice li + li { margin-top: 2px; }
-
-/* ==========================================================================
    ヒーロー
    ========================================================================== */
 
@@ -1293,7 +1279,7 @@ fieldset { border: 0; padding: 0; margin: 0 0 22px; }
 
 @media print {
   body { background: #fff; color: #000; }
-  .callbar, .cback, .notice, .sitehead, .ticket__photo { display: none; }
+  .callbar, .cback, .sitehead, .ticket__photo { display: none; }
   .ticket { opacity: 1; transform: none; border-color: #000; }
   .ticket__use { border-color: #000; color: #000; }
 }

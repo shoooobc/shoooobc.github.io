@@ -6,9 +6,8 @@
 
 'use strict';
 
-/* --- 取得先。Apps Script ができたら、この2行を差し替えるだけで動く。 --- */
-const NOTICE_URL = './data/notice.json'; // TODO: Apps Script のURLに差し替え
-const BEANS_URL  = './data/beans.json';  // TODO: Apps Script のURLに差し替え
+/* --- 取得先。Apps Script ができたら、この1行を差し替えるだけで動く。 --- */
+const BEANS_URL = './data/beans.json'; // TODO: Apps Script のURLに差し替え
 
 const CACHE_MS = 5 * 60 * 1000;
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -81,40 +80,6 @@ async function loadJSON(url, key) {
   } catch (e) {
     return null; // 画面にエラーは出さない
   }
-}
-
-/* ==========================================================================
-   お知らせ帯
-   ========================================================================== */
-
-async function renderNotice() {
-  const box = document.getElementById('notice');
-  if (!box) return;
-
-  const data = await loadJSON(NOTICE_URL, 'mokku_notice');
-  if (!data || !Array.isArray(data.notices)) return;
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const live = data.notices
-    .filter(function (n) {
-      if (!n || n.show !== true || !n.message) return false;
-      const end = new Date(n.expires);
-      return !isNaN(end) && end >= today;
-    })
-    .sort(function (a, b) { return new Date(a.expires) - new Date(b.expires); });
-
-  if (!live.length) return; // 空の帯は残さない
-
-  const ul = document.createElement('ul');
-  ul.className = 'wide';
-  live.forEach(function (n) {
-    const li = document.createElement('li');
-    li.textContent = n.message;
-    ul.appendChild(li);
-  });
-  box.appendChild(ul);
 }
 
 /* ==========================================================================
@@ -586,6 +551,5 @@ document.addEventListener('DOMContentLoaded', function () {
   if (document.getElementById('shelves')) trackEvent('beans_view', SOURCE);
   if (document.body.classList.contains('coupon-page')) trackEvent('coupon_view', SOURCE);
 
-  renderNotice();
   renderBeans();
 });

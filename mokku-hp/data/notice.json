@@ -1,7 +1,0 @@
-{
-  "notices": [
-    { "show": true, "message": "本日は17時に閉店します", "expires": "2026-09-08" },
-    { "show": true, "message": "9月23日（火・祝）は営業します", "expires": "2026-09-24" },
-    { "show": false, "message": "この行は show が false なので表示されません", "expires": "2026-12-31" }
-  ]
-}
