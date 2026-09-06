@@ -610,16 +610,21 @@ function setupOrderForm() {
   }
 
   /* 受け取り方法で、そのあとに聞くことが変わる。
-     店頭 → 日時を聞く。配送 → 配送先を聞く。日時は聞かない。
+     店頭 → 日時を聞く。配送 → 配送先を聞く。まだ選んでいなければ、どちらも出さない。
      隠したままの required は送信を止めてしまうので、必ず一緒に外す。 */
+  const addrEl = form.querySelector('#f-addr');
+
   function syncDelivery() {
     const picked = form.querySelector('input[name="giftDelivery"]:checked');
-    const toShop = !picked || picked.value === '店頭';
+    const mode = picked ? picked.value : '';
+    const toShop = mode === '店頭';
+    const toShip = mode === '配送';
 
     if (whenWrap) whenWrap.hidden = !toShop;
     if (dateSel) { dateSel.required = toShop; dateSel.disabled = !toShop; }
     if (timeSel) { timeSel.required = toShop; }
-    if (addrWrap) addrWrap.hidden = toShop;
+    if (addrWrap) addrWrap.hidden = !toShip;
+    if (addrEl)  { addrEl.required = toShip; }
     if (msg) msg.textContent = '';
   }
 

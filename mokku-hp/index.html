@@ -400,30 +400,30 @@
             <input type="tel" id="f-tel" name="tel" autocomplete="tel" required>
           </div>
           <div class="field">
-            <label for="f-mail">メールアドレス</label>
-            <input type="email" id="f-mail" name="email" autocomplete="email" spellcheck="false" autocapitalize="off">
+            <label for="f-mail">メールアドレス<span class="req">必須</span></label>
+            <input type="email" id="f-mail" name="email" autocomplete="email" spellcheck="false" autocapitalize="off" required>
           </div>
 
           <div id="panel-gift">
             <fieldset>
-              <legend class="fieldset__legend">中身の組み合わせ</legend>
+              <legend class="fieldset__legend">中身の組み合わせ<span class="req">必須</span></legend>
               <div class="choice">
-                <label><input type="radio" name="giftContent" value="豆200g×2袋" checked> コーヒー豆200g × 2袋</label>
-                <label><input type="radio" name="giftContent" value="豆200g＋お菓子"> コーヒー豆200g ＋ お菓子</label>
+                <label><input type="radio" name="giftContent" value="豆200g×2袋" required> コーヒー豆200g × 2袋</label>
+                <label><input type="radio" name="giftContent" value="豆200g＋お菓子" required> コーヒー豆200g ＋ お菓子</label>
               </div>
             </fieldset>
             <fieldset>
-              <legend class="fieldset__legend">白い帯</legend>
+              <legend class="fieldset__legend">白い帯<span class="req">必須</span></legend>
               <div class="choice">
-                <label><input type="radio" name="giftBand" value="帯あり" checked> 掛ける</label>
-                <label><input type="radio" name="giftBand" value="帯なし"> 掛けない（配送できます）</label>
+                <label><input type="radio" name="giftBand" value="帯あり" required> 掛ける</label>
+                <label><input type="radio" name="giftBand" value="帯なし" required> 掛けない（配送できます）</label>
               </div>
             </fieldset>
             <fieldset>
-              <legend class="fieldset__legend">受け取り方法</legend>
+              <legend class="fieldset__legend">受け取り方法<span class="req">必須</span></legend>
               <div class="choice">
-                <label><input type="radio" name="giftDelivery" value="店頭" checked> 店頭で受け取る</label>
-                <label><input type="radio" name="giftDelivery" value="配送"> 配送してもらう</label>
+                <label><input type="radio" name="giftDelivery" value="店頭" required> 店頭で受け取る</label>
+                <label><input type="radio" name="giftDelivery" value="配送" required> 配送してもらう</label>
               </div>
             </fieldset>
 
@@ -447,7 +447,7 @@
             </div>
 
             <div class="field" id="f-addr-wrap" hidden>
-              <label for="f-addr">配送先</label>
+              <label for="f-addr">配送先<span class="req">必須</span></label>
               <textarea id="f-addr" name="address" placeholder="〒203-0053 東京都東久留米市本町2-2-19 もっく 様…"></textarea>
             </div>
             <p class="note" id="gift-note">豆の種類とお菓子によってお値段が変わります。<strong>お日にちとお値段は、後日店舗よりご連絡します。</strong></p>
