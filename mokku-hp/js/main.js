@@ -671,7 +671,7 @@ function keepOrderSummary(form) {
     ['受け取り方法', get('giftDelivery')],
     [toShop ? '受け取り希望' : '', toShop ? pickupLabel(get('date'), get('time')) : ''],
     [toShop ? '' : '配送先', toShop ? '' : get('address')],
-    ['そのほかご希望', get('memo')]
+    ['中身のご希望', get('memo')]
   ].filter(function (r) { return r[0] && r[1]; });
 
   try {
