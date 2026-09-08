@@ -6,10 +6,6 @@
 
 'use strict';
 
-/* --- 取得先。Apps Script ができたら、この1行を差し替えるだけで動く。 --- */
-const BEANS_URL = './data/beans.json'; // TODO: Apps Script のURLに差し替え
-
-const CACHE_MS = 5 * 60 * 1000;
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ==========================================================================
@@ -56,196 +52,10 @@ function bindTracking() {
   });
 }
 
-/* ==========================================================================
-   取得（5分キャッシュ・失敗してもサイトは壊さない）
-   ========================================================================== */
-
-async function loadJSON(url, key) {
-  try {
-    const raw = sessionStorage.getItem(key);
-    if (raw) {
-      const hit = JSON.parse(raw);
-      if (Date.now() - hit.at < CACHE_MS) return hit.data;
-    }
-  } catch (e) {}
-
-  try {
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) return null;
-    const data = await res.json();
-    try {
-      sessionStorage.setItem(key, JSON.stringify({ at: Date.now(), data: data }));
-    } catch (e) {}
-    return data;
-  } catch (e) {
-    return null; // 画面にエラーは出さない
-  }
-}
-
-/* ==========================================================================
-   豆
-   ========================================================================== */
-
-const ROAST_COLOR = {
-  '浅煎り':   '#8A5A32',
-  '中煎り':   '#6B3F22',
-  '中深煎り': '#4A2A17',
-  '深煎り':   '#2E1A10'
-};
-
-const SHELVES = [
-  { key: 'upper', label: 'UPPER SHELF', ja: '上の段' },
-  { key: 'lower', label: 'LOWER SHELF', ja: '下の段' }
-];
-
-function daysSince(iso) {
-  const d = new Date(iso);
-  if (isNaN(d)) return null;
-  return Math.floor((Date.now() - d.getTime()) / 86400000);
-}
-
-const FMT_MD = new Intl.DateTimeFormat('ja-JP', { month: 'long', day: 'numeric' });
 const FMT_YMDW = new Intl.DateTimeFormat('ja-JP', {
   year: 'numeric', month: 'long', day: 'numeric', weekday: 'short'
 });
 
-function jaDate(iso) {
-  const d = new Date(iso);
-  if (isNaN(d)) return '';
-  return FMT_MD.format(d);
-}
-
-/* beans.html — 豆の帯を並べる
-   beans.html には同じ形の帯が静的に書いてある。取得できたらここで描き直す。
-   取得に失敗しても、静的な帯がそのまま残る。 */
-function renderShelves(beans) {
-  const wrap = document.getElementById('shelves');
-  if (!wrap) return;
-
-  wrap.textContent = '';
-
-  SHELVES.forEach(function (shelf) {
-    const list = beans.filter(function (b) { return (b.shelf || 'upper') === shelf.key; });
-    if (!list.length) return;
-
-    const sec = document.createElement('section');
-    sec.className = 'shelf';
-
-    const h2 = document.createElement('h2');
-    h2.className = 'shelf__label';
-    h2.innerHTML = '<span translate="no">' + shelf.label + '</span>' +
-                   '<span class="sr-only">（' + shelf.ja + '）</span>';
-    sec.appendChild(h2);
-
-    const ul = document.createElement('ul');
-    ul.className = 'beans';
-
-    list.forEach(function (bean, i) {
-      const id = 'bean-' + shelf.key + '-' + i;
-
-      const li = document.createElement('li');
-      li.className = 'bean reveal' + (bean.soldOut ? ' bean--empty' : '');
-      if (i < 6) li.dataset.i = String(i);
-
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'bean__row';
-      btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-controls', id);
-      btn.innerHTML = beanRowHTML(bean);
-
-      const detail = document.createElement('div');
-      detail.className = 'bean__detail';
-      detail.id = id;
-      detail.innerHTML = '<div><p class="bean__spec">' + beanSpecHTML(bean) + '</p></div>';
-
-      btn.addEventListener('click', function () { openBean(btn, detail); });
-
-      li.appendChild(btn);
-      li.appendChild(detail);
-      ul.appendChild(li);
-    });
-
-    sec.appendChild(ul);
-    wrap.appendChild(sec);
-  });
-
-  observeReveals();
-}
-
-/* 帯の頭。焙煎度の色バー・名前・焙煎日・店主のひとこと（1行）。 */
-function beanRowHTML(bean) {
-  const days = daysSince(bean.roastedOn);
-  const fresh = !bean.soldOut && days !== null && days <= 7;
-
-  let when;
-  if (bean.soldOut) {
-    when = '<b>切らしています</b>';
-  } else if (fresh) {
-    when = '<b>焼きたて</b><i>/</i>' + esc(jaDate(bean.roastedOn)) + ' 焙煎';
-  } else {
-    when = '<b>' + esc(jaDate(bean.roastedOn)) + ' 焙煎</b>';
-  }
-  if (bean.roast) when += '<i>/</i>' + esc(bean.roast);
-
-  return '<span class="bean__bar" aria-hidden="true"' +
-           (bean.soldOut ? '' :
-             ' style="--roast:' + (ROAST_COLOR[bean.roast] || '#4A2A17') + '"') + '></span>' +
-         '<span class="bean__id">' +
-           '<span class="bean__en" translate="no">' + esc(bean.nameEn || bean.name) + '</span>' +
-           '<span class="bean__ja">' + esc(bean.name) + '</span>' +
-         '</span>' +
-         '<span class="bean__when' + (fresh ? ' bean__when--fresh' : '') + '">' + when + '</span>' +
-         '<span class="bean__say">' + esc(bean.comment || '') + '</span>';
-}
-
-/* 開いたときに出る、産地の1行。 */
-function beanSpecHTML(bean) {
-  const spec = [bean.origin, bean.farm, bean.process, bean.notes]
-    .filter(Boolean)
-    .map(function (v) { return '<span>' + esc(v) + '</span>'; })
-    .join('<i aria-hidden="true">　/　</i>');
-
-  return spec;
-}
-
-/* 帯の開閉。このサイトで唯一、人の操作に返す動き。 */
-function openBean(btn, detail) {
-  const already = btn.getAttribute('aria-expanded') === 'true';
-
-  document.querySelectorAll('.bean__row[aria-expanded="true"]').forEach(function (b) {
-    b.setAttribute('aria-expanded', 'false');
-    const d = document.getElementById(b.getAttribute('aria-controls'));
-    if (d) d.classList.remove('is-open');
-  });
-
-  if (already) return;
-
-  btn.setAttribute('aria-expanded', 'true');
-  detail.classList.add('is-open');
-}
-
-function esc(s) {
-  return String(s == null ? '' : s)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-/* ページに埋めてある控え。fetch が使えない環境（ローカルで直接開いたときなど）でも
-   瓶が開くようにするため。 */
-function seedBeans() {
-  const el = document.getElementById('beans-seed');
-  if (!el) return null;
-  try { return JSON.parse(el.textContent); } catch (e) { return null; }
-}
-
-async function renderBeans() {
-  if (!document.getElementById('shelves')) return;
-
-  const data = (await loadJSON(BEANS_URL, 'mokku_beans')) || seedBeans();
-  if (!data || !Array.isArray(data.beans) || !data.beans.length) return; // 静的な棚をそのまま残す
-
-  renderShelves(data.beans);
-}
 
 /* ==========================================================================
    スクロール表示（1種類だけ。一度出したら二度と動かさない）
@@ -465,49 +275,68 @@ function setupMenu() {
 }
 
 /* ==========================================================================
-   メニューの開閉（スマホのみ）
-   3つのまとまりを畳んでおく。開いたものだけが伸びるので、余白が残らない。
-   PC は全部開いたまま、操作もしない。
+   メニュー（付箋で切り替える）
+   紙は1枚のまま動かない。付箋を選ぶと、書かれている中身が入れ替わる。
+   紙の高さは CSS の grid が3枚の重なりから決めるので、ここでは測らない。
    ========================================================================== */
 
-function setupMenuGroups() {
-  const toggles = Array.prototype.slice.call(document.querySelectorAll('.menu__toggle'));
-  if (!toggles.length) return;
+function setupMenuTabs() {
+  const root = document.querySelector('#menu .menu');
+  if (!root) return;
 
-  const wide = window.matchMedia('(min-width: 768px)');
+  const tabs = Array.prototype.slice.call(root.querySelectorAll('.menu__tab'));
+  if (tabs.length < 2) return;
 
-  function body(t) { return document.getElementById(t.getAttribute('aria-controls')); }
+  const pages = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+  if (pages.indexOf(null) !== -1) return;
 
-  function sync() {
-    toggles.forEach(function (t, i) {
-      const b = body(t);
-      if (!b) return;
-      if (wide.matches) {
-        // 幅があるときは全部見せる。ボタンとしても働かせない。
-        t.setAttribute('aria-expanded', 'true');
-        t.disabled = true;
-        b.classList.add('is-open');
-      } else {
-        t.disabled = false;
-        const open = i === 0;
-        t.setAttribute('aria-expanded', String(open));
-        b.classList.toggle('is-open', open);
-      }
+  let cur = 0;
+
+  function select(i, moveFocus) {
+    if (i < 0 || i >= pages.length) return;
+    if (moveFocus) tabs[i].focus();
+    if (i === cur) return;
+
+    cur = i;
+    tabs.forEach(function (t, n) {
+      t.setAttribute('aria-selected', String(n === cur));
+      t.tabIndex = n === cur ? 0 : -1;
+    });
+    pages.forEach(function (p, n) {
+      p.classList.toggle('is-front', n === cur);
+      if (n === cur) p.removeAttribute('aria-hidden');
+      else p.setAttribute('aria-hidden', 'true');
     });
   }
 
-  toggles.forEach(function (t) {
-    t.addEventListener('click', function () {
-      if (wide.matches) return;
-      const b = body(t);
-      const open = t.getAttribute('aria-expanded') === 'true';
-      t.setAttribute('aria-expanded', String(!open));
-      if (b) b.classList.toggle('is-open', !open);
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(i, false); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); select((i + 1) % tabs.length, true); }
+      if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+      if (e.key === 'Home') { e.preventDefault(); select(0, true); }
+      if (e.key === 'End')  { e.preventDefault(); select(tabs.length - 1, true); }
     });
   });
 
-  wide.addEventListener('change', sync);
-  sync();
+  /* 指ではらう。縦に読んでいる途中の誤爆を拾わないよう、
+     横に十分動いていて、かつ縦より横が勝っているときだけ。 */
+  const paper = root.querySelector('.menu__paper');
+  if (paper) {
+    let x0 = null, y0 = null;
+    paper.addEventListener('touchstart', function (e) {
+      x0 = e.touches[0].clientX;
+      y0 = e.touches[0].clientY;
+    }, { passive: true });
+    paper.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      const dy = e.changedTouches[0].clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) < 46 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+      select(dx < 0 ? cur + 1 : cur - 1, false);
+    }, { passive: true });
+  }
 }
 
 /* ==========================================================================
@@ -951,7 +780,7 @@ document.addEventListener('DOMContentLoaded', function () {
   setupOrderForm();
   renderOrderRecap();
   setupMenu();
-  setupMenuGroups();
+  setupMenuTabs();
   setupGift();
   setupCoupon();
   watchHero();
@@ -963,8 +792,5 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add('is-ready');
   });
 
-  if (document.getElementById('shelves')) trackEvent('beans_view', SOURCE);
   if (document.body.classList.contains('coupon-page')) trackEvent('coupon_view', SOURCE);
-
-  renderBeans();
 });
