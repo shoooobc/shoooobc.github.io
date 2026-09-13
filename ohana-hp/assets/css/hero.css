@@ -1,0 +1,162 @@
+/* ==========================================================================
+   Hero — 写真・縦書きの見出し・実用情報
+   ========================================================================== */
+
+.hero {
+  border-block-end: 1px solid var(--color-border-primary);
+}
+
+.hero__photo {
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 40% 50%;
+}
+
+.hero__body {
+  display: grid;
+  gap: var(--space-5);
+  padding-block: var(--space-6) var(--space-7);
+}
+
+.hero__kicker {
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+}
+
+.hero__title {
+  font-size: var(--font-size-3xl);
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+}
+
+.hero__lead {
+  max-inline-size: 26em;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  word-break: auto-phrase;
+}
+
+.hero__meta {
+  display: grid;
+  border-block: 1px solid var(--color-border-primary);
+}
+
+.hero__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-4);
+  padding-block: var(--space-3);
+}
+
+.hero__meta-row + .hero__meta-row {
+  border-block-start: 1px solid var(--color-border-secondary);
+}
+
+.hero__meta-label {
+  inline-size: 4.5em;
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.hero__meta-row a {
+  color: var(--color-text-primary);
+}
+
+.hero__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: end;
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  .hero__photo-wrap {
+    position: relative;
+  }
+
+  /* 写真の外側に、少しずらした細い枠 */
+  .hero__photo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: var(--space-3) calc(var(--space-3) * -1) calc(var(--space-3) * -1) var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    pointer-events: none;
+  }
+
+  .hero__photo {
+    aspect-ratio: 4 / 5;
+  }
+
+  .hero__body {
+    padding: 0;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .hero__actions .button {
+    min-inline-size: 11rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 6fr) auto minmax(0, 5fr);
+    gap: var(--space-8);
+    padding-block: var(--space-8) var(--space-9);
+    align-items: stretch;
+  }
+
+  .hero__photo {
+    block-size: 100%;
+    max-block-size: 720px;
+    aspect-ratio: auto;
+    min-block-size: 560px;
+  }
+
+  /* 縦書きの見出しを、写真と情報のあいだに */
+  .hero__title {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    font-size: clamp(2.75rem, 1.4rem + 2.6vw, 4.25rem);
+    line-height: 1.5;
+    letter-spacing: 0.2em;
+  }
+
+  .hero__body {
+    grid-column: 3;
+    grid-row: 1;
+    align-content: end;
+    gap: var(--space-6);
+  }
+}
+
+/* スマホ：写真は画面の端まで */
+@media (max-width: 767px) {
+  .hero__photo-wrap {
+    margin-inline: calc(var(--space-gutter) * -1);
+  }
+
+  .hero__title {
+    margin-block-start: var(--space-6);
+  }
+
+  .hero__body {
+    padding-block-start: var(--space-5);
+  }
+}

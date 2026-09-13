@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>まがりDEバナナ 東久留米店｜バナナジュース専門店（Dining Bar OHANA 店内）</title>
+  <meta name="description" content="バナナジュース専門店 まがりDEバナナ 東久留米店。Dining Bar OHANA の店内で営業中。ミディアム500円から、キリンサイズや恋バナも。Uber Eats・出前館でデリバリー注文もできます。">
+  <!-- 仮: 公開するドメイン（現行サイトと同じドメインを想定） -->
+  <link rel="canonical" href="https://diningbarohana.com/banana/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Dining Bar OHANA">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="まがりDEバナナ 東久留米店｜バナナジュース専門店（Dining Bar OHANA 店内）">
+  <meta property="og:description" content="バナナジュース専門店 まがりDEバナナ 東久留米店。Dining Bar OHANA の店内で営業中。ミディアム500円から、キリンサイズや恋バナも。Uber Eats・出前館でデリバリー注文もできます。">
+  <meta property="og:url" content="https://diningbarohana.com/banana/">
+  <meta property="og:image" content="https://diningbarohana.com/assets/img/ogp-banana.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="まがりDEバナナ 東久留米店のキャラクター">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- 試作：オーナー確認前のため検索に出さない（公開時に削除） -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1C1410">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+
+  <!-- 仮: テイクアウトの営業時間は現行サイトの内容 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    "name": "まがりDEバナナ 東久留米店",
+    "description": "バナナジュース専門店 まがりDEバナナ 東久留米店。Dining Bar OHANA の店内で営業中。ミディアム500円から、キリンサイズや恋バナも。Uber Eats・出前館でデリバリー注文もできます。",
+    "url": "https://diningbarohana.com/banana/",
+    "image": "https://diningbarohana.com/assets/img/ogp-banana.jpg",
+    "telephone": "+81-42-476-7361",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "本町2-5-1 オーヴ02ビル 1F",
+      "addressLocality": "東久留米市",
+      "addressRegion": "東京都",
+      "addressCountry": "JP"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "18:00",
+        "closes": "00:00"
+      }
+    ],
+    "containedInPlace": {
+      "@id": "https://diningbarohana.com/#bar"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Web フォントは描画を止めずに読み込む（先に代わりのフォントで表示し、読み込めたら差し替える） -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap"></noscript>
+
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/button.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/drawer.css">
+  <link rel="stylesheet" href="../assets/css/action-bar.css">
+  <link rel="stylesheet" href="../assets/css/footer.css">
+  <link rel="stylesheet" href="../assets/css/hours.css">
+  <link rel="stylesheet" href="../assets/css/motion.css">
+  <link rel="stylesheet" href="../assets/css/page.css">
+  <link rel="stylesheet" href="../assets/css/banana.css">
+
+  <link rel="preload" as="image" href="../assets/img/banana-logo-600w.webp" fetchpriority="high">
+  <script type="module" src="../assets/js/main.js"></script>
+</head>
+<body data-brand="banana">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <!-- ===================== Site header ===================== -->
+  <header class="site-header">
+    <div class="site-info">
+      <div class="container site-info__inner">
+        <div class="site-info__item hours-status" data-hours-status>
+              <p class="hours-status__fallback" data-hours-fallback><span class="nums">月〜木・日 18:00〜25:00</span>／<span class="nums">金・土 18:00〜26:00</span></p>
+              <span class="hours-status__badge" data-hours-live hidden><span class="hours-status__dot" aria-hidden="true"></span><span data-hours-badge>本日の営業</span></span>
+              <span class="hours-status__text" data-hours-live hidden><span class="hours-status__main nums" data-hours-main></span><span class="hours-status__sub" data-hours-sub></span></span>
+        </div>
+        <span class="site-info__item">西武池袋線 東久留米駅から徒歩7分</span>
+        <span class="site-info__item site-info__item--end"><a href="https://www.instagram.com/diningbarohana/" target="_blank" rel="noopener">Instagram<span class="visually-hidden">（新しいタブで開きます）</span></a></span>
+      </div>
+    </div>
+    <div class="container site-header__inner">
+      <a class="site-logo" href="../" aria-label="Dining Bar OHANA トップへ">
+        <img class="site-logo__img" src="../assets/img/logo-ohana-320w.webp" srcset="../assets/img/logo-ohana-320w.webp 320w, ../assets/img/logo-ohana-640w.webp 640w" sizes="120px" width="320" height="186" alt="Dining Bar OHANA">
+      </a>
+
+      <nav class="site-nav" aria-label="メインメニュー">
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="../#menu">メニュー</a></li>
+          <li><a class="site-nav__link" href="../#darts">ダーツ</a></li>
+          <li><a class="site-nav__link" href="../#private">貸切</a></li>
+          <li><a class="site-nav__link" href="../#access">アクセス</a></li>
+          <li><a class="site-nav__link" href="../banana/" aria-current="page">まがりDEバナナ</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <a class="site-header__tel" href="tel:0424767361"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg><span class="site-header__tel-number nums">042-476-7361</span><span class="visually-hidden">に電話する</span></a>
+        <a class="button button--primary button--sm" href="../reserve/">ネット予約</a>
+      </div>
+
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="drawer">
+        <span class="menu-button__label" aria-hidden="true">メニュー</span>
+        <span class="menu-button__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="visually-hidden">メニューを開く</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== Drawer（〜1023px） ===================== -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer__backdrop" data-drawer-close></div>
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="メニュー">
+      <div class="drawer__header">
+        <a href="../"><img class="drawer__logo" src="../assets/img/logo-ohana-320w.webp" width="320" height="186" alt="Dining Bar OHANA トップへ"></a>
+        <button class="drawer__close" type="button" data-drawer-close>閉じる<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <nav class="drawer__nav" aria-label="メインメニュー">
+        <ul role="list">
+          <li><a class="drawer__link" href="../#menu">メニュー<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+          <li><a class="drawer__link" href="../#darts">ダーツ<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+          <li><a class="drawer__link" href="../#private">貸切<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+          <li><a class="drawer__link" href="../#access">アクセス<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+          <li><a class="drawer__link" href="../banana/" aria-current="page">まがりDEバナナ<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+        </ul>
+      </nav>
+      <div class="drawer__actions">
+        <a class="button button--primary button--block" href="../reserve/">ネット予約</a>
+        <a class="button button--secondary button--block" href="tel:0424767361"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg><span class="nums">042-476-7361</span><span class="visually-hidden">に電話する</span></a>
+        <p class="drawer__hours nums">月〜木・日 18:00〜25:00<br>金・土 18:00〜26:00</p>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ===================== Hero ===================== -->
+    <section class="banana-hero" aria-labelledby="banana-title">
+      <div class="container">
+        <div class="banana-hero__card">
+          <img class="banana-hero__logo" src="../assets/img/banana-logo-600w.webp" srcset="../assets/img/banana-logo-600w.webp 600w, ../assets/img/banana-logo-1200w.webp 1200w" sizes="(min-width: 768px) 45vw, 90vw" width="600" height="239" alt="" fetchpriority="high">
+          <div class="banana-hero__body">
+            <a class="back-link" href="../"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>OHANA トップへ</a>
+            <h1 class="banana-hero__title" id="banana-title">
+              <small>バナナジュース専門店</small>
+              まがりDEバナナ 東久留米店
+            </h1>
+            <p class="banana-hero__lead">Dining Bar OHANA の店内で営業中。テイクアウトと、Uber Eats・出前館のデリバリーでお楽しみいただけます。</p>
+            <!-- 仮: Uber Eats・出前館の店舗ページの URL（現在はサービスのトップページ） -->
+            <div class="order-buttons">
+              <a class="order-button" href="https://www.ubereats.com/jp" target="_blank" rel="noopener">
+                <span class="order-button__name">Uber Eats で注文<small>外部サイトが開きます</small></span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+              </a>
+              <a class="order-button" href="https://demae-can.com/" target="_blank" rel="noopener">
+                <span class="order-button__name">出前館で注文<small>外部サイトが開きます</small></span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 注文方法 ===================== -->
+    <section class="section" id="how-to-order" aria-labelledby="order-title">
+      <div class="container">
+        <div class="section-heading banana-menu__heading">
+          <span class="eyebrow">Menu</span>
+          <h2 class="section-heading__title" id="order-title">メニューと注文方法</h2>
+          <p class="section-heading__lead">サイズ、牛乳か豆乳か、トッピングの3ステップで選べます。</p>
+        </div>
+
+        <!-- 仮: メニューと価格は現行サイトの内容（現在も同じか確認） -->
+        <div class="steps">
+          <section class="step" aria-labelledby="step1-title">
+            <div class="step__header">
+              <span class="step__number" aria-hidden="true">1</span>
+              <h3 class="step__title" id="step1-title"><span class="visually-hidden">ステップ1：</span>サイズを選ぶ</h3>
+              <p class="step__text">キリンサイズはミディアムの1.5倍。</p>
+            </div>
+            <ul class="product-grid product-grid--sizes" role="list">
+              <li class="product">
+                <img class="product__img" src="../assets/img/banana-medium-400w.webp" srcset="../assets/img/banana-medium-400w.webp 400w, ../assets/img/banana-medium-800w.webp 800w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="400" height="400" alt="まがりDEバナナのロゴ入りカップのバナナジュース（ミディアムサイズ）" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">ミディアムサイズ</h4>
+                  <p class="product__price nums">500<small>円</small></p>
+                </div>
+              </li>
+              <li class="product">
+                <img class="product__img" src="../assets/img/banana-kirin-400w.webp" srcset="../assets/img/banana-kirin-400w.webp 400w, ../assets/img/banana-kirin-800w.webp 800w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="400" height="400" alt="背の高いカップのバナナジュース（キリンサイズ）" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">キリンサイズ</h4>
+                  <p class="product__price nums">600<small>円</small></p>
+                  <p class="product__note">ミディアムサイズの1.5倍！</p>
+                </div>
+              </li>
+              <li class="product">
+                <img class="product__img" src="../assets/img/banana-koibana-400w.webp" srcset="../assets/img/banana-koibana-400w.webp 400w, ../assets/img/banana-koibana-800w.webp 800w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="400" height="400" alt="いちごとバナナのカップが並んだ「恋バナ」" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <span class="product__tag">数量限定</span>
+                  <h4 class="product__name">恋バナ</h4>
+                  <p class="product__price nums">800<small>円</small></p>
+                  <p class="product__note">イチゴとバナナ、2つのカップが合体した特別メニュー。</p>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="step" aria-labelledby="step2-title">
+            <div class="step__header">
+              <span class="step__number" aria-hidden="true">2</span>
+              <h3 class="step__title" id="step2-title"><span class="visually-hidden">ステップ2：</span>牛乳か豆乳か</h3>
+              <p class="step__text">+100円で豆乳に変更できます。</p>
+            </div>
+            <ul class="product-grid product-grid--milk" role="list">
+              <li class="product">
+                <img class="product__img" src="../assets/img/banana-milk-320w.webp" srcset="../assets/img/banana-milk-320w.webp 320w, ../assets/img/banana-milk-640w.webp 640w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="320" height="240" alt="グラスに入った牛乳" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">牛乳</h4>
+                  <p class="product__price nums">0<small>円</small></p>
+                </div>
+              </li>
+              <li class="product">
+                <img class="product__img" src="../assets/img/banana-soy-320w.webp" srcset="../assets/img/banana-soy-320w.webp 320w, ../assets/img/banana-soy-640w.webp 640w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="320" height="240" alt="大豆とグラスに入った豆乳" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">豆乳</h4>
+                  <p class="product__price nums">+100<small>円</small></p>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="step" aria-labelledby="step3-title">
+            <div class="step__header">
+              <span class="step__number" aria-hidden="true">3</span>
+              <h3 class="step__title" id="step3-title"><span class="visually-hidden">ステップ3：</span>トッピングを選ぶ</h3>
+              <p class="step__text">お好みで追加できます。</p>
+            </div>
+            <ul class="product-grid product-grid--toppings" role="list">
+              <li class="product">
+                <img class="product__img" src="../assets/img/topping-strawberry-320w.webp" srcset="../assets/img/topping-strawberry-320w.webp 320w, ../assets/img/topping-strawberry-640w.webp 640w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="320" height="320" alt="かごに入ったいちご" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">いちご<wbr>シロップ</h4>
+                  <p class="product__price nums">+100<small>円</small></p>
+                </div>
+              </li>
+              <li class="product">
+                <img class="product__img" src="../assets/img/topping-honey-320w.webp" srcset="../assets/img/topping-honey-320w.webp 320w, ../assets/img/topping-honey-640w.webp 640w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="320" height="320" alt="スプーンからたれるハチミツ" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">ハチミツ</h4>
+                  <p class="product__price nums">+100<small>円</small></p>
+                </div>
+              </li>
+              <li class="product">
+                <img class="product__img" src="../assets/img/topping-protein-320w.webp" srcset="../assets/img/topping-protein-320w.webp 320w, ../assets/img/topping-protein-640w.webp 640w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="320" height="320" alt="プロテインドリンク" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">バニラ<wbr>プロテイン</h4>
+                  <p class="product__price nums">+200<small>円</small></p>
+                </div>
+              </li>
+              <li class="product">
+                <img class="product__img" src="../assets/img/topping-protein-320w.webp" srcset="../assets/img/topping-protein-320w.webp 320w, ../assets/img/topping-protein-640w.webp 640w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="320" height="320" alt="プロテインドリンク" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">ショコラ<wbr>プロテイン</h4>
+                  <p class="product__price nums">+200<small>円</small></p>
+                </div>
+              </li>
+              <li class="product">
+                <img class="product__img" src="../assets/img/topping-banana-320w.webp" srcset="../assets/img/topping-banana-320w.webp 320w, ../assets/img/topping-banana-640w.webp 640w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="320" height="320" alt="バナナとバナナジュース" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">おいバナ</h4>
+                  <p class="product__price nums">+100<small>円</small></p>
+                  <p class="product__note">バナナを追加</p>
+                </div>
+              </li>
+              <li class="product">
+                <img class="product__img" src="../assets/img/topping-chocolate-320w.webp" srcset="../assets/img/topping-chocolate-320w.webp 320w, ../assets/img/topping-chocolate-640w.webp 640w" sizes="(min-width: 1024px) 200px, (min-width: 768px) 30vw, 45vw" width="320" height="320" alt="瓶に入ったチョコレート" loading="lazy" decoding="async">
+                <div class="product__body">
+                  <h4 class="product__name">チョコチップ</h4>
+                  <p class="product__price nums">+100<small>円</small></p>
+                </div>
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <p class="banana-price-note">※ 価格は変更の場合があります。デリバリーの価格は各サービスのページでご確認ください。</p>
+      </div>
+    </section>
+
+    <!-- ===================== デリバリー・テイクアウト ===================== -->
+    <section class="section banana-order" id="order" aria-labelledby="delivery-title">
+      <div class="container banana-info">
+        <div class="info-card">
+          <h2 class="info-card__title" id="delivery-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h5l3-6h3M9 11h5M15 7h3"/></svg>デリバリー</h2>
+          <p class="info-card__text">おうちや職場へお届けします。対応エリアや配達料は、各サービスでご確認ください。</p>
+          <!-- 仮: Uber Eats・出前館の店舗ページの URL（現在はサービスのトップページ） -->
+            <div class="order-buttons">
+              <a class="order-button" href="https://www.ubereats.com/jp" target="_blank" rel="noopener">
+                <span class="order-button__name">Uber Eats で注文<small>外部サイトが開きます</small></span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+              </a>
+              <a class="order-button" href="https://demae-can.com/" target="_blank" rel="noopener">
+                <span class="order-button__name">出前館で注文<small>外部サイトが開きます</small></span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+              </a>
+            </div>
+        </div>
+
+        <div class="info-card">
+          <h2 class="info-card__title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>テイクアウト</h2>
+          <p class="info-card__text">Dining Bar OHANA の店頭で、お持ち帰りいただけます。</p>
+          <!-- 仮: テイクアウトの営業時間は現行サイトの内容（OHANA と閉店時刻が違う。現在も同じか確認） -->
+          <dl class="info-list">
+            <div><dt>営業時間</dt><dd class="nums">毎日 18:00〜24:00</dd></div>
+            <div><dt>場所</dt><dd><address>東京都東久留米市本町2-5-1<br>オーヴ02ビル 1F（OHANA 店内）</address></dd></div>
+            <div><dt>アクセス</dt><dd>西武池袋線 東久留米駅から徒歩7分</dd></div>
+          </dl>
+          <a class="ohana-link" href="../">
+            <img src="../assets/img/logo-ohana-320w.webp" width="320" height="186" alt="" loading="lazy">
+            <span class="ohana-link__text"><strong>Dining Bar OHANA のサイトへ</strong>地図や店内の様子はこちら</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== 固定アクションバー（〜1023px） ===================== -->
+  <!-- 仮: Uber Eats・出前館の店舗ページの URL -->
+  <nav class="action-bar" aria-label="注文" data-action-bar data-state="hidden" data-show-after=".banana-hero" data-hide-on="#order, .site-footer">
+    <a class="action-bar__item action-bar__item--primary" href="https://www.ubereats.com/jp" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h5l3-6h3M9 11h5M15 7h3"/></svg>Uber Eats<span class="visually-hidden">で注文（新しいタブで開きます）</span></a>
+    <a class="action-bar__item action-bar__item--primary" href="https://demae-can.com/" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h5l3-6h3M9 11h5M15 7h3"/></svg>出前館<span class="visually-hidden">で注文（新しいタブで開きます）</span></a>
+    <a class="action-bar__item" href="../"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg>OHANA</a>
+  </nav>
+
+  <!-- ===================== Site footer ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <a class="site-logo" href="../" aria-label="Dining Bar OHANA トップへ">
+            <img class="site-logo__img site-logo__img--footer" src="../assets/img/logo-ohana-320w.webp" srcset="../assets/img/logo-ohana-320w.webp 320w, ../assets/img/logo-ohana-640w.webp 640w" sizes="160px" width="320" height="186" alt="Dining Bar OHANA" loading="lazy">
+          </a>
+          <p class="site-footer__name">東久留米　二〇〇八年創業</p>
+        </div>
+
+        <dl class="site-footer__info">
+          <div class="site-footer__row">
+            <dt class="site-footer__label">住所</dt>
+            <dd class="site-footer__value"><address class="site-footer__value">東京都東久留米市本町2-5-1 オーヴ02ビル1F<br>西武池袋線 東久留米駅から徒歩7分</address></dd>
+          </div>
+          <div class="site-footer__row">
+            <dt class="site-footer__label">営業時間</dt>
+            <dd class="site-footer__value nums">月〜木・日 18:00〜25:00<br>金・土 18:00〜26:00（定休日なし）</dd>
+          </div>
+          <div class="site-footer__row">
+            <dt class="site-footer__label">電話</dt>
+            <dd class="site-footer__value"><a class="site-footer__tel nums" href="tel:0424767361">042-476-7361</a></dd>
+          </div>
+        </dl>
+
+        <div class="site-footer__links">
+          <nav aria-label="フッターメニュー">
+            <ul class="site-footer__nav" role="list">
+              <li><a href="../#menu">メニュー</a></li>
+              <li><a href="../#darts">ダーツ</a></li>
+              <li><a href="../#private">貸切</a></li>
+              <li><a href="../#access">アクセス</a></li>
+              <li><a href="../reserve/">ネット予約</a></li>
+              <li><a href="../banana/">まがりDEバナナ</a></li>
+            </ul>
+          </nav>
+          <div class="site-footer__social">
+            <a href="https://www.instagram.com/diningbarohana/" target="_blank" rel="noopener">Instagram<span class="visually-hidden">（新しいタブで開きます）</span></a>
+            <a href="https://www.youtube.com/channel/UCWhaSuIf68WhF-wPaHrlFjA" target="_blank" rel="noopener">YouTube<span class="visually-hidden">（新しいタブで開きます）</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>© 2008–<span data-current-year>2026</span> Dining Bar OHANA</p>
+        <a href="../privacy/">プライバシーポリシー</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

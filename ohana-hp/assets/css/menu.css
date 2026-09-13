@@ -1,0 +1,184 @@
+/* ==========================================================================
+   品書き #menu（生成りの面）— 点線でつないだ価格表
+   ========================================================================== */
+
+.menu {
+  border-block: 1px solid var(--color-border-primary);
+}
+
+.menu__photos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-block-end: var(--space-7);
+}
+
+.menu__photo {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.menu__photo img {
+  inline-size: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.menu__photo figcaption {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+  color: var(--color-text-secondary);
+}
+
+.menu__columns {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.menu__group-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block-end: var(--space-3);
+  border-block-end: 2px solid var(--color-text-primary);
+  font-size: var(--font-size-xl);
+  letter-spacing: 0.2em;
+}
+
+.menu__group-title small {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.05em;
+  color: var(--color-text-tertiary);
+}
+
+.price-list {
+  display: grid;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+  border-block-end: 1px solid var(--color-border-secondary);
+}
+
+.price-row__name {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  letter-spacing: 0.04em;
+}
+
+.price-row__name small {
+  display: block;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-tertiary);
+}
+
+.price-row__dots {
+  flex: 1;
+  min-inline-size: 1.5rem;
+  border-block-end: 1px dotted var(--color-border-strong);
+  transform: translateY(-0.35em);
+}
+
+.price-row__price {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+.price-row__price small {
+  font-size: 0.8em;
+}
+
+.menu__notes {
+  display: grid;
+  gap: var(--space-4);
+  margin-block-start: var(--space-7);
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--color-border-primary);
+}
+
+.menu__charge {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.menu__charge em {
+  font-style: normal;
+  color: var(--color-text-accent);
+}
+
+.menu__small {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.file-meta {
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-tertiary);
+}
+
+@media (min-width: 768px) {
+  .menu__columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8);
+  }
+
+  .menu__photos {
+    grid-template-columns: 1.3fr 1fr 1fr;
+    align-items: end;
+  }
+
+  .menu__photo:first-child img {
+    aspect-ratio: 4 / 5;
+  }
+
+  .menu__notes {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+}
+
+/* スマホ：1枚目を大きく、残り2枚を半分ずつ。品名が途中で折り返さないよう詰める */
+@media (max-width: 767px) {
+  .menu__photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .menu__photo:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .menu__photo:first-child img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .menu__photo img {
+    aspect-ratio: 1;
+  }
+
+  .price-row {
+    gap: var(--space-2);
+  }
+
+  .price-row__name {
+    letter-spacing: 0;
+    word-break: auto-phrase;
+  }
+
+  .price-row__dots {
+    min-inline-size: 0.75rem;
+  }
+}

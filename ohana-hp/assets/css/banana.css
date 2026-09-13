@@ -1,0 +1,469 @@
+/* ==========================================================================
+   まがりDEバナナ /banana/（Banana テーマ）
+   ページの地は OHANA と同じ焦げ茶。黄色は面とボタンに使う
+   ========================================================================== */
+
+/* Hero -------------------------------------------------------------------- */
+.banana-hero {
+  padding-block: var(--space-5) var(--space-8);
+}
+
+.banana-hero__card {
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+  overflow: hidden;
+  padding: var(--space-6) var(--space-5);
+  border-radius: var(--border-radius-xl);
+  background-color: var(--banana-surface);
+  color: var(--banana-surface-text);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  isolation: isolate;
+}
+
+.banana-hero__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(42, 31, 24, 0.07) 1.5px, transparent 1.6px);
+  background-size: 18px 18px;
+}
+
+.banana-hero__logo {
+  inline-size: min(100%, 520px);
+  justify-self: center;
+}
+
+.banana-hero__body {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+.banana-hero__title {
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+}
+
+.banana-hero__title small {
+  display: block;
+  font-size: var(--font-size-md);
+}
+
+.banana-hero__lead {
+  color: var(--paper-600);
+  word-break: auto-phrase;
+}
+
+.banana-hero .back-link {
+  color: var(--paper-600);
+}
+
+.banana-hero .back-link:hover {
+  color: var(--banana-surface-text);
+}
+
+/* 注文ボタン */
+.order-buttons {
+  display: grid;
+  gap: var(--space-3);
+  inline-size: 100%;
+}
+
+.order-button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-block-size: 60px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--border-radius-md);
+  background: var(--banana-surface-text);
+  color: var(--banana-400);
+  text-decoration: none;
+  transition: background-color var(--duration-fast), transform var(--duration-fast);
+}
+
+.order-button:hover {
+  background: var(--wood-800);
+  color: var(--banana-300);
+}
+
+.order-button:active {
+  transform: translateY(1px);
+}
+
+.order-button:focus-visible {
+  box-shadow: 0 0 0 3px var(--banana-surface), 0 0 0 5px var(--banana-surface-text);
+}
+
+.order-button__name {
+  display: grid;
+  line-height: 1.3;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.order-button__name small {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--wood-300);
+}
+
+.order-button .icon {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+/* Steps（注文方法） --------------------------------------------------------- */
+.steps {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.step__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin-block-end: var(--space-5);
+}
+
+.step__number {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  inline-size: 52px;
+  block-size: 52px;
+  border-radius: var(--border-radius-full);
+  background: var(--banana-surface);
+  color: var(--banana-surface-text);
+  font-family: var(--font-family-label);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.step__title {
+  font-size: var(--font-size-xl);
+}
+
+.step__text {
+  color: var(--color-text-secondary);
+  word-break: auto-phrase;
+}
+
+/* 商品のカード（白い背景の写真） */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.product-grid--sizes {
+  grid-template-columns: 1fr;
+}
+
+.product {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border-radius: var(--border-radius-lg);
+  background: var(--paper-50);
+  color: var(--paper-900);
+}
+
+.product__img {
+  inline-size: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: #fff;
+}
+
+.product__body {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+
+.product__name {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-snug);
+}
+
+.product__price {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  color: var(--amber-800);
+}
+
+.product__price small {
+  font-size: var(--font-size-sm);
+}
+
+.product__note {
+  font-size: var(--font-size-sm);
+  color: var(--paper-600);
+  word-break: auto-phrase;
+}
+
+.product__tag {
+  justify-self: start;
+  padding: 0 var(--space-2);
+  border-radius: var(--border-radius-sm);
+  background: var(--banana-400);
+  color: var(--paper-900);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.8;
+}
+
+/* サイズのカードはスマホで横並び（写真左・文字右） */
+.product-grid--sizes .product {
+  grid-template-columns: 120px 1fr;
+  grid-template-rows: auto;
+}
+
+.product-grid--sizes .product__img {
+  block-size: 100%;
+}
+
+.product-grid--sizes .product__body {
+  align-content: center;
+  padding: var(--space-4);
+}
+
+.banana-price-note {
+  max-inline-size: 40em;
+  margin-block-start: var(--space-5);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+/* デリバリー・テイクアウト ------------------------------------------------ */
+.banana-info {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.info-card {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-xl);
+  background: var(--color-bg-secondary);
+}
+
+.info-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-xl);
+}
+
+.info-card__title .icon {
+  inline-size: 28px;
+  block-size: 28px;
+  color: var(--color-text-accent);
+}
+
+.info-card__text {
+  color: var(--color-text-secondary);
+}
+
+.info-card .order-button {
+  background: var(--banana-surface);
+  color: var(--banana-surface-text);
+}
+
+.info-card .order-button:hover {
+  background: var(--banana-300);
+  color: var(--banana-surface-text);
+}
+
+.info-card .order-button__name small {
+  color: var(--paper-600);
+}
+
+.info-card .order-button:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-bg-secondary), 0 0 0 5px var(--banana-400);
+}
+
+.info-list {
+  display: grid;
+  border-block-start: 1px solid var(--color-border-secondary);
+}
+
+.info-list > div {
+  display: grid;
+  grid-template-columns: 5em 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-block-end: 1px solid var(--color-border-secondary);
+}
+
+.info-list dt {
+  color: var(--color-text-secondary);
+}
+
+.info-list dd address {
+  font-style: normal;
+}
+
+.ohana-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-lg);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: border-color var(--duration-fast), background-color var(--duration-fast);
+}
+
+.ohana-link:hover {
+  border-color: var(--color-accent-primary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+.ohana-link img {
+  block-size: 40px;
+  inline-size: auto;
+}
+
+.ohana-link__text {
+  display: grid;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.ohana-link__text strong {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+}
+
+/* Tablet ------------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .banana-hero__card {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-7);
+    padding: var(--space-7);
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .product-grid--sizes .product {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .product-grid--sizes .product__body {
+    align-content: start;
+  }
+
+  .product-grid--sizes .product__img {
+    block-size: auto;
+  }
+
+  .product-grid--milk {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-inline-size: 640px;
+  }
+
+  .banana-info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .info-card {
+    padding: var(--space-7);
+  }
+}
+
+/* Desktop ----------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .banana-hero {
+    padding-block: var(--space-7) var(--space-9);
+  }
+
+  .banana-hero__card {
+    padding: var(--space-8);
+  }
+
+  .banana-hero__title {
+    font-size: var(--font-size-3xl);
+  }
+
+
+  .step {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .step__header {
+    position: sticky;
+    inset-block-start: calc(var(--header-height-lg) + var(--space-6));
+    margin: 0;
+  }
+}
+
+.banana-menu__heading {
+  margin-block-end: var(--space-8);
+}
+
+/* メニューのすぐ後に続くので、上の余白は取らない */
+.banana-order {
+  padding-block-start: 0;
+}
+
+
+/* v1 の共通部品のうち、このページだけで使い続けるもの（トップでは使わない） */
+[data-brand="banana"] .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.22em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-text-accent);
+}
+
+[data-brand="banana"] .eyebrow::before {
+  content: "";
+  inline-size: var(--space-6);
+  block-size: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+[data-brand="banana"] .section-heading {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+[data-brand="banana"] .section-heading__title {
+  font-size: var(--font-size-2xl);
+}
+
+[data-brand="banana"] .section-heading__lead {
+  max-inline-size: var(--max-width-content);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}

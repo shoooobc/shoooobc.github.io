@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Button — 角ばった平らなボタン。主（朱）/ 副（線）/ テキスト
+   ========================================================================== */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-block-size: var(--button-height);
+  padding-inline: var(--button-padding-x);
+  border: 1px solid transparent;
+  border-radius: var(--button-radius);
+  font-family: var(--font-family-body);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--line-height-snug);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--easing-default),
+    border-color var(--duration-fast) var(--easing-default),
+    color var(--duration-fast) var(--easing-default);
+}
+
+.button:focus-visible {
+  box-shadow: var(--shadow-focus);
+}
+
+.button--primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+
+.button--primary:hover {
+  background-color: var(--button-primary-bg-hover);
+  color: var(--button-primary-text);
+}
+
+.button--primary:active {
+  background-color: var(--button-primary-bg-active);
+}
+
+.button--secondary {
+  background-color: var(--button-secondary-bg);
+  border-color: var(--button-secondary-border);
+  color: var(--button-secondary-text);
+}
+
+.button--secondary:hover {
+  background-color: var(--button-secondary-bg-hover);
+  border-color: var(--color-text-primary);
+  color: var(--button-secondary-text);
+}
+
+/* 矢印つきのテキストリンク */
+.button--text {
+  min-block-size: var(--button-height-sm);
+  padding-inline: 0;
+  border-block-end: 1px solid currentColor;
+  border-radius: 0;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.button--text::after {
+  content: "→";
+  font-family: var(--font-family-body);
+  transition: transform var(--duration-fast) var(--easing-out);
+}
+
+.button--text:hover {
+  color: var(--color-text-accent);
+}
+
+.button--text:hover::after {
+  transform: translateX(3px);
+}
+
+.button--sm {
+  min-block-size: var(--button-height-sm);
+  padding-inline: var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.button--block {
+  inline-size: 100%;
+}

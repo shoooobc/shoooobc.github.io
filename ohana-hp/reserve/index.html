@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ネット予約のご案内｜Dining Bar OHANA（東久留米）</title>
+  <meta name="description" content="Dining Bar OHANA のネット予約のご案内。来店日の前日17:00まで、6名さままでネットで予約できます。本日のご予約はお電話（042-476-7361）で承ります。">
+  <!-- 仮: 公開するドメイン（現行サイトと同じドメインを想定） -->
+  <link rel="canonical" href="https://diningbarohana.com/reserve/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Dining Bar OHANA">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="ネット予約のご案内｜Dining Bar OHANA（東久留米）">
+  <meta property="og:description" content="Dining Bar OHANA のネット予約のご案内。来店日の前日17:00まで、6名さままでネットで予約できます。本日のご予約はお電話（042-476-7361）で承ります。">
+  <meta property="og:url" content="https://diningbarohana.com/reserve/">
+  <meta property="og:image" content="https://diningbarohana.com/assets/img/ogp.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dining Bar OHANA の店内。木のカウンターと手描きのイラスト">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- 試作：オーナー確認前のため検索に出さない（公開時に削除） -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1C1410">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Web フォントは描画を止めずに読み込む（先に代わりのフォントで表示し、読み込めたら差し替える） -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap"></noscript>
+
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/button.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/drawer.css">
+  <link rel="stylesheet" href="../assets/css/action-bar.css">
+  <link rel="stylesheet" href="../assets/css/footer.css">
+  <link rel="stylesheet" href="../assets/css/hours.css">
+  <link rel="stylesheet" href="../assets/css/motion.css">
+  <link rel="stylesheet" href="../assets/css/page.css">
+  <link rel="stylesheet" href="../assets/css/reserve.css">
+
+  <script type="module" src="../assets/js/main.js"></script>
+  <script type="module" src="../assets/js/reserve-form.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <!-- ===================== Site header ===================== -->
+  <header class="site-header">
+    <div class="site-info">
+      <div class="container site-info__inner">
+        <div class="site-info__item hours-status" data-hours-status>
+              <p class="hours-status__fallback" data-hours-fallback><span class="nums">月〜木・日 18:00〜25:00</span>／<span class="nums">金・土 18:00〜26:00</span></p>
+              <span class="hours-status__badge" data-hours-live hidden><span class="hours-status__dot" aria-hidden="true"></span><span data-hours-badge>本日の営業</span></span>
+              <span class="hours-status__text" data-hours-live hidden><span class="hours-status__main nums" data-hours-main></span><span class="hours-status__sub" data-hours-sub></span></span>
+        </div>
+        <span class="site-info__item">西武池袋線 東久留米駅から徒歩7分</span>
+        <span class="site-info__item site-info__item--end"><a href="https://www.instagram.com/diningbarohana/" target="_blank" rel="noopener">Instagram<span class="visually-hidden">（新しいタブで開きます）</span></a></span>
+      </div>
+    </div>
+    <div class="container site-header__inner">
+      <a class="site-logo" href="../" aria-label="Dining Bar OHANA トップへ">
+        <img class="site-logo__img" src="../assets/img/logo-ohana-320w.webp" srcset="../assets/img/logo-ohana-320w.webp 320w, ../assets/img/logo-ohana-640w.webp 640w" sizes="120px" width="320" height="186" alt="Dining Bar OHANA">
+      </a>
+
+      <nav class="site-nav" aria-label="メインメニュー">
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="../#menu">メニュー</a></li>
+          <li><a class="site-nav__link" href="../#darts">ダーツ</a></li>
+          <li><a class="site-nav__link" href="../#private">貸切</a></li>
+          <li><a class="site-nav__link" href="../#access">アクセス</a></li>
+          <li><a class="site-nav__link" href="../banana/">まがりDEバナナ</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <a class="site-header__tel" href="tel:0424767361"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg><span class="site-header__tel-number nums">042-476-7361</span><span class="visually-hidden">に電話する</span></a>
+        <a class="button button--primary button--sm" href="../reserve/">ネット予約</a>
+      </div>
+
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="drawer">
+        <span class="menu-button__label" aria-hidden="true">メニュー</span>
+        <span class="menu-button__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="visually-hidden">メニューを開く</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== Drawer（〜1023px） ===================== -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer__backdrop" data-drawer-close></div>
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="メニュー">
+      <div class="drawer__header">
+        <a href="../"><img class="drawer__logo" src="../assets/img/logo-ohana-320w.webp" width="320" height="186" alt="Dining Bar OHANA トップへ"></a>
+        <button class="drawer__close" type="button" data-drawer-close>閉じる<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <nav class="drawer__nav" aria-label="メインメニュー">
+        <ul role="list">
+          <li><a class="drawer__link" href="../#menu">メニュー<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+          <li><a class="drawer__link" href="../#darts">ダーツ<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+          <li><a class="drawer__link" href="../#private">貸切<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+          <li><a class="drawer__link" href="../#access">アクセス<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+          <li><a class="drawer__link" href="../banana/">まがりDEバナナ<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a></li>
+        </ul>
+      </nav>
+      <div class="drawer__actions">
+        <a class="button button--primary button--block" href="../reserve/">ネット予約</a>
+        <a class="button button--secondary button--block" href="tel:0424767361"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg><span class="nums">042-476-7361</span><span class="visually-hidden">に電話する</span></a>
+        <p class="drawer__hours nums">月〜木・日 18:00〜25:00<br>金・土 18:00〜26:00</p>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ===================== Page hero ===================== -->
+    <div class="page-hero">
+      <div class="container page-hero__inner">
+        <a class="back-link" href="../"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>OHANA トップへ</a>
+        <h1 class="page-hero__title">ネット予約のご案内</h1>
+        <p class="page-hero__lead">24時間いつでも、ネットからご予約いただけます。ご来店の前に、下のルールをご確認ください。</p>
+      </div>
+    </div>
+
+    <div class="reserve">
+      <div class="container reserve__grid">
+        <!-- ===================== 本日のご予約はお電話で ===================== -->
+        <section class="today-call reserve__today" aria-labelledby="today-call-title">
+          <div class="today-call__main">
+            <h2 class="today-call__title" id="today-call-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>本日のご予約はお電話で</h2>
+            <p class="today-call__text">ネット予約は前日 17:00 までです。今日のご来店は、お電話でお席の空きをお問い合わせください。</p>
+            <div class="hours-status" data-hours-status>
+              <p class="hours-status__fallback" data-hours-fallback>
+                <span class="nums">月〜木・日 18:00〜25:00</span><br>
+                <span class="nums">金・土 18:00〜26:00</span>（定休日なし）
+              </p>
+              <span class="hours-status__badge" data-hours-live hidden>
+                <span class="hours-status__dot" aria-hidden="true"></span>
+                <span data-hours-badge>本日の営業</span>
+              </span>
+              <p class="hours-status__text" data-hours-live hidden>
+                <span class="hours-status__main nums" data-hours-main></span>
+                <span class="hours-status__sub" data-hours-sub></span>
+              </p>
+            </div>
+          </div>
+          <div class="today-call__actions">
+            <a class="button button--primary" href="tel:0424767361"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>電話する</a>
+            <p class="today-call__tel nums">TEL 042-476-7361</p>
+          </div>
+        </section>
+
+        <!-- ===================== ご予約のルール ===================== -->
+        <div class="reserve__aside">
+          <section class="rules" aria-labelledby="rules-title">
+            <h2 class="rules__title" id="rules-title">ご予約のルール</h2>
+            <!-- 仮: 締め切り・人数・確定の仕組みはオーナー確認 -->
+            <ol class="rules__list" role="list">
+              <li class="rule">
+                <span class="rule__title">来店日の前日 17:00 まで</span>
+                <span class="rule__text">当日のご予約は、お電話でお願いします。</span>
+              </li>
+              <li class="rule">
+                <span class="rule__title">6名さままで</span>
+                <span class="rule__text">7名さま以上や貸切のご相談は、お電話でお願いします。</span>
+              </li>
+              <li class="rule">
+                <span class="rule__title">送信した時点で、ご予約確定です</span>
+                <span class="rule__text">送信後、ご入力のメールアドレスに受付のメールが届きます。</span>
+              </li>
+              <li class="rule">
+                <span class="rule__title">お席をご用意できない場合のみ、お電話します</span>
+                <span class="rule__text">お店から連絡がなければ、そのままご来店ください。</span>
+              </li>
+            </ol>
+          </section>
+
+          <div class="shop-brief">
+            <p class="shop-brief__name">Dining Bar OHANA</p>
+            <address>東京都東久留米市本町2-5-1 オーヴ02ビル 1F<br>西武池袋線 東久留米駅から徒歩7分</address>
+            <p class="nums">月〜木・日 18:00〜25:00 ／ 金・土 18:00〜26:00（定休日なし）</p>
+            <p>TEL <a class="nums" href="tel:0424767361">042-476-7361</a></p>
+          </div>
+        </div>
+
+        <!-- ===================== 予約フォーム ===================== -->
+        <!-- 仮: 本番ではこのブロックの中身を Google Form の埋め込みかリンクに差し替える -->
+        <div class="reserve-form-block theme-paper" id="form" data-reserve-form-block>
+          <form class="reserve-form" data-reserve-form novalidate aria-labelledby="reserve-form-title">
+            <div class="reserve-form__header">
+              <span class="reserve-form__prototype">試作のため、送信しても予約はされません</span>
+              <h2 class="reserve-form__title" id="reserve-form-title">予約フォーム</h2>
+              <p class="reserve-form__required-note"><span class="badge-required">必須</span> の項目は必ずご入力ください。</p>
+            </div>
+
+            <div class="error-summary" data-error-summary tabindex="-1" role="alert" hidden>
+              <h3 class="error-summary__title">入力内容をご確認ください</h3>
+              <ul></ul>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label class="field__label" for="reserve-name">お名前 <span class="badge-required">必須</span></label>
+                <input class="input" id="reserve-name" name="name" type="text" autocomplete="name" required aria-describedby="reserve-name-error">
+                <p class="field__error" id="reserve-name-error" data-error-for="name" hidden></p>
+              </div>
+
+              <div class="form-grid form-grid--2">
+                <div class="field">
+                  <label class="field__label" for="reserve-tel">電話番号 <span class="badge-required">必須</span></label>
+                  <input class="input nums" id="reserve-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="090-1234-5678" required aria-describedby="reserve-tel-hint reserve-tel-error">
+                  <p class="field__hint" id="reserve-tel-hint">お席をご用意できない場合に、こちらへご連絡します。</p>
+                  <p class="field__error" id="reserve-tel-error" data-error-for="tel" hidden></p>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="reserve-email">メールアドレス <span class="badge-required">必須</span></label>
+                  <input class="input" id="reserve-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="ohana@example.com" required aria-describedby="reserve-email-hint reserve-email-error">
+                  <p class="field__hint" id="reserve-email-hint">受付のメールをお送りします。</p>
+                  <p class="field__error" id="reserve-email-error" data-error-for="email" hidden></p>
+                </div>
+              </div>
+
+              <div class="form-grid form-grid--2">
+                <div class="field">
+                  <label class="field__label" for="reserve-date">来店日 <span class="badge-required">必須</span></label>
+                  <input class="input nums" id="reserve-date" name="date" type="date" required aria-describedby="reserve-date-hint reserve-date-error">
+                  <p class="field__hint" id="reserve-date-hint">いまは <strong data-earliest-date>明日</strong> 以降を選べます。</p>
+                  <p class="field__error" id="reserve-date-error" data-error-for="date" hidden></p>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="reserve-time">来店時間 <span class="badge-required">必須</span></label>
+                  <select class="select nums" id="reserve-time" name="time" required aria-describedby="reserve-time-error">
+                    <option value="">選んでください</option>
+                  </select>
+                  <p class="field__error" id="reserve-time-error" data-error-for="time" hidden></p>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="reserve-people">人数 <span class="badge-required">必須</span></label>
+                <select class="select" id="reserve-people" name="people" required aria-describedby="reserve-people-hint reserve-people-error">
+                  <option value="">選んでください</option>
+                </select>
+                <p class="field__hint" id="reserve-people-hint">7名さま以上は、お電話でご相談ください。</p>
+                <p class="field__error" id="reserve-people-error" data-error-for="people" hidden></p>
+              </div>
+
+              <!-- 仮: 席の種類（テーブル席の有無をオーナー確認） -->
+              <fieldset class="field">
+                <legend class="field__label">お席のご希望 <span class="badge-optional">任意</span></legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="seat" value="指定なし" checked><span>指定なし</span></label>
+                  <label class="choice"><input type="radio" name="seat" value="カウンター席"><span>カウンター席</span></label>
+                  <label class="choice"><input type="radio" name="seat" value="テーブル席"><span>テーブル席</span></label>
+                </div>
+              </fieldset>
+
+              <div class="field">
+                <label class="field__label" for="reserve-note">ご要望 <span class="badge-optional">任意</span></label>
+                <textarea class="textarea" id="reserve-note" name="note" rows="4" placeholder="誕生日のお祝い、アレルギーなど"></textarea>
+              </div>
+
+              <div class="field">
+                <label class="agree">
+                  <input type="checkbox" id="reserve-agree" name="agree" required aria-describedby="reserve-agree-error">
+                  <span><a href="../privacy/" target="_blank" rel="noopener">プライバシーポリシー<span class="visually-hidden">（新しいタブで開きます）</span></a>に同意します <span class="badge-required">必須</span></span>
+                </label>
+                <p class="field__error" id="reserve-agree-error" data-error-for="agree" hidden></p>
+              </div>
+            </div>
+
+            <div class="reserve-form__submit">
+              <button class="button button--primary button--block" type="submit">この内容で予約する</button>
+              <p>送信した時点でご予約が確定します。</p>
+            </div>
+          </form>
+
+          <section class="reserve-done" data-reserve-done hidden aria-labelledby="reserve-done-title">
+            <span class="reserve-done__check" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+            </span>
+            <span class="reserve-form__prototype">試作のため、実際には送信されていません</span>
+            <h2 class="reserve-done__title" id="reserve-done-title" tabindex="-1">ご予約を受け付けました</h2>
+            <p>ご来店をお待ちしています。お席をご用意できない場合のみ、お店からお電話します。</p>
+            <dl class="reserve-done__summary" data-reserve-summary></dl>
+            <div>
+              <button class="button button--secondary" type="button" data-reserve-reset>入力画面に戻る</button>
+            </div>
+          </section>
+        </div>
+
+        <ul class="reserve-notes" role="list">
+          <li>受付のメールが届かない場合は、お手数ですがお電話でご確認ください。</li>
+          <li>キャンセル・変更は、お電話でご連絡ください。</li>
+          <li>ご入力いただいた情報は、ご予約の管理とご連絡のためだけに使います（<a href="../privacy/">プライバシーポリシー</a>）。</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== 固定アクションバー（〜1023px） ===================== -->
+  <nav class="action-bar" aria-label="ご予約の方法" data-action-bar data-state="hidden" data-show-after=".page-hero" data-hide-on="#form, .site-footer">
+    <a class="action-bar__item" href="tel:0424767361"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>電話する</a>
+    <a class="action-bar__item action-bar__item--primary" href="#form"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>フォームを開く</a>
+  </nav>
+
+  <!-- ===================== Site footer ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <a class="site-logo" href="../" aria-label="Dining Bar OHANA トップへ">
+            <img class="site-logo__img site-logo__img--footer" src="../assets/img/logo-ohana-320w.webp" srcset="../assets/img/logo-ohana-320w.webp 320w, ../assets/img/logo-ohana-640w.webp 640w" sizes="160px" width="320" height="186" alt="Dining Bar OHANA" loading="lazy">
+          </a>
+          <p class="site-footer__name">東久留米　二〇〇八年創業</p>
+        </div>
+
+        <dl class="site-footer__info">
+          <div class="site-footer__row">
+            <dt class="site-footer__label">住所</dt>
+            <dd class="site-footer__value"><address class="site-footer__value">東京都東久留米市本町2-5-1 オーヴ02ビル1F<br>西武池袋線 東久留米駅から徒歩7分</address></dd>
+          </div>
+          <div class="site-footer__row">
+            <dt class="site-footer__label">営業時間</dt>
+            <dd class="site-footer__value nums">月〜木・日 18:00〜25:00<br>金・土 18:00〜26:00（定休日なし）</dd>
+          </div>
+          <div class="site-footer__row">
+            <dt class="site-footer__label">電話</dt>
+            <dd class="site-footer__value"><a class="site-footer__tel nums" href="tel:0424767361">042-476-7361</a></dd>
+          </div>
+        </dl>
+
+        <div class="site-footer__links">
+          <nav aria-label="フッターメニュー">
+            <ul class="site-footer__nav" role="list">
+              <li><a href="../#menu">メニュー</a></li>
+              <li><a href="../#darts">ダーツ</a></li>
+              <li><a href="../#private">貸切</a></li>
+              <li><a href="../#access">アクセス</a></li>
+              <li><a href="../reserve/">ネット予約</a></li>
+              <li><a href="../banana/">まがりDEバナナ</a></li>
+            </ul>
+          </nav>
+          <div class="site-footer__social">
+            <a href="https://www.instagram.com/diningbarohana/" target="_blank" rel="noopener">Instagram<span class="visually-hidden">（新しいタブで開きます）</span></a>
+            <a href="https://www.youtube.com/channel/UCWhaSuIf68WhF-wPaHrlFjA" target="_blank" rel="noopener">YouTube<span class="visually-hidden">（新しいタブで開きます）</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>© 2008–<span data-current-year>2026</span> Dining Bar OHANA</p>
+        <a href="../privacy/">プライバシーポリシー</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

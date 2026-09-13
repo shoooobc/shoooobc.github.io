@@ -1,0 +1,204 @@
+/* ==========================================================================
+   場所と営業時間 #access
+   ========================================================================== */
+
+.access__grid {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.access__main {
+  display: grid;
+  gap: var(--space-6);
+  align-content: start;
+}
+
+.access__address {
+  display: grid;
+  gap: var(--space-2);
+  font-style: normal;
+}
+
+.access__address-main {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+}
+
+.access__station {
+  color: var(--color-text-secondary);
+}
+
+.access__tel {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  min-block-size: 44px;
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.access__tel small {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-tertiary);
+}
+
+.access__tel:hover {
+  color: var(--color-text-accent);
+}
+
+.access__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.access__subtitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block-end: var(--space-2);
+  border-block-end: 2px solid var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  letter-spacing: 0.12em;
+}
+
+.access__subtitle small {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.04em;
+  color: var(--color-text-tertiary);
+}
+
+.hours-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.hours-table th,
+.hours-table td {
+  padding: var(--space-3) 0;
+  border-block-end: 1px solid var(--color-border-secondary);
+  text-align: start;
+  font-weight: var(--font-weight-normal);
+}
+
+.hours-table th {
+  inline-size: 7em;
+  font-family: var(--font-family-display);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.hours-table td small {
+  margin-inline-start: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.hours-table .is-today th,
+.hours-table .is-today td {
+  color: var(--color-text-accent);
+  font-weight: var(--font-weight-bold);
+}
+
+.hours-table__today {
+  margin-inline-start: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.hours-table__today::before {
+  content: "（";
+}
+
+.hours-table__today::after {
+  content: "）";
+}
+
+.facts {
+  display: grid;
+}
+
+.facts__row {
+  display: grid;
+  grid-template-columns: 5em 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-block-end: 1px solid var(--color-border-secondary);
+}
+
+.facts__row dt {
+  font-family: var(--font-family-display);
+  color: var(--color-text-secondary);
+}
+
+.access__media {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+.access__map {
+  border: 1px solid var(--color-border-primary);
+}
+
+.access__map iframe {
+  inline-size: 100%;
+  aspect-ratio: var(--map-ratio);
+  border: 0;
+  filter: grayscale(0.6) contrast(0.95) brightness(0.9);
+}
+
+.access__map:focus-within,
+.access__map.is-focused {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+.access__exterior {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: var(--space-4);
+  align-items: center;
+  margin: 0;
+}
+
+.access__exterior img {
+  inline-size: 7rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.access__exterior figcaption {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 1024px) {
+  .access__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+
+  .access__map iframe {
+    aspect-ratio: var(--map-ratio-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .access__media {
+    position: sticky;
+    inset-block-start: calc(var(--header-height-lg) + 36px + var(--space-6));
+    align-self: start;
+  }
+}

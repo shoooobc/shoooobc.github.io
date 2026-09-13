@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Drawer（〜1023px のメニュー）— 開閉は assets/js/nav.js
+   ========================================================================== */
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+}
+
+.drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface-overlay);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--easing-default);
+}
+
+.drawer__panel {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  display: flex;
+  flex-direction: column;
+  inline-size: var(--drawer-width);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block-end: env(safe-area-inset-bottom);
+  background: var(--drawer-bg);
+  border-inline-start: 1px solid var(--color-border-primary);
+  transform: translateX(100%);
+  transition: transform var(--duration-slow) var(--easing-out);
+}
+
+.drawer.is-open .drawer__backdrop {
+  opacity: 1;
+}
+
+.drawer.is-open .drawer__panel {
+  transform: none;
+}
+
+.drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  block-size: var(--header-height);
+  padding-inline: var(--space-5) var(--space-3);
+  border-block-end: 1px solid var(--color-border-primary);
+}
+
+.drawer__logo {
+  block-size: 38px;
+  inline-size: auto;
+}
+
+.drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  padding-inline: var(--space-2);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.2em;
+}
+
+.drawer__close .icon {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.drawer__nav {
+  padding: var(--space-2) var(--space-5);
+}
+
+.drawer__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: 64px;
+  border-block-end: 1px solid var(--color-border-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+
+.drawer__link:hover,
+.drawer__link[aria-current="page"] {
+  color: var(--color-text-accent);
+}
+
+.drawer__link .icon {
+  inline-size: 18px;
+  block-size: 18px;
+  color: var(--color-text-tertiary);
+}
+
+.drawer__actions {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-start: auto;
+  padding: var(--space-5);
+}
+
+.drawer__hours {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.is-drawer-open {
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .drawer {
+    display: none;
+  }
+}
+
+.menu-button[aria-expanded="true"] .menu-button__bars span:nth-child(1) {
+  transform: translateY(5px) rotate(30deg);
+}
+
+.menu-button[aria-expanded="true"] .menu-button__bars span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-button[aria-expanded="true"] .menu-button__bars span:nth-child(3) {
+  transform: translateY(-5px) rotate(-30deg);
+}

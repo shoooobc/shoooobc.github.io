@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Site header — 上に実用的な情報の帯、下にロゴとナビ
+   ========================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background-color: var(--color-bg-primary);
+  border-block-end: 1px solid var(--color-border-primary);
+}
+
+/* 情報の帯（PC のみ。スクロールしたら隠す） */
+.site-info {
+  display: none;
+  border-block-end: 1px solid var(--color-border-secondary);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.site-info__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-block-size: 36px;
+}
+
+.site-info__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.site-info__item a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 36px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.site-info__item a:hover {
+  color: var(--color-text-primary);
+}
+
+.site-info__item--end {
+  margin-inline-start: auto;
+}
+
+.site-info .hours-status {
+  font-size: var(--font-size-xs);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  block-size: var(--header-height);
+}
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  text-decoration: none;
+}
+
+.site-logo__img {
+  block-size: 40px;
+  inline-size: auto;
+}
+
+.site-logo__img--footer {
+  block-size: 72px;
+}
+
+.site-nav {
+  display: none;
+  margin-inline-start: auto;
+}
+
+.site-nav__list {
+  display: flex;
+  align-items: center;
+}
+
+.site-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding-inline: var(--space-4);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav__link:hover,
+.site-nav__link[aria-current="page"] {
+  color: var(--color-text-accent);
+}
+
+.site-header__actions {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.site-header__tel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  padding-inline: var(--space-3);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header__tel:hover {
+  color: var(--color-text-accent);
+}
+
+.menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  margin-inline-start: auto;
+  margin-inline-end: calc(var(--space-2) * -1);
+  padding-inline: var(--space-2);
+  color: var(--color-text-primary);
+}
+
+.menu-button__label {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.2em;
+}
+
+.menu-button__bars {
+  position: relative;
+  inline-size: 24px;
+  block-size: 11px;
+}
+
+.menu-button__bars span {
+  position: absolute;
+  inset-inline: 0;
+  block-size: 1px;
+  background: currentColor;
+  transition: transform var(--duration-normal) var(--easing-out), opacity var(--duration-fast);
+}
+
+.menu-button__bars span:nth-child(1) { inset-block-start: 0; }
+.menu-button__bars span:nth-child(2) { inset-block-start: 5px; }
+.menu-button__bars span:nth-child(3) { inset-block-end: 0; }
+
+@media (min-width: 1024px) {
+  .site-info {
+    display: block;
+  }
+
+  .site-header__inner {
+    block-size: var(--header-height-lg);
+    gap: var(--space-6);
+  }
+
+  .site-logo__img {
+    block-size: 50px;
+  }
+
+  .site-nav,
+  .site-header__actions {
+    display: flex;
+  }
+
+  .menu-button {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .site-header__tel-number {
+    display: none;
+  }
+
+  .site-nav__link {
+    padding-inline: var(--space-3);
+  }
+}

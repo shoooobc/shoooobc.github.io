@@ -1,0 +1,87 @@
+/* ==========================================================================
+   はじめての方へ — よく聞かれることに、お店の言葉で答える
+   ========================================================================== */
+
+.qa-list {
+  display: grid;
+  border-block-start: 1px solid var(--color-border-primary);
+}
+
+.qa {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-block-end: 1px solid var(--color-border-primary);
+}
+
+.qa__q {
+  display: flex;
+  gap: var(--space-3);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  letter-spacing: 0.06em;
+  word-break: auto-phrase;
+}
+
+.qa__q::before {
+  content: "問";
+  flex-shrink: 0;
+  color: var(--color-text-accent);
+}
+
+.qa__a {
+  padding-inline-start: calc(1em * 1.25 + var(--space-3));
+  color: var(--color-text-secondary);
+  word-break: auto-phrase;
+}
+
+.qa__a strong {
+  color: var(--color-text-primary);
+}
+
+.first-visit__figure {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-start: var(--space-7);
+}
+
+.first-visit__figure img {
+  inline-size: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.first-visit__figure figcaption {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.first-visit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  margin-block-start: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .first-visit__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .first-visit__figure {
+    margin-block-start: 0;
+  }
+
+  .first-visit__figure img {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+.first-visit__grid .sec__lead {
+  margin-block-end: var(--space-5);
+}

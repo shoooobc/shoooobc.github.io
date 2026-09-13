@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Motion — 押したときの反応だけ（v2 ではスクロールでのフェードインはしない）
+   ========================================================================== */
+
+.button:active,
+.action-bar__item:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:active,
+  .action-bar__item:active {
+    transform: none;
+  }
+}

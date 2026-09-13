@@ -1,0 +1,114 @@
+/* ==========================================================================
+   ダーツ #darts ・ 貸切 #private — 2つを縦の罫線で分けて並べる
+   ========================================================================== */
+
+.play {
+  display: grid;
+}
+
+.play__item {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  padding-block: var(--space-7);
+}
+
+.play__item + .play__item {
+  border-block-start: 1px solid var(--color-border-primary);
+}
+
+.play__img {
+  inline-size: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  margin-block-end: var(--space-2);
+}
+
+.play__img--darts {
+  object-position: 50% 30%;
+}
+
+.play__title {
+  font-size: var(--font-size-xl);
+  line-height: 1.4;
+}
+
+.play__text {
+  color: var(--color-text-secondary);
+  word-break: auto-phrase;
+}
+
+.play__spec {
+  display: grid;
+  border-block: 1px solid var(--color-border-primary);
+  font-size: var(--font-size-sm);
+}
+
+.play__spec div {
+  display: grid;
+  grid-template-columns: 5em 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+}
+
+.play__spec div + div {
+  border-block-start: 1px solid var(--color-border-secondary);
+}
+
+.play__spec dt {
+  font-family: var(--font-family-display);
+  color: var(--color-text-tertiary);
+}
+
+.play__spec dd {
+  color: var(--color-text-primary);
+}
+
+.play__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin-block-start: var(--space-2);
+}
+
+@media (min-width: 1024px) {
+  .play {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .play__item {
+    padding-block: var(--space-2);
+  }
+
+  .play__item:first-child {
+    padding-inline-end: var(--space-7);
+  }
+
+  .play__item + .play__item {
+    padding-inline-start: var(--space-7);
+    border-block-start: 0;
+    border-inline-start: 1px solid var(--color-border-primary);
+  }
+}
+
+@media (max-width: 1023px) {
+  .play__item {
+    padding-block: var(--space-6);
+  }
+
+  .play__item:first-child {
+    padding-block-start: 0;
+  }
+
+  .play__item:last-child {
+    padding-block-end: 0;
+  }
+}
+
+.play__spec a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  margin-block: -12px;
+}

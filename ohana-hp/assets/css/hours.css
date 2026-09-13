@@ -1,0 +1,51 @@
+/* ==========================================================================
+   本日の営業（ヘッダーの帯・ヒーロー・予約ページ）— assets/js/hours-status.js
+   ========================================================================== */
+
+.hours-status {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+}
+
+.hours-status__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+/* 灯り：営業中だけ朱色に点く */
+.hours-status__dot {
+  inline-size: 7px;
+  block-size: 7px;
+  border-radius: var(--border-radius-full);
+  background: var(--color-text-tertiary);
+}
+
+.hours-status[data-state="open"] .hours-status__dot {
+  background: var(--shu-300);
+}
+
+.hours-status__text {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+}
+
+.hours-status__main {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.hours-status__sub {
+  color: var(--color-text-secondary);
+}
+
+.hours-status__fallback {
+  color: var(--color-text-primary);
+}

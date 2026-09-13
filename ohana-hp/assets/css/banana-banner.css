@@ -1,0 +1,191 @@
+/* ==========================================================================
+   まがりDEバナナのバナー（トップ）
+   焦げ茶のページの中で、黄色の面を1枚だけ置く。黄色は面に使い、文字は焦げ茶
+   ========================================================================== */
+
+.banana-banner-wrap {
+  padding-block: 0 var(--space-section);
+}
+
+.banana-banner {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  border-radius: var(--border-radius-xl);
+  background-color: var(--banana-surface);
+  color: var(--banana-surface-text);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  isolation: isolate;
+}
+
+/* ごく薄い水玉で、ポップすぎない質感を足す */
+.banana-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(42, 31, 24, 0.07) 1.5px, transparent 1.6px);
+  background-size: 18px 18px;
+}
+
+.banana-banner__media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--space-6) var(--space-6) var(--space-2);
+}
+
+/* キャラクターの後ろの白い円 */
+.banana-banner__media::before {
+  content: "";
+  position: absolute;
+  inline-size: min(62%, 220px);
+  aspect-ratio: 1;
+  border-radius: var(--border-radius-full);
+  background: rgba(255, 255, 255, 0.55);
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -46%);
+}
+
+.banana-banner__character {
+  position: relative;
+  inline-size: min(50%, 190px);
+  transform: rotate(-4deg);
+  filter: drop-shadow(0 10px 18px rgba(42, 31, 24, 0.22));
+}
+
+.banana-banner__body {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-5) var(--space-6);
+}
+
+.banana-banner__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--border-radius-full);
+  background: var(--banana-surface-text);
+  color: var(--banana-400);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.6;
+}
+
+.banana-banner__title {
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+  color: var(--banana-surface-text);
+}
+
+.banana-banner__title small {
+  display: block;
+  margin-block-end: var(--space-1);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.banana-banner__text {
+  color: var(--paper-600);
+  word-break: auto-phrase;
+}
+
+.banana-banner__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.banana-banner__fact {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid rgba(42, 31, 24, 0.25);
+  border-radius: var(--border-radius-full);
+  background: rgba(255, 255, 255, 0.45);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.banana-banner__fact strong {
+  font-weight: var(--font-weight-bold);
+}
+
+.banana-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  margin-block-start: var(--space-2);
+}
+
+/* 黄色の上のボタンは焦げ茶にする */
+.button--ink {
+  background-color: var(--banana-surface-text);
+  color: var(--banana-400);
+}
+
+.button--ink:hover {
+  background-color: var(--wood-800);
+  color: var(--banana-300);
+}
+
+.button--ink:focus-visible {
+  box-shadow: 0 0 0 3px var(--banana-surface), 0 0 0 5px var(--banana-surface-text);
+}
+
+.banana-banner__delivery {
+  font-size: var(--font-size-sm);
+  color: var(--paper-600);
+}
+
+/* Tablet ------------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .banana-banner {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: center;
+  }
+
+  .banana-banner__media {
+    padding: var(--space-7);
+  }
+
+  .banana-banner__media::before {
+    transform: translate(-50%, -50%);
+    inline-size: min(78%, 300px);
+  }
+
+  .banana-banner__character {
+    inline-size: min(80%, 260px);
+  }
+
+  .banana-banner__body {
+    padding: var(--space-7) var(--space-7) var(--space-7) 0;
+  }
+}
+
+/* Desktop ----------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .banana-banner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  }
+
+  .banana-banner__body {
+    padding-inline-end: var(--space-9);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .banana-banner__character {
+    transition: transform var(--duration-slower) var(--easing-out);
+  }
+
+  .banana-banner:hover .banana-banner__character {
+    transform: rotate(3deg) translateY(-4px);
+  }
+}

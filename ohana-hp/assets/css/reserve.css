@@ -1,0 +1,495 @@
+/* ==========================================================================
+   ネット予約のご案内 /reserve/
+   ========================================================================== */
+
+.reserve {
+  padding-block-end: var(--space-section);
+}
+
+.reserve__grid {
+  display: grid;
+  gap: var(--space-7);
+}
+
+/* 当日のご予約はお電話で ---------------------------------------------------- */
+.today-call {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--color-accent-secondary);
+}
+
+.today-call__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-xl);
+}
+
+.today-call__title .icon {
+  inline-size: 28px;
+  block-size: 28px;
+  color: var(--color-text-accent);
+}
+
+.today-call__text {
+  max-inline-size: 36em;
+  color: var(--color-text-secondary);
+  word-break: auto-phrase;
+}
+
+.today-call .hours-status {
+  padding-block: var(--space-3);
+  border-block: 1px solid var(--color-border-primary);
+}
+
+.today-call__actions {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+}
+
+.today-call__tel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+/* ご予約のルール ---------------------------------------------------------- */
+.rules__title {
+  margin-block-end: var(--space-4);
+  font-size: var(--font-size-xl);
+  letter-spacing: 0.1em;
+}
+
+.rules__list {
+  display: grid;
+  border-block-start: 1px solid var(--color-border-primary);
+  counter-reset: rule;
+}
+
+.rules__list .rule {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-4);
+  padding-block: var(--space-4);
+  border-block-end: 1px solid var(--color-border-primary);
+  counter-increment: rule;
+}
+
+.rules__list .rule::before {
+  content: counter(rule) ".";
+  grid-row: span 2;
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+  color: var(--color-text-accent);
+}
+
+.rules__list .rule__title {
+  align-self: center;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.rules__list .rule__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  word-break: auto-phrase;
+}
+
+/* Form（生成りの紙のカード） ----------------------------------------------- */
+.reserve-form-block {
+  border: 1px solid var(--color-border-primary);
+}
+
+.reserve-form,
+.reserve-done {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-5);
+}
+
+.reserve-form__header {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.reserve-form__title {
+  font-size: var(--font-size-xl);
+}
+
+.reserve-form__prototype {
+  display: inline-flex;
+  justify-self: start;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-accent-secondary);
+  color: var(--color-accent-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.reserve-form__required-note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.form-grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.field {
+  display: grid;
+  align-content: start; /* 隣の欄にエラーが出て高さが変わっても、入力欄を伸ばさない */
+  gap: var(--space-2);
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.badge-required,
+.badge-optional {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.8;
+}
+
+.badge-required {
+  background: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+}
+
+.badge-optional {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+}
+
+.field__hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.input,
+.select,
+.textarea {
+  inline-size: 100%;
+  min-block-size: var(--button-height);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base); /* 16px 以上（iOS でズームしない） */
+  line-height: var(--line-height-snug);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-tertiary);
+  opacity: 0.8;
+}
+
+/* 入力欄はマウスでもキーボードでもフォーカスを示す（日付の入力欄は :focus-visible が効かないブラウザがあるため） */
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 1px var(--color-border-focus), 0 0 0 5px var(--color-accent-glow);
+  outline: none;
+}
+
+.select {
+  appearance: none;
+  padding-inline-end: var(--space-8);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235A4838' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  background-size: 20px;
+}
+
+.textarea {
+  min-block-size: 7.5em;
+  resize: vertical;
+}
+
+.field.is-invalid .input,
+.field.is-invalid .select,
+.field.is-invalid .textarea {
+  border-color: var(--color-status-error);
+  border-width: 2px;
+}
+
+.field__error {
+  display: flex;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-status-error);
+}
+
+.field__error::before {
+  content: "!";
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  inline-size: 1.25em;
+  block-size: 1.25em;
+  margin-block-start: 0.2em;
+  border-radius: var(--border-radius-full);
+  background: var(--color-status-error);
+  color: var(--paper-50);
+  font-size: 0.75em;
+}
+
+/* ラジオ・チェックボックス */
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.choice {
+  position: relative;
+  display: inline-flex;
+}
+
+.choice input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.choice span {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-secondary);
+  transition: background-color var(--duration-fast), border-color var(--duration-fast), color var(--duration-fast);
+}
+
+.choice input:checked + span {
+  border-color: var(--color-accent-primary);
+  background: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  font-weight: var(--font-weight-bold);
+}
+
+.choice input:focus-visible + span {
+  box-shadow: 0 0 0 3px var(--color-bg-primary), 0 0 0 5px var(--color-border-focus);
+}
+
+.agree {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-tertiary);
+  cursor: pointer;
+}
+
+.agree input {
+  inline-size: 24px;
+  block-size: 24px;
+  margin: 2px 0 0;
+  accent-color: var(--color-accent-primary);
+}
+
+/* エラーの一覧 */
+.error-summary {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border: 2px solid var(--color-status-error);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-secondary);
+}
+
+.error-summary:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-accent-glow);
+}
+
+.error-summary__title {
+  font-size: var(--font-size-base);
+  color: var(--color-status-error);
+}
+
+.error-summary ul {
+  display: grid;
+  gap: var(--space-1);
+  padding-inline-start: 1.2em;
+  font-size: var(--font-size-sm);
+}
+
+.error-summary a {
+  color: var(--color-status-error);
+}
+
+.reserve-form__submit {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.reserve-form__submit .button {
+  min-block-size: 56px;
+  font-size: var(--font-size-md);
+}
+
+.reserve-form__submit p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 完了画面 */
+.reserve-done__check {
+  display: grid;
+  place-items: center;
+  inline-size: 56px;
+  block-size: 56px;
+  border-radius: var(--border-radius-full);
+  background: var(--color-status-success);
+  color: var(--paper-50);
+}
+
+.reserve-done__title {
+  font-size: var(--font-size-xl);
+}
+
+.reserve-done__title:focus-visible {
+  box-shadow: none;
+  outline: 2px dashed var(--color-border-focus);
+  outline-offset: 4px;
+}
+
+.reserve-done__summary {
+  display: grid;
+  border-block-start: 1px solid var(--color-border-primary);
+}
+
+.reserve-done__summary > div {
+  display: grid;
+  grid-template-columns: 5.5em 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-block-end: 1px solid var(--color-border-primary);
+}
+
+.reserve-done__summary dt {
+  color: var(--color-text-secondary);
+}
+
+.reserve-done__summary dd {
+  overflow-wrap: anywhere;
+}
+
+/* 補足 */
+.reserve-notes {
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.reserve-notes li {
+  padding-inline-start: 1em;
+  text-indent: -1em;
+}
+
+.reserve-notes li::before {
+  content: "※";
+}
+
+/* スマホ・タブレットでは、フォームを店舗情報より先に出す */
+@media (max-width: 1023px) {
+  .reserve__aside {
+    display: contents;
+  }
+
+  .reserve-notes {
+    order: 4;
+  }
+
+  .shop-brief {
+    order: 5;
+  }
+}
+
+/* Tablet ------------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .reserve-form,
+  .reserve-done {
+    padding: var(--space-7);
+  }
+
+  .form-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .today-call {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: var(--space-6);
+  }
+
+  .today-call__main {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .today-call__actions {
+    justify-items: end;
+    text-align: end;
+  }
+}
+
+/* Desktop ----------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .reserve__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    align-items: start;
+    gap: var(--space-8);
+  }
+
+  .reserve__today {
+    grid-column: 1 / -1;
+  }
+
+  .reserve__aside {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+    position: sticky;
+    inset-block-start: calc(var(--header-height-lg) + var(--space-6));
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .reserve-form-block,
+  .reserve-notes {
+    grid-column: 2;
+  }
+}

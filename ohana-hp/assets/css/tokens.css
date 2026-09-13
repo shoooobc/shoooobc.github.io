@@ -1,0 +1,325 @@
+/* ==========================================================================
+   Dining Bar OHANA — Design Tokens（v2：夜のカウンターと品書き）
+   --------------------------------------------------------------------------
+   方向性 : 墨色の地・生成りの文字・差し色は提灯の朱色だけ。
+            見出しは明朝、区切りは罫線。角丸・影・光・すりガラスは使わない。
+            （v1 の「北欧スタイルの温かさ」はテンプレート的に見えたため変更。
+             .design/ohana-renewal/DESIGN_BRIEF.md の「v2」を参照）
+   構成   : 1. Primitives  2. Night（既定） 3. Paper（品書きの面）
+            4. Banana（/banana/ は v1 の柔らかい見た目を残す）
+            5. Scale  6. Component tokens
+   コントラスト : 数値は WCAG 2.1。背景 primary / secondary / tertiary の順
+   ========================================================================== */
+
+:root {
+  /* 1. Primitives ----------------------------------------------------------- */
+  --ink-950: #0E0B09;
+  --ink-900: #14100D;
+  --ink-850: #1D1814;
+  --ink-800: #27201A;
+  --ink-700: #3A3027;
+  --ink-600: #5A4D40;
+  --ink-500: #8E7F6C;
+  --ink-400: #9E8F7B;
+  --ink-300: #C4B6A1;
+  --ink-100: #EDE4D3;
+
+  --paper-50:  #F5EFE3;
+  --paper-100: #ECE3D2;
+  --paper-200: #E0D5C1;
+  --paper-400: #7A6B58;
+  --paper-500: #605345;
+  --paper-600: #4E4337;
+  --paper-900: #1B1511;
+
+  --shu-300: #E2765A;  /* 墨の地の上の朱（文字） */
+  --shu-600: #B0412A;  /* 朱のボタン */
+  --shu-700: #99371F;
+  --shu-800: #A33A22;  /* 生成りの上の朱（文字） */
+
+  --banana-300: #FFDD66;
+  --banana-400: #FFD23F;
+  --banana-500: #F2C11C;
+
+  --green-300: #9CCB8F;  --green-700: #3F6B35;
+  --yellow-300: #EDB752; --yellow-700: #855A00;
+  --red-300: #F09483;    --red-700: #A8352A;
+  --blue-300: #9DC0DE;   --blue-700: #2F5F85;
+
+  /* v1 の名前を使っている部品のための別名 */
+  --wood-950: var(--ink-950);
+  --wood-900: var(--ink-900);
+  --wood-850: var(--ink-850);
+  --wood-800: var(--ink-800);
+  --wood-700: var(--ink-700);
+  --wood-500: var(--ink-500);
+  --wood-300: var(--ink-300);
+  --wood-100: var(--ink-100);
+  --amber-800: var(--shu-800);
+
+  /* 2. Night（既定） --------------------------------------------------------- */
+  color-scheme: dark;
+
+  --color-bg-primary:    var(--ink-900);
+  --color-bg-secondary:  var(--ink-850);
+  --color-bg-tertiary:   var(--ink-800);
+  --color-bg-inverse:    var(--paper-100);
+  --color-bg-wood:       var(--ink-900);
+
+  --color-text-primary:   var(--ink-100); /* 14.99 / 13.95 / 12.72 */
+  --color-text-secondary: var(--ink-300); /*  9.51 /  8.85 /  8.07 */
+  --color-text-tertiary:  var(--ink-400); /*  6.01 /  5.59 /  5.10 */
+  --color-text-inverse:   var(--paper-900);
+  --color-text-link:      var(--ink-100);
+  --color-text-accent:    var(--shu-300); /*  6.28 /  5.84 /  5.33 */
+  --color-text-hand:      var(--shu-300);
+  --color-text-on-accent: var(--ink-100); /* 朱のボタンの文字 4.58 */
+
+  --color-border-primary:   var(--ink-700);
+  --color-border-secondary: var(--ink-800);
+  --color-border-strong:    var(--ink-500); /* 4.87 / 4.53 / 4.13 */
+  --color-border-focus:     var(--shu-300); /* 6.28 */
+
+  --color-accent-primary:        var(--shu-600);
+  --color-accent-primary-hover:  var(--shu-700); /* 暗くする（明るくするとコントラストが落ちる） */
+  --color-accent-primary-active: var(--shu-700);
+  --color-accent-secondary:      var(--shu-300);
+  --color-accent-glow:           transparent;
+
+  --color-status-success: var(--green-300);
+  --color-status-warning: var(--yellow-300);
+  --color-status-error:   var(--red-300);
+  --color-status-info:    var(--blue-300);
+
+  --color-surface-overlay: rgba(10, 8, 6, 0.78);
+  --color-surface-header:  var(--ink-900);
+  --color-surface-scrim:   linear-gradient(180deg, rgba(14, 11, 9, 0) 40%, rgba(14, 11, 9, 0.85) 100%);
+
+  --texture-grain: none;
+
+  /* 5. Scale --------------------------------------------------------------- */
+  --space-0:  0;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-7:  3rem;
+  --space-8:  4rem;
+  --space-9:  6rem;
+  --space-10: 8rem;
+  --space-11: 12rem;
+  --space-12: 16rem;
+
+  --space-section: clamp(4.5rem, 3rem + 6vw, 9rem);
+  --space-gutter:  clamp(1.25rem, 0.75rem + 2.5vw, 3rem);
+
+  /* 書体：見出しは明朝、本文はゴシック。英字の飾り書体と手書き風は使わない */
+  --font-family-display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
+  --font-family-body:    "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --font-family-hand:    var(--font-family-display);
+  --font-family-label:   var(--font-family-display);
+  --font-family-mono:    ui-monospace, "SFMono-Regular", "Menlo", monospace;
+
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md:   clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);
+  --font-size-lg:   clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --font-size-xl:   clamp(1.5rem, 1.25rem + 1vw, 2.125rem);
+  --font-size-2xl:  clamp(1.875rem, 1.4rem + 2vw, 3rem);
+  --font-size-3xl:  clamp(2.25rem, 1.5rem + 3.4vw, 4.5rem);
+  --font-size-4xl:  clamp(3rem, 1.8rem + 5.5vw, 7rem);
+
+  --font-weight-normal:   400;
+  --font-weight-medium:   400;
+  --font-weight-semibold: 700;
+  --font-weight-bold:     700;
+
+  --line-height-tight:   1.4;
+  --line-height-snug:    1.6;
+  --line-height-normal:  1.85;
+  --line-height-relaxed: 2;
+
+  --letter-spacing-tight:  0.06em;  /* 明朝の見出しは少し広げる */
+  --letter-spacing-normal: 0.05em;
+  --letter-spacing-wide:   0.2em;
+
+  --max-width-content: 38rem;
+  --max-width-wide:    60rem;
+  --max-width-page:    76rem;
+
+  /* 角は四角く。まがりDEバナナだけ下で丸みを戻す */
+  --border-radius-sm:   0;
+  --border-radius-md:   2px;
+  --border-radius-lg:   2px;
+  --border-radius-xl:   2px;
+  --border-radius-full: 9999px;
+
+  /* 影は使わない（重なりは線と面の色で見せる） */
+  --shadow-sm:    none;
+  --shadow-md:    none;
+  --shadow-lg:    none;
+  --shadow-glow:  none;
+  --shadow-focus: 0 0 0 2px var(--color-bg-primary), 0 0 0 4px var(--color-border-focus);
+
+  --duration-instant: 50ms;
+  --duration-fast:    150ms;
+  --duration-normal:  250ms;
+  --duration-slow:    400ms;
+  --duration-slower:  600ms;
+
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-in:      cubic-bezier(0.4, 0, 1, 1);
+  --easing-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --easing-bounce:  cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --reveal-distance: 0px; /* v2 ではスクロールで浮き上がらせない */
+
+  --breakpoint-sm:  375px;
+  --breakpoint-md:  768px;
+  --breakpoint-lg:  1024px;
+  --breakpoint-xl:  1280px;
+  --breakpoint-2xl: 1536px;
+
+  --z-base:       0;
+  --z-raised:     10;
+  --z-header:     100;
+  --z-action-bar: 110;
+  --z-overlay:    200;
+  --z-drawer:     210;
+
+  /* 6. Component tokens ------------------------------------------------------ */
+  --header-height:      60px;
+  --header-height-lg:   76px;
+  --header-bg:          transparent;
+  --header-bg-scrolled: var(--color-surface-header);
+  --header-blur:        0px;
+
+  --drawer-width: min(88vw, 380px);
+
+  --action-bar-height: 64px;
+  --action-bar-bg:     var(--ink-900);
+  --action-bar-gap:    0;
+
+  --button-height:      50px;
+  --button-height-sm:   44px;
+  --button-padding-x:   var(--space-5);
+  --button-radius:      var(--border-radius-md);
+  --button-font-size:   var(--font-size-base);
+  --button-font-weight: var(--font-weight-bold);
+  --button-secondary-bg:       transparent;
+  --button-secondary-bg-hover: var(--ink-850);
+
+  --card-radius:       var(--border-radius-lg);
+  --card-padding:      var(--space-5);
+  --card-lift-hover:   0px;
+  --card-image-ratio:  4 / 3;
+
+  --eyebrow-font:    var(--font-family-display);
+  --eyebrow-size:    var(--font-size-sm);
+  --eyebrow-spacing: 0.2em;
+
+  --note-font:   var(--font-family-display);
+  --note-size:   var(--font-size-base);
+  --note-rotate: 0deg;
+
+  --hero-min-height:    min(100svh, 880px);
+  --hero-min-height-sm: 88svh;
+
+  --map-ratio:    4 / 3;
+  --map-ratio-lg: 16 / 10;
+}
+
+/* 他のトークンを参照するトークンは、テーマを切り替える範囲ごとに再計算させる */
+:root,
+.theme-paper,
+[data-surface="paper"],
+[data-brand="banana"] {
+  --shadow-focus: 0 0 0 2px var(--color-bg-primary), 0 0 0 4px var(--color-border-focus);
+  --drawer-bg:                var(--color-bg-primary);
+  --button-primary-bg:        var(--color-accent-primary);
+  --button-primary-bg-hover:  var(--color-accent-primary-hover);
+  --button-primary-bg-active: var(--color-accent-primary-active);
+  --button-primary-text:      var(--color-text-on-accent);
+  --button-secondary-border:  var(--color-border-strong);
+  --button-secondary-text:    var(--color-text-primary);
+  --card-bg:                  var(--color-bg-secondary);
+  --card-shadow:              var(--shadow-md);
+  --card-shadow-hover:        var(--shadow-lg);
+  --eyebrow-color:            var(--color-text-accent);
+  --note-color:               var(--color-text-hand);
+  --hours-today-text:         var(--color-text-accent);
+  --hours-today-bg:           transparent;
+}
+
+/* 3. Paper（品書きの面） ------------------------------------------------------ */
+.theme-paper,
+[data-surface="paper"] {
+  color-scheme: light;
+
+  --color-bg-primary:    var(--paper-100);
+  --color-bg-secondary:  var(--paper-50);
+  --color-bg-tertiary:   var(--paper-200);
+  --color-bg-inverse:    var(--ink-900);
+
+  --color-text-primary:   var(--paper-900); /* 14.19 / 15.78 / 12.44 */
+  --color-text-secondary: var(--paper-600); /*  7.56 /  8.40 /  6.63 */
+  --color-text-tertiary:  var(--paper-500); /* ≥ 4.5 */
+  --color-text-inverse:   var(--ink-100);
+  --color-text-link:      var(--paper-900);
+  --color-text-accent:    var(--shu-800);   /*  5.17 /  5.76 /  4.54 */
+  --color-text-hand:      var(--shu-800);
+  --color-text-on-accent: var(--paper-50);
+
+  --color-border-primary:   var(--paper-400);
+  --color-border-secondary: var(--paper-200);
+  --color-border-strong:    var(--paper-400);
+  --color-border-focus:     var(--shu-800);
+
+  --color-accent-primary:        var(--paper-900); /* 生成りの上のボタンは墨色 */
+  --color-accent-primary-hover:  var(--shu-800);
+  --color-accent-primary-active: var(--shu-800);
+  --color-accent-secondary:      var(--shu-800);
+
+  --color-status-success: var(--green-700);
+  --color-status-warning: var(--yellow-700);
+  --color-status-error:   var(--red-700);
+  --color-status-info:    var(--blue-700);
+
+  --button-secondary-bg-hover: var(--paper-200);
+}
+
+/* 4. Banana（/banana/ とトップのバナー）：v1 の柔らかい見た目を残す ------------ */
+[data-brand="banana"] {
+  --color-text-accent:           var(--banana-400);
+  --color-text-link:             var(--banana-300);
+  --color-text-on-accent:        var(--paper-900);
+  --color-border-focus:          var(--banana-400);
+  --color-accent-primary:        var(--banana-400);
+  --color-accent-primary-hover:  var(--banana-300);
+  --color-accent-primary-active: var(--banana-500);
+  --color-accent-glow:           rgba(255, 210, 63, 0.25);
+
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+  --shadow-md:   0 6px 18px -4px rgba(0, 0, 0, 0.5);
+  --shadow-lg:   0 18px 48px -12px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 10px 40px -8px rgba(255, 210, 63, 0.25);
+
+  --banana-surface:      var(--banana-400);
+  --banana-surface-text: var(--paper-900);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast:    0ms;
+    --duration-normal:  0ms;
+    --duration-slow:    0ms;
+    --duration-slower:  0ms;
+  }
+}
