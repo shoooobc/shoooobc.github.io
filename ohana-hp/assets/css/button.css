@@ -15,7 +15,7 @@
   font-size: var(--button-font-size);
   font-weight: var(--button-font-weight);
   line-height: var(--line-height-snug);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-decoration: none;
   white-space: nowrap;
   transition:

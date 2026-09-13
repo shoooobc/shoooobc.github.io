@@ -91,13 +91,14 @@
   align-items: center;
   min-block-size: 44px;
   padding-inline: var(--space-4);
-  color: var(--color-text-primary);
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.16em;
   text-decoration: none;
   white-space: nowrap;
+  transition: color var(--duration-fast) var(--easing-default);
 }
 
 .site-nav__link:hover,
@@ -143,10 +144,9 @@
 }
 
 .menu-button__label {
-  font-family: var(--font-family-display);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
 }
 
 .menu-button__bars {

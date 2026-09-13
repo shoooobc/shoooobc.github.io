@@ -1,14 +1,30 @@
 /* ==========================================================================
-   品書き #menu（生成りの面）— 点線でつないだ価格表
+   Menu #menu — バーのメニューカード（暗い地に真鍮色の二重線）
    ========================================================================== */
 
 .menu {
+  background: var(--ink-950);
   border-block: 1px solid var(--color-border-primary);
+}
+
+.menu__card {
+  position: relative;
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid rgba(201, 166, 107, 0.5);
+}
+
+/* 内側のもう1本の線 */
+.menu__card::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(201, 166, 107, 0.22);
+  pointer-events: none;
 }
 
 .menu__photos {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
   margin-block-end: var(--space-7);
 }
@@ -16,19 +32,26 @@
 .menu__photo {
   display: grid;
   gap: var(--space-2);
+  margin: 0;
+}
+
+.menu__photo:first-child {
+  grid-column: 1 / -1;
 }
 
 .menu__photo img {
   inline-size: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1;
   object-fit: cover;
 }
 
+.menu__photo:first-child img {
+  aspect-ratio: 16 / 10;
+}
+
 .menu__photo figcaption {
-  font-family: var(--font-family-display);
   font-size: var(--font-size-sm);
-  line-height: var(--line-height-snug);
-  color: var(--color-text-secondary);
+  color: var(--color-text-tertiary);
 }
 
 .menu__columns {
@@ -39,17 +62,28 @@
 .menu__group-title {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
+  gap: var(--space-4);
   padding-block-end: var(--space-3);
-  border-block-end: 2px solid var(--color-text-primary);
-  font-size: var(--font-size-xl);
+  border-block-end: 1px solid rgba(201, 166, 107, 0.5);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-display);
   letter-spacing: 0.2em;
+  color: var(--color-text-secondary);
 }
 
-.menu__group-title small {
+.menu__group-en {
+  font-family: var(--font-family-latin);
+  font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.menu__group-note {
+  margin-inline-start: auto;
   font-family: var(--font-family-body);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-xs);
   letter-spacing: 0.05em;
   color: var(--color-text-tertiary);
 }
@@ -61,7 +95,7 @@
 .price-row {
   display: flex;
   align-items: baseline;
-  gap: var(--space-3);
+  gap: var(--space-2);
   padding-block: var(--space-4);
   border-block-end: 1px solid var(--color-border-secondary);
 }
@@ -69,9 +103,10 @@
 .price-row__name {
   font-family: var(--font-family-display);
   font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-display);
   line-height: var(--line-height-snug);
   letter-spacing: 0.04em;
+  word-break: auto-phrase;
 }
 
 .price-row__name small {
@@ -84,20 +119,24 @@
 
 .price-row__dots {
   flex: 1;
-  min-inline-size: 1.5rem;
-  border-block-end: 1px dotted var(--color-border-strong);
+  min-inline-size: 0.75rem;
+  border-block-end: 1px dotted rgba(201, 166, 107, 0.45);
   transform: translateY(-0.35em);
 }
 
 .price-row__price {
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
+  font-variant-numeric: lining-nums;
+  font-family: var(--font-family-latin);
+  font-size: 1.35rem;
+  font-weight: 600;
   white-space: nowrap;
+  color: var(--color-text-accent);
 }
 
 .price-row__price small {
-  font-size: 0.8em;
+  font-family: var(--font-family-body);
+  font-size: 0.65em;
+  font-weight: var(--font-weight-normal);
 }
 
 .menu__notes {
@@ -105,18 +144,22 @@
   gap: var(--space-4);
   margin-block-start: var(--space-7);
   padding-block-start: var(--space-5);
-  border-block-start: 1px solid var(--color-border-primary);
+  border-block-start: 1px solid rgba(201, 166, 107, 0.5);
 }
 
 .menu__charge {
   font-family: var(--font-family-display);
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-display);
   line-height: var(--line-height-snug);
 }
 
 .menu__charge em {
+  font-variant-numeric: lining-nums;
+  font-family: var(--font-family-latin);
+  font-size: 1.2em;
   font-style: normal;
+  font-weight: 600;
   color: var(--color-text-accent);
 }
 
@@ -131,14 +174,26 @@
 }
 
 @media (min-width: 768px) {
+  .menu__card {
+    padding: var(--space-8) var(--space-7);
+  }
+
   .menu__columns {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-8);
   }
 
   .menu__photos {
-    grid-template-columns: 1.3fr 1fr 1fr;
+    grid-template-columns: 1.4fr 1fr 1fr;
     align-items: end;
+  }
+
+  .menu__photo:first-child {
+    grid-column: auto;
+  }
+
+  .menu__photo img {
+    aspect-ratio: 3 / 4;
   }
 
   .menu__photo:first-child img {
@@ -148,37 +203,5 @@
   .menu__notes {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
-  }
-}
-
-/* スマホ：1枚目を大きく、残り2枚を半分ずつ。品名が途中で折り返さないよう詰める */
-@media (max-width: 767px) {
-  .menu__photos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .menu__photo:first-child {
-    grid-column: 1 / -1;
-  }
-
-  .menu__photo:first-child img {
-    aspect-ratio: 16 / 10;
-  }
-
-  .menu__photo img {
-    aspect-ratio: 1;
-  }
-
-  .price-row {
-    gap: var(--space-2);
-  }
-
-  .price-row__name {
-    letter-spacing: 0;
-    word-break: auto-phrase;
-  }
-
-  .price-row__dots {
-    min-inline-size: 0.75rem;
   }
 }

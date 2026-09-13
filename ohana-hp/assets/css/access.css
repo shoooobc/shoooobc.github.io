@@ -22,7 +22,7 @@
 .access__address-main {
   font-family: var(--font-family-display);
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-display);
   line-height: 1.5;
   letter-spacing: 0.06em;
 }
@@ -36,9 +36,13 @@
   align-items: baseline;
   gap: var(--space-3);
   min-block-size: 44px;
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-latin);
+  font-variant-numeric: lining-nums;
+  font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem);
+  white-space: nowrap;
+  flex-wrap: wrap;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   color: var(--color-text-primary);
   text-decoration: none;
 }
@@ -66,7 +70,7 @@
   align-items: baseline;
   justify-content: space-between;
   padding-block-end: var(--space-2);
-  border-block-end: 2px solid var(--color-text-primary);
+  border-block-end: 1px solid rgba(201, 166, 107, 0.5);
   font-size: var(--font-size-lg);
   letter-spacing: 0.12em;
 }

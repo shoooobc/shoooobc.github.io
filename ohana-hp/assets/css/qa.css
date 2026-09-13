@@ -19,20 +19,24 @@
   gap: var(--space-3);
   font-family: var(--font-family-display);
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-display);
   line-height: var(--line-height-snug);
   letter-spacing: 0.06em;
   word-break: auto-phrase;
 }
 
 .qa__q::before {
-  content: "問";
+  content: "Q.";
   flex-shrink: 0;
+  font-family: var(--font-family-latin);
+  font-size: 1.15em;
+  font-weight: 500;
+  line-height: 1.3;
   color: var(--color-text-accent);
 }
 
 .qa__a {
-  padding-inline-start: calc(1em * 1.25 + var(--space-3));
+  padding-inline-start: calc(1.15em * 1.4 + var(--space-3));
   color: var(--color-text-secondary);
   word-break: auto-phrase;
 }

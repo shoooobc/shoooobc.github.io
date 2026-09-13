@@ -87,7 +87,7 @@
   color: var(--color-text-primary);
   font-family: var(--font-family-display);
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-display);
   letter-spacing: 0.12em;
   text-decoration: none;
 }

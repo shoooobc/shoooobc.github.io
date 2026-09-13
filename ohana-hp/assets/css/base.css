@@ -88,7 +88,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-family-display);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-display);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
   text-wrap: balance;
@@ -121,8 +121,21 @@ a:hover {
 }
 
 ::selection {
-  background: var(--shu-600);
-  color: var(--ink-100);
+  background: var(--brass-400);
+  color: var(--ink-900);
+}
+
+/* 英字のセリフ体（見出しの添え字・価格・年号） */
+.latin {
+  font-family: var(--font-family-latin);
+  font-weight: 500;
+  font-variant-numeric: lining-nums;
+  letter-spacing: 0.02em;
+}
+
+/* 写真の色味を、しっとりした夜の雰囲気に揃える（まがりDEバナナは除く） */
+main:not([data-photo="natural"]) img:not([src*="banana"]):not([src*="topping"]):not([src*="logo"]) {
+  filter: saturate(0.74) contrast(1.08) brightness(0.84);
 }
 
 /* 生成りの面 */

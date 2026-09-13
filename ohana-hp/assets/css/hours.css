@@ -27,7 +27,7 @@
 }
 
 .hours-status[data-state="open"] .hours-status__dot {
-  background: var(--shu-300);
+  background: var(--brass-400);
 }
 
 .hours-status__text {
