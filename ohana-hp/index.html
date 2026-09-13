@@ -22,7 +22,7 @@
 
   <!-- 試作：オーナー確認前のため検索に出さない（公開時に削除） -->
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#1C1410">
+  <meta name="theme-color" content="#231A15">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -89,8 +89,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Web フォントは描画を止めずに読み込む（先に代わりのフォントで表示し、読み込めたら差し替える） -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap"></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap"></noscript>
 
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
@@ -110,7 +110,8 @@
   <link rel="stylesheet" href="assets/css/gallery.css">
   <link rel="stylesheet" href="assets/css/access.css">
 
-  <link rel="preload" as="image" href="assets/img/shop-counter-600w.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero-bottles-800w.webp" imagesrcset="assets/img/hero-bottles-800w.webp 800w, assets/img/hero-bottles-1600w.webp 1600w, assets/img/hero-bottles-2400w.webp 2400w" imagesizes="(min-width: 1024px) calc(100vw - 6rem), 100vw" media="(min-width: 768px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero-bottles-sp-750w.webp" imagesrcset="assets/img/hero-bottles-sp-750w.webp 750w, assets/img/hero-bottles-sp-1200w.webp 1200w" imagesizes="100vw" media="(max-width: 767px)" fetchpriority="high">
   <script type="module" src="assets/js/main.js"></script>
 </head>
 <body class="page-home">
@@ -185,15 +186,20 @@
   <main id="main">
     <!-- ===================== Hero ===================== -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero__inner">
+      <div class="hero__stage">
         <div class="hero__photo-wrap">
-          <!-- 仮: 写真は現行サイトの shop04.jpg（600px）。撮り直し候補「カウンターの全景」 -->
-          <img class="hero__photo" src="assets/img/shop-counter-600w.webp" width="600" height="400" alt="木のカウンターと、壁いっぱいの手描きの絵。OHANA の店内" fetchpriority="high" decoding="async">
+          <!-- 仮: 写真は現行サイトの bg.jpg（ボトルの棚）を明るく補正したもの。撮り直し候補「カウンターの全景」 -->
+          <picture>
+            <source media="(max-width: 767px)" srcset="assets/img/hero-bottles-sp-750w.webp 750w, assets/img/hero-bottles-sp-1200w.webp 1200w" sizes="100vw" width="750" height="903">
+            <img class="hero__photo" src="assets/img/hero-bottles-1600w.webp" srcset="assets/img/hero-bottles-800w.webp 800w, assets/img/hero-bottles-1600w.webp 1600w, assets/img/hero-bottles-2400w.webp 2400w" sizes="(min-width: 1024px) calc(100vw - 6rem), 100vw" width="1600" height="832" alt="バックバーの棚に並ぶ、ウィスキーのボトル" fetchpriority="high" decoding="async">
+          </picture>
         </div>
-
+        <h1 class="hero__title" id="hero-title"><span class="hero__line">東久留米で、</span><span class="hero__line">2008年から。</span></h1>
+        <p class="hero__side" aria-hidden="true">Dining Bar OHANA ― Higashikurume, since 2008</p>
+      </div>
+      <div class="container hero__inner">
         <div class="hero__body">
           <p class="hero__kicker">Cocktails, Whisky and Kitchen</p>
-          <h1 class="hero__title" id="hero-title">東久留米で、<br>2008年から。</h1>
           <p class="hero__lead">季節の果物のカクテルに、ウィスキー、パスタや一品料理。仕事帰りの一杯から、ゆっくり飲む夜まで。東久留米駅から歩いて7分です。</p>
 
           <div class="hero__meta">
@@ -220,7 +226,7 @@
     </section>
 
     <!-- ===================== はじめての方へ ===================== -->
-    <section class="section" id="first-visit" aria-labelledby="first-visit-title">
+    <section class="section tone-taupe" id="first-visit" aria-labelledby="first-visit-title">
       <div class="container sec">
         <div class="sec__head">
           <h2 class="sec__title" id="first-visit-title"><span class="sec__en" aria-hidden="true">First Visit</span><span class="sec__ja">はじめての方へ</span></h2>
@@ -261,7 +267,7 @@
     </section>
 
     <!-- ===================== 品書き ===================== -->
-    <section class="section menu" id="menu" aria-labelledby="menu-title">
+    <section class="section menu tone-deep" id="menu" aria-labelledby="menu-title">
       <div class="container sec">
         <div class="sec__head">
           <h2 class="sec__title" id="menu-title"><span class="sec__en" aria-hidden="true">Menu</span><span class="sec__ja">メニュー</span></h2>
@@ -318,7 +324,7 @@
     </section>
 
     <!-- ===================== ダーツ ・ 貸切 ===================== -->
-    <section class="section" aria-labelledby="play-title">
+    <section class="section tone-taupe" aria-labelledby="play-title">
       <div class="container sec">
         <div class="sec__head">
           <h2 class="sec__title" id="play-title"><span class="sec__en" aria-hidden="true">Darts &amp; Parties</span><span class="sec__ja">ダーツと貸切</span></h2>
@@ -386,7 +392,7 @@
     </aside>
 
     <!-- ===================== 店内 ===================== -->
-    <section class="section gallery" id="gallery" aria-labelledby="gallery-title">
+    <section class="section gallery tone-deep" id="gallery" aria-labelledby="gallery-title">
       <div class="container sec">
         <div class="sec__head">
           <h2 class="sec__title" id="gallery-title"><span class="sec__en" aria-hidden="true">Inside</span><span class="sec__ja">店内の様子</span></h2>
@@ -410,7 +416,7 @@
     </section>
 
     <!-- ===================== 場所と時間 ===================== -->
-    <section class="section" id="access" aria-labelledby="access-title">
+    <section class="section tone-greige" id="access" aria-labelledby="access-title">
       <div class="container sec">
         <div class="sec__head">
           <h2 class="sec__title" id="access-title"><span class="sec__en" aria-hidden="true">Hours &amp; Access</span><span class="sec__ja">営業時間とアクセス</span></h2>

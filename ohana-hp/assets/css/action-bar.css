@@ -12,7 +12,7 @@
   grid-auto-columns: minmax(0, 1fr);
   padding-block-end: env(safe-area-inset-bottom);
   background: var(--action-bar-bg);
-  border-block-start: 1px solid var(--color-border-primary);
+  border-block-start: 1px solid var(--color-border-secondary);
   transition:
     transform var(--duration-normal) var(--easing-out),
     visibility 0s linear 0s;
@@ -28,26 +28,28 @@
 
 .action-bar__item {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
+  gap: 6px;
   min-block-size: var(--action-bar-height);
   padding-inline: var(--space-2);
   color: var(--color-text-primary);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  letter-spacing: 0.06em;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .action-bar__item + .action-bar__item {
-  border-inline-start: 1px solid var(--color-border-primary);
+  border-inline-start: 1px solid var(--color-border-secondary);
 }
 
 .action-bar__item .icon {
-  inline-size: 18px;
-  block-size: 18px;
+  inline-size: 22px;
+  block-size: 22px;
 }
 
 .action-bar__item--primary {

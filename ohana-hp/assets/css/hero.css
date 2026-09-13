@@ -1,42 +1,84 @@
 /* ==========================================================================
-   Hero — 写真・縦書きの見出し・実用情報
+   Hero — 画面いっぱいの写真に、暗い帯の縦書きの見出し
+   その下に、リード文・本日の営業・電話と予約
    ========================================================================== */
 
-.hero {
-  border-block-end: 1px solid var(--color-border-primary);
+.hero__stage {
+  position: relative;
+}
+
+.hero__photo-wrap {
+  position: relative;
 }
 
 .hero__photo {
   inline-size: 100%;
-  aspect-ratio: 4 / 3;
+  block-size: min(120vw, 76svh);
   object-fit: cover;
-  object-position: 40% 50%;
+  object-position: 50% 30%;
+  filter: sepia(0.3) saturate(1.25) brightness(1.02) contrast(1.05);
+}
+
+/* 下のほうを、ページの焦げ茶に溶かす */
+.hero__photo-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(35, 26, 21, 0) 60%, rgba(35, 26, 21, 0.55) 100%);
+  pointer-events: none;
+}
+
+/* 縦書きの見出し：1行ずつ暗い帯に載せる（右から左へ） */
+.hero__title {
+  position: absolute;
+  inset-block-start: var(--space-6);
+  inset-inline-end: var(--space-gutter);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  color: var(--white);
+}
+
+.hero__line {
+  display: block;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  padding: 0.45em 0.28em 0.3em;
+  background: rgba(21, 14, 7, 0.9);
+}
+
+/* 2行目は少し下げて、段違いにする */
+.hero__line + .hero__line {
+  margin-block-start: 1.6em;
+}
+
+.hero__side {
+  display: none;
 }
 
 .hero__body {
   display: grid;
   gap: var(--space-5);
-  padding-block: var(--space-6) var(--space-7);
+  padding-block: var(--space-7) var(--space-8);
 }
 
 .hero__kicker {
   font-family: var(--font-family-latin);
-  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
   font-weight: 500;
-  font-style: normal;
+  font-style: italic;
+  line-height: 1.2;
   letter-spacing: 0.04em;
-  color: var(--color-text-accent);
-}
-
-.hero__title {
-  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
-  line-height: 1.45;
-  letter-spacing: 0.1em;
+  color: var(--color-text-primary);
 }
 
 .hero__lead {
-  max-inline-size: 26em;
-  font-size: var(--font-size-md);
+  max-inline-size: 30em;
   line-height: var(--line-height-relaxed);
   color: var(--color-text-secondary);
   word-break: auto-phrase;
@@ -44,25 +86,22 @@
 
 .hero__meta {
   display: grid;
-  border-block: 1px solid var(--color-border-primary);
+  border-block-start: 1px dotted var(--color-border-primary);
 }
 
 .hero__meta-row {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--space-1) var(--space-4);
+  gap: var(--space-1) var(--space-5);
   padding-block: var(--space-3);
-}
-
-.hero__meta-row + .hero__meta-row {
-  border-block-start: 1px solid var(--color-border-secondary);
+  border-block-end: 1px dotted var(--color-border-primary);
+  font-size: var(--font-size-sm);
 }
 
 .hero__meta-label {
-  inline-size: 4.5em;
+  inline-size: 3em;
   font-family: var(--font-family-display);
-  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
 }
 
@@ -77,36 +116,34 @@
 }
 
 @media (min-width: 768px) {
-  .hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--space-7);
-    align-items: end;
-    padding-block: var(--space-7) var(--space-8);
-  }
-
-  .hero__photo-wrap {
-    position: relative;
-  }
-
-  /* 写真の内側に、真鍮色の細い線 */
-  .hero__photo-wrap::after {
-    content: "";
-    position: absolute;
-    inset: var(--space-3);
-    border: 1px solid rgba(201, 166, 107, 0.55);
-    pointer-events: none;
-  }
-
   .hero__photo {
-    aspect-ratio: 4 / 5;
+    block-size: min(62vw, 82svh);
+  }
+
+  .hero__title {
+    inset-block-start: var(--space-8);
+    inset-inline-end: calc(var(--space-gutter) + var(--space-5));
   }
 
   .hero__body {
-    padding: 0;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--space-8);
+    align-items: start;
+    padding-block: var(--space-8) var(--space-9);
+  }
+
+  .hero__kicker,
+  .hero__lead {
+    grid-column: 1;
+  }
+
+  .hero__meta {
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
 
   .hero__actions {
+    grid-column: 2;
     display: flex;
     flex-wrap: wrap;
   }
@@ -117,32 +154,31 @@
 }
 
 @media (min-width: 1024px) {
-  .hero__inner {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: var(--space-8);
-    padding-block: var(--space-8) var(--space-9);
-    align-items: center;
+  /* 右に細い余白を残し、そこに小さな縦書きの英字 */
+  .hero__stage {
+    padding-inline-end: 6rem;
   }
 
   .hero__photo {
-    block-size: 100%;
-    max-block-size: 720px;
-    aspect-ratio: auto;
-    min-block-size: 560px;
+    block-size: min(52vw, calc(100svh - var(--header-height-lg) - 36px));
+    min-block-size: 520px;
   }
 
-  .hero__body {
-    gap: var(--space-6);
-  }
-}
-
-/* スマホ：写真は画面の端まで */
-@media (max-width: 767px) {
-  .hero__photo-wrap {
-    margin-inline: calc(var(--space-gutter) * -1);
+  .hero__title {
+    inset-inline-end: calc(6rem + var(--space-8));
   }
 
-  .hero__body {
-    padding-block-start: var(--space-5);
+  .hero__side {
+    position: absolute;
+    inset-block-start: var(--space-7);
+    inset-inline-end: 0;
+    width: 6rem;
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-family-latin);
+    font-size: 0.9375rem;
+    letter-spacing: 0.2em;
+    color: var(--color-text-tertiary);
   }
 }

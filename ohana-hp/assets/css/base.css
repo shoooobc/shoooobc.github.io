@@ -72,6 +72,7 @@ body {
   min-height: 100vh;
   min-height: 100svh;
   background-color: var(--color-bg-primary);
+  background-image: var(--texture-grain);
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
   font-size: var(--font-size-base);
@@ -121,8 +122,8 @@ a:hover {
 }
 
 ::selection {
-  background: var(--brass-400);
-  color: var(--ink-900);
+  background: var(--grey-200);
+  color: var(--brown-950);
 }
 
 /* 英字のセリフ体（見出しの添え字・価格・年号） */
@@ -133,16 +134,25 @@ a:hover {
   letter-spacing: 0.02em;
 }
 
-/* 写真の色味を、しっとりした夜の雰囲気に揃える（まがりDEバナナは除く） */
-main:not([data-photo="natural"]) img:not([src*="banana"]):not([src*="topping"]):not([src*="logo"]) {
-  filter: saturate(0.74) contrast(1.08) brightness(0.84);
+/* 写真の色味を、琥珀色の灯りの雰囲気に揃える（まがりDEバナナは除く） */
+main:not([data-photo="natural"]) img:not([src*="banana"]):not([src*="topping"]):not([src*="logo"]):not([src*="hero-bottles"]) {
+  filter: sepia(0.18) saturate(0.95) contrast(1.04) brightness(0.9);
 }
 
-/* 生成りの面 */
+/* 生成りの面・グレージュの面（紙のような質感） */
 .theme-paper,
-[data-surface="paper"] {
+[data-surface="paper"],
+.tone-taupe,
+.tone-greige {
   background-color: var(--color-bg-primary);
+  background-image: var(--texture-grain);
   color: var(--color-text-primary);
+}
+
+/* いちばん暗い面 */
+.tone-deep {
+  background-color: var(--brown-950);
+  background-image: var(--texture-grain);
 }
 
 /* Layout ------------------------------------------------------------------ */
@@ -164,7 +174,7 @@ main:not([data-photo="natural"]) img:not([src*="banana"]):not([src*="topping"]):
 /* 縦書き（PC のみ。スマホは横書き） */
 .tategaki {
   font-family: var(--font-family-display);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-display);
   letter-spacing: 0.18em;
 }
 

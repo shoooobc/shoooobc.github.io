@@ -4,7 +4,7 @@
    ========================================================================== */
 
 .banana-banner-wrap {
-  padding-block: 0 var(--space-section);
+  padding-block: var(--space-section);
 }
 
 .banana-banner {

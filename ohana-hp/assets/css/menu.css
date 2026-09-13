@@ -1,38 +1,23 @@
 /* ==========================================================================
-   Menu #menu — バーのメニューカード（暗い地に真鍮色の二重線）
+   Menu #menu — いちばん暗い面。写真を段違いに並べ、点線の価格表
    ========================================================================== */
-
-.menu {
-  background: var(--ink-950);
-  border-block: 1px solid var(--color-border-primary);
-}
 
 .menu__card {
   position: relative;
-  padding: var(--space-6) var(--space-5);
-  border: 1px solid rgba(201, 166, 107, 0.5);
-}
-
-/* 内側のもう1本の線 */
-.menu__card::before {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border: 1px solid rgba(201, 166, 107, 0.22);
-  pointer-events: none;
 }
 
 .menu__photos {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
-  margin-block-end: var(--space-7);
+  margin-block-end: var(--space-8);
 }
 
 .menu__photo {
   display: grid;
   gap: var(--space-2);
   margin: 0;
+  align-content: start;
 }
 
 .menu__photo:first-child {
@@ -41,7 +26,7 @@
 
 .menu__photo img {
   inline-size: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
 }
 
@@ -50,54 +35,55 @@
 }
 
 .menu__photo figcaption {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
 }
 
 .menu__columns {
   display: grid;
-  gap: var(--space-7);
+  gap: var(--space-8);
 }
 
 .menu__group-title {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-4);
-  padding-block-end: var(--space-3);
-  border-block-end: 1px solid rgba(201, 166, 107, 0.5);
-  font-size: var(--font-size-sm);
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  margin-block-end: var(--space-5);
+  text-align: center;
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-display);
-  letter-spacing: 0.2em;
-  color: var(--color-text-secondary);
+  letter-spacing: 0.24em;
+  color: var(--color-text-primary);
 }
 
 .menu__group-en {
   font-family: var(--font-family-latin);
   font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem);
   font-weight: 500;
-  letter-spacing: 0.01em;
+  font-style: italic;
+  letter-spacing: 0.02em;
   line-height: 1;
-  color: var(--color-text-primary);
+  color: var(--color-text-accent);
 }
 
 .menu__group-note {
-  margin-inline-start: auto;
   font-family: var(--font-family-body);
   font-size: var(--font-size-xs);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.14em;
   color: var(--color-text-tertiary);
 }
 
 .price-list {
   display: grid;
+  border-block-start: 1px solid var(--color-border-primary);
 }
 
 .price-row {
   display: flex;
   align-items: baseline;
-  gap: var(--space-2);
+  gap: var(--space-3);
   padding-block: var(--space-4);
-  border-block-end: 1px solid var(--color-border-secondary);
+  border-block-end: 1px dotted var(--color-border-primary);
 }
 
 .price-row__name {
@@ -105,14 +91,15 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-display);
   line-height: var(--line-height-snug);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
   word-break: auto-phrase;
 }
 
 .price-row__name small {
   display: block;
+  margin-block-start: var(--space-1);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-normal);
   color: var(--color-text-tertiary);
 }
@@ -120,31 +107,31 @@
 .price-row__dots {
   flex: 1;
   min-inline-size: 0.75rem;
-  border-block-end: 1px dotted rgba(201, 166, 107, 0.45);
-  transform: translateY(-0.35em);
 }
 
 .price-row__price {
   font-variant-numeric: lining-nums;
   font-family: var(--font-family-latin);
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 600;
+  letter-spacing: 0.04em;
   white-space: nowrap;
-  color: var(--color-text-accent);
+  color: var(--color-text-primary);
 }
 
 .price-row__price small {
   font-family: var(--font-family-body);
-  font-size: 0.65em;
+  font-size: 0.6em;
   font-weight: var(--font-weight-normal);
 }
 
+/* チャージの説明：細い線で囲んだ札 */
 .menu__notes {
   display: grid;
-  gap: var(--space-4);
-  margin-block-start: var(--space-7);
-  padding-block-start: var(--space-5);
-  border-block-start: 1px solid rgba(201, 166, 107, 0.5);
+  gap: var(--space-5);
+  margin-block-start: var(--space-8);
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid var(--color-border-primary);
 }
 
 .menu__charge {
@@ -152,19 +139,22 @@
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-display);
   line-height: var(--line-height-snug);
+  letter-spacing: 0.12em;
 }
 
 .menu__charge em {
   font-variant-numeric: lining-nums;
   font-family: var(--font-family-latin);
-  font-size: 1.2em;
+  font-size: 1.35em;
   font-style: normal;
   font-weight: 600;
-  color: var(--color-text-accent);
+  letter-spacing: 0.04em;
 }
 
 .menu__small {
+  margin-block-start: var(--space-2);
   font-size: var(--font-size-sm);
+  line-height: 2;
   color: var(--color-text-secondary);
 }
 
@@ -174,26 +164,27 @@
 }
 
 @media (min-width: 768px) {
-  .menu__card {
-    padding: var(--space-8) var(--space-7);
-  }
-
   .menu__columns {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-8);
+    gap: var(--space-9);
   }
 
+  /* 大きい写真と、少し下にずらした2枚 */
   .menu__photos {
-    grid-template-columns: 1.4fr 1fr 1fr;
-    align-items: end;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: var(--space-5);
   }
 
   .menu__photo:first-child {
     grid-column: auto;
   }
 
-  .menu__photo img {
-    aspect-ratio: 3 / 4;
+  .menu__photo:nth-child(2) {
+    margin-block-start: var(--space-9);
+  }
+
+  .menu__photo:nth-child(3) {
+    margin-block-start: var(--space-7);
   }
 
   .menu__photo:first-child img {
@@ -202,6 +193,14 @@
 
   .menu__notes {
     grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
+    align-items: center;
+    padding: var(--space-6) var(--space-7);
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu__card {
+    max-inline-size: 64rem;
+    margin-inline: auto;
   }
 }

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Button — 角ばった平らなボタン。主（朱）/ 副（線）/ テキスト
+   Button — 角ばった平らなボタン。主（錆色）/ 副（線）/ 丸い矢印つきのリンク
    ========================================================================== */
 
 .button {
@@ -15,7 +15,7 @@
   font-size: var(--button-font-size);
   font-weight: var(--button-font-weight);
   line-height: var(--line-height-snug);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-decoration: none;
   white-space: nowrap;
   transition:
@@ -54,27 +54,35 @@
   color: var(--button-secondary-text);
 }
 
-/* 矢印つきのテキストリンク */
+/* 右に錆色の丸い矢印がつくリンク */
 .button--text {
+  gap: var(--space-4);
   min-block-size: var(--button-height-sm);
   padding-inline: 0;
-  border-block-end: 1px solid currentColor;
+  border: 0;
   border-radius: 0;
   color: var(--color-text-primary);
   font-weight: var(--font-weight-bold);
 }
 
 .button--text::after {
-  content: "→";
-  font-family: var(--font-family-body);
-  transition: transform var(--duration-fast) var(--easing-out);
+  content: "";
+  flex-shrink: 0;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  border-radius: var(--border-radius-full);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12h12M13 7l5 5-5 5'/%3E%3C/svg%3E") center / 1rem no-repeat,
+    var(--rust-600);
+  transition: transform var(--duration-fast) var(--easing-out), background-color var(--duration-fast);
 }
 
 .button--text:hover {
-  color: var(--color-text-accent);
+  color: var(--color-text-primary);
 }
 
 .button--text:hover::after {
+  background-color: var(--rust-700);
   transform: translateX(3px);
 }
 

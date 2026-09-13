@@ -137,3 +137,7 @@
 .menu-button[aria-expanded="true"] .menu-button__bars span:nth-child(3) {
   transform: translateY(-5px) rotate(-30deg);
 }
+
+.menu-button[aria-expanded="true"] .menu-button__bars span {
+  inline-size: 100%;
+}

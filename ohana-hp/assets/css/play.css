@@ -1,27 +1,23 @@
 /* ==========================================================================
-   ダーツ #darts ・ 貸切 #private — 2つを縦の罫線で分けて並べる
+   ダーツ #darts ・ 貸切 #private — グレージュの面に、段違いの2列
    ========================================================================== */
 
 .play {
   display: grid;
+  gap: var(--space-9);
 }
 
 .play__item {
   display: grid;
   gap: var(--space-4);
   align-content: start;
-  padding-block: var(--space-7);
-}
-
-.play__item + .play__item {
-  border-block-start: 1px solid var(--color-border-primary);
 }
 
 .play__img {
   inline-size: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  margin-block-end: var(--space-2);
+  margin-block-end: var(--space-4);
 }
 
 .play__img--darts {
@@ -30,18 +26,19 @@
 
 .play__title {
   font-size: var(--font-size-xl);
-  line-height: 1.5;
-  letter-spacing: 0.1em;
+  line-height: 1.6;
+  letter-spacing: 0.14em;
 }
 
 .play__en {
   display: block;
-  margin-block-end: var(--space-2);
+  margin-block-end: var(--space-3);
   font-family: var(--font-family-latin);
-  font-size: var(--font-size-md);
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
   font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--color-text-accent);
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: 0.02em;
 }
 
 .play__text {
@@ -51,7 +48,7 @@
 
 .play__spec {
   display: grid;
-  border-block: 1px solid var(--color-border-primary);
+  border-block-start: 1px dotted var(--color-border-primary);
   font-size: var(--font-size-sm);
 }
 
@@ -60,61 +57,16 @@
   grid-template-columns: 5em 1fr;
   gap: var(--space-3);
   padding-block: var(--space-3);
-}
-
-.play__spec div + div {
-  border-block-start: 1px solid var(--color-border-secondary);
+  border-block-end: 1px dotted var(--color-border-primary);
 }
 
 .play__spec dt {
   font-family: var(--font-family-display);
-  color: var(--color-text-tertiary);
+  font-weight: 700;
 }
 
 .play__spec dd {
   color: var(--color-text-primary);
-}
-
-.play__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3) var(--space-5);
-  margin-block-start: var(--space-2);
-}
-
-@media (min-width: 1024px) {
-  .play {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .play__item {
-    padding-block: var(--space-2);
-  }
-
-  .play__item:first-child {
-    padding-inline-end: var(--space-7);
-  }
-
-  .play__item + .play__item {
-    padding-inline-start: var(--space-7);
-    border-block-start: 0;
-    border-inline-start: 1px solid var(--color-border-primary);
-  }
-}
-
-@media (max-width: 1023px) {
-  .play__item {
-    padding-block: var(--space-6);
-  }
-
-  .play__item:first-child {
-    padding-block-start: 0;
-  }
-
-  .play__item:last-child {
-    padding-block-end: 0;
-  }
 }
 
 .play__spec a {
@@ -122,4 +74,30 @@
   align-items: center;
   min-block-size: 44px;
   margin-block: -12px;
+}
+
+.play__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin-block-start: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .play {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8);
+  }
+
+  /* 右の列は少し下げて、段違いに */
+  .play__item + .play__item {
+    margin-block-start: var(--space-10);
+  }
+}
+
+@media (min-width: 1024px) {
+  .play {
+    gap: var(--space-9);
+  }
 }

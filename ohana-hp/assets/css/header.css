@@ -1,16 +1,17 @@
 /* ==========================================================================
-   Site header — 上に実用的な情報の帯、下にロゴとナビ
+   Site header — 焦げ茶の地にロゴ、明朝のナビ、英字の電話番号
    ========================================================================== */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: var(--z-header);
-  background-color: var(--color-bg-primary);
-  border-block-end: 1px solid var(--color-border-primary);
+  background-color: var(--brown-900);
+  background-image: var(--texture-grain);
+  border-block-end: 1px solid var(--color-border-secondary);
 }
 
-/* 情報の帯（PC のみ。スクロールしたら隠す） */
+/* 情報の帯（PC のみ） */
 .site-info {
   display: none;
   border-block-end: 1px solid var(--color-border-secondary);
@@ -21,7 +22,7 @@
 .site-info__inner {
   display: flex;
   align-items: center;
-  gap: var(--space-5);
+  gap: var(--space-6);
   min-block-size: 36px;
 }
 
@@ -30,6 +31,7 @@
   align-items: center;
   gap: var(--space-2);
   white-space: nowrap;
+  letter-spacing: 0.14em;
 }
 
 .site-info__item a {
@@ -38,6 +40,9 @@
   gap: var(--space-2);
   min-block-size: 36px;
   color: var(--color-text-secondary);
+  font-family: var(--font-family-latin);
+  font-size: 0.9375rem;
+  letter-spacing: 0.08em;
   text-decoration: none;
 }
 
@@ -73,7 +78,7 @@
 }
 
 .site-logo__img--footer {
-  block-size: 72px;
+  block-size: 84px;
 }
 
 .site-nav {
@@ -87,29 +92,46 @@
 }
 
 .site-nav__link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-block-size: 44px;
   padding-inline: var(--space-4);
-  color: var(--color-text-secondary);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: 0.16em;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-display);
+  letter-spacing: 0.14em;
   text-decoration: none;
   white-space: nowrap;
-  transition: color var(--duration-fast) var(--easing-default);
+}
+
+/* ホバーで下に細い線 */
+.site-nav__link::after {
+  content: "";
+  position: absolute;
+  inset-inline: var(--space-4);
+  inset-block-end: 6px;
+  block-size: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform var(--duration-normal) var(--easing-out);
 }
 
 .site-nav__link:hover,
 .site-nav__link[aria-current="page"] {
-  color: var(--color-text-accent);
+  color: var(--color-text-primary);
+}
+
+.site-nav__link:hover::after,
+.site-nav__link[aria-current="page"]::after {
+  transform: scaleX(1);
 }
 
 .site-header__actions {
   display: none;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .site-header__tel {
@@ -119,53 +141,62 @@
   gap: var(--space-2);
   min-block-size: 44px;
   min-inline-size: 44px;
-  padding-inline: var(--space-3);
+  padding-inline: var(--space-2);
   color: var(--color-text-primary);
-  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-latin);
+  font-size: 1.375rem;
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+  letter-spacing: 0.04em;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.site-header__tel .icon {
+  inline-size: 1rem;
+  block-size: 1rem;
 }
 
 .site-header__tel:hover {
   color: var(--color-text-accent);
 }
 
+/* スマホ・タブレット：丸いメニューボタン */
 .menu-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
-  min-inline-size: 44px;
-  min-block-size: 44px;
+  inline-size: 48px;
+  block-size: 48px;
   margin-inline-start: auto;
   margin-inline-end: calc(var(--space-2) * -1);
-  padding-inline: var(--space-2);
+  border-radius: var(--border-radius-full);
+  background: var(--brown-950);
   color: var(--color-text-primary);
 }
 
 .menu-button__label {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-sm);
-  letter-spacing: 0.16em;
+  display: none;
 }
 
 .menu-button__bars {
   position: relative;
-  inline-size: 24px;
+  inline-size: 20px;
   block-size: 11px;
 }
 
 .menu-button__bars span {
   position: absolute;
-  inset-inline: 0;
+  inset-inline-end: 0;
   block-size: 1px;
   background: currentColor;
   transition: transform var(--duration-normal) var(--easing-out), opacity var(--duration-fast);
 }
 
-.menu-button__bars span:nth-child(1) { inset-block-start: 0; }
-.menu-button__bars span:nth-child(2) { inset-block-start: 5px; }
-.menu-button__bars span:nth-child(3) { inset-block-end: 0; }
+/* 長さの違う3本線 */
+.menu-button__bars span:nth-child(1) { inset-block-start: 0; inline-size: 70%; }
+.menu-button__bars span:nth-child(2) { inset-block-start: 5px; inline-size: 100%; }
+.menu-button__bars span:nth-child(3) { inset-block-end: 0; inline-size: 55%; }
 
 @media (min-width: 1024px) {
   .site-info {
@@ -178,7 +209,7 @@
   }
 
   .site-logo__img {
-    block-size: 50px;
+    block-size: 52px;
   }
 
   .site-nav,
@@ -191,12 +222,16 @@
   }
 }
 
-@media (min-width: 1024px) and (max-width: 1199px) {
+@media (min-width: 1024px) and (max-width: 1239px) {
   .site-header__tel-number {
     display: none;
   }
 
   .site-nav__link {
     padding-inline: var(--space-3);
+  }
+
+  .site-nav__link::after {
+    inset-inline: var(--space-3);
   }
 }

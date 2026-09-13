@@ -1,54 +1,53 @@
 /* ==========================================================================
-   セクションの骨組み：英字のセリフ体の大きな見出し ＋ 日本語
-   PC は左に見出し、右に中身
+   セクションの骨組み：中央に大きな英字のセリフ体、その下に日本語
    ========================================================================== */
 
 .sec {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-7);
 }
 
 .sec__head {
   display: grid;
-  gap: var(--space-3);
-  align-content: start;
+  justify-items: center;
+  text-align: center;
 }
 
 .sec__title {
   display: grid;
-  gap: var(--space-2);
+  justify-items: center;
+  gap: var(--space-3);
   line-height: 1;
 }
 
 .sec__en {
   font-family: var(--font-family-latin);
-  font-size: clamp(2.5rem, 1.8rem + 3vw, 4.25rem);
-  font-weight: 500;
+  font-size: clamp(2.75rem, 2rem + 3.2vw, 4.5rem);
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
   color: var(--color-text-primary);
 }
 
 .sec__ja {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-display);
-  letter-spacing: 0.24em;
-  color: var(--color-text-accent);
+  letter-spacing: 0.3em;
+  color: var(--color-text-primary);
 }
 
-.sec__ja::before {
+/* 見出しの下の短い縦線 */
+.sec__head::after {
   content: "";
-  inline-size: 1.75rem;
-  block-size: 1px;
+  inline-size: 1px;
+  block-size: var(--space-7);
+  margin-block-start: var(--space-5);
   background: currentColor;
+  opacity: 0.6;
 }
 
 .sec__lead {
   max-inline-size: var(--max-width-content);
-  font-size: var(--font-size-md);
   line-height: var(--line-height-relaxed);
   color: var(--color-text-secondary);
   word-break: auto-phrase;
@@ -60,13 +59,6 @@
 
 @media (min-width: 1024px) {
   .sec {
-    grid-template-columns: minmax(14rem, 3fr) minmax(0, 9fr);
     gap: var(--space-8);
-  }
-
-  .sec__head {
-    position: sticky;
-    inset-block-start: calc(var(--header-height-lg) + 36px + var(--space-6));
-    align-self: start;
   }
 }
